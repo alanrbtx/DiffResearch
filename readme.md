@@ -50,7 +50,7 @@ export BASE_URL="http://your-provider-url/v1"
 export MODEL_NAME="your-model-name"
 ```
 
-## Usage
+## 💻Usage
 
 ### Lite Research
 ```bash
@@ -64,7 +64,7 @@ Available Flags:
 --squeeze: Optimizes context usage by summarizing individual pages before final synthesis.
 
 
-### 💻Full Research
+### Full Research
 
 ```bash
 uv run run_full_deep_research.py --prompt "What is GRPO and how can I apply it to robotics?"
