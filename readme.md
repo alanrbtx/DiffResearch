@@ -21,12 +21,12 @@ The framework provides two distinct operational modes:
 ## 🏗 Architecture
 
 ### Lite Architecture
-The Lite mode uses a linear pipeline: Search ➔ Visit ➔ Summarize.
-
-
+The Lite mode uses a linear pipeline: Search ➔ Visittop-5 sitest ➔ Summarize.
 
 ### Full Architecture
-The Full mode utilizes a recursive agentic loop: Decompose ➔ Research ➔ Judge ➔ Refine.
+The Full mode utilizes a recursive agentic loop: Decompose (if prompt is complex) ➔ Research ➔ Judge ➔ Ref (if needed)ine.
+
+![Flowcharts](deep_resereach_scheem.png )
 
 
 
@@ -69,6 +69,10 @@ Available Flags:
 ```bash
 uv run run_full_deep_research.py --prompt "What is GRPO and how can I apply it to robotics?"
 ```
+### Important Note
+
+Due to DuckDuckGo's strict rate limits, frequent automated queries are often restricted
+
 
 ### 📄License
 
