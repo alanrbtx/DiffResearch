@@ -20,12 +20,6 @@ The framework provides two distinct operational modes:
 
 ## 🏗 Architecture
 
-### Lite Architecture
-The Lite mode uses a linear pipeline: Search ➔ Visittop-5 sitest ➔ Summarize.
-
-### Full Architecture
-The Full mode utilizes a recursive agentic loop: Decompose (if prompt is complex) ➔ Research  Judge ➔Refine.
-
 ![Flowcharts](deep_research_scheem.png )
 
 
