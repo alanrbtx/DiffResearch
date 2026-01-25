@@ -54,6 +54,7 @@ export MODEL_NAME="your-model-name"
 ### Lite Research
 ```bash
 uv run lite_deep_research.py --prompt "What is GRPO?"
+```
 
 Available Flags:
 
@@ -66,7 +67,7 @@ Available Flags:
 
 ```bash
 uv run run_full_deep_research.py --prompt "What is GRPO and how can I apply it to robotics?"
-
+```
 
 ### 📄License
 
