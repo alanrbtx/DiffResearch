@@ -49,4 +49,25 @@ export API_KEY="your_api_key"
 export BASE_URL="http://your-provider-url/v1"
 export MODEL_NAME="your-model-name"
 
+## Usage
 
+### Lite Research
+```bash
+uv run lite_deep_research.py --prompt "What is GRPO?"
+
+Available Flags:
+
+--relevance: Adds an agent to filter search results for high accuracy.
+
+--squeeze: Optimizes context usage by summarizing individual pages before final synthesis.
+
+
+### 💻Full Research
+
+```bash
+uv run run_full_deep_research.py --prompt "What is GRPO and how can I apply it to robotics?"
+
+
+### 📄License
+
+Licensed under the Apache License, Version 2.0.
