@@ -26,7 +26,7 @@ The Lite mode uses a linear pipeline: Search ➔ Visittop-5 sitest ➔ Summarize
 ### Full Architecture
 The Full mode utilizes a recursive agentic loop: Decompose (if prompt is complex) ➔ Research ➔ Judge ➔ Ref (if needed)ine.
 
-![Flowcharts](deep_resereach_scheem.png )
+![Flowcharts](deep_research_scheem.png )
 
 
 
