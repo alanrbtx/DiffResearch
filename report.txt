@@ -1,0 +1,29 @@
+**Final Report: Who is Alan Gazzaev?**
+
+Alan Gazzaev is a prominent figure in the fields of artificial intelligence (AI), natural language processing (NLP), and machine learning (ML), known for his innovative contributions to AI development and entrepreneurship. He is a graduate of ITMO University, where he pursued a Master’s degree in Deep Learning and Generative AI. His academic and professional journey has been marked by a strong focus on AI research, startup innovation, and the development of practical AI solutions for real-world applications.
+
+### Background and Education
+
+Alan Gazzaev began his academic journey at North Ossetian State University, where he developed a robotic manipulator and won a grant of 500,000 rubles from the UMNIK program. This early success in robotics and AI sparked his interest in pursuing a career in AI and NLP. Later, he transitioned to ITMO University, where he completed his Master’s degree in Deep Learning and Generative AI. At ITMO, he secured a tuition-free position through the Junior ML Contest, where his AI project, AIsaacChat, was recognized for its innovative use of neural networks to understand user intent, answer queries, and generate images.
+
+### Professional Journey and Achievements
+
+Alan's professional career began with his work on AI projects at the Joint Institute for Nuclear Research in Dubna, where he contributed to the ATLAS experiment at CERN. This experience solidified his interest in AI and led him to pursue opportunities in the field more actively. He later joined MWS AI, a subsidiary of MTS, one of Russia's leading telecom operators. His work with MWS AI has been instrumental in developing advanced AI solutions, particularly in the area of language models.
+
+### Innovations and Contributions
+
+Alan is best known for his work on **Cotype Nano**, a compact Russian-language neural network designed for business applications. This model is notable for its small size, which allows it to run efficiently on devices without internet access, ensuring data security and fast response times. Cotype Nano can perform a wide range of tasks, including generating code, creating marketing content, answering customer queries, and developing training materials. It was trained using a two-stage supervised training approach (SFT), first on code and mathematical problems, and then on high-quality instructions, resulting in a benchmark score of 50.51 in the RuLLMArena evaluation.
+
+Cotype Nano's success has earned Alan Gazzaev the national award **Priority: Digital – 2025**, which recognizes groundbreaking digital innovations in Russia. He was also invited to a session of the parliament of the North Ossetia-Alania Republic, highlighting the significance of his work on a regional and national level.
+
+### Research and Future Work
+
+Alan's research interests extend beyond the development of practical AI models. In his Master’s thesis, he developed an algorithm that enables language models to generate multiple solutions to a given problem, rather than just one. This innovation could have significant implications for AI applications in problem-solving, startup validation, and autonomous systems.
+
+Alan is currently working at MWS AI and continues to contribute to AI research and development. His work is also reflected in his presence on platforms like **Hugging Face**, where he has shared several AI models, including **AlanRobotics/nanit_slerp**, **AlanRobotics/opt-assisted-generation**, and **AlanRobotics/whisper-tiny-ru**, among others. These models cover a range of AI applications, including text generation, speech recognition, and feature extraction.
+
+### Personal and Professional Impact
+
+Alan Gazzaev's journey from a student at North Ossetian State University to a leading AI researcher and entrepreneur exemplifies the power of combining academic rigor with practical innovation. His work with ITMO University, MWS AI, and his own startup projects has not only advanced the field of AI in Russia but also inspired a new generation of technologists and entrepreneurs.
+
+In summary, Alan Gazzaev is a visionary AI researcher and entrepreneur whose contributions to AI, particularly in the areas of natural language processing and generative AI, have positioned him as a key player in the Russian tech ecosystem. His work continues to push the boundaries of what AI can achieve in both academic and real-world applications.
