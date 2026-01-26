@@ -1,6 +1,6 @@
 # 🔍 Simple Deep Research
 
-**Simple Deep Research** is an open-source, easy-to-run framework for building autonomous deep research systems. It works seamlessly with both open-source (via vLLM/Ollama) and proprietary LLM providers.
+**Simple Deep Research** is an open-source, easy-to-run framework for building autonomous deep research systems. It works seamlessly with both open-source (via vLLM/Ollama) and proprietary LLM providers. **Simple Deep Research** is built without heavy abstractions like LangChain or LangGraph.
 
 The framework is designed to automate the process of web searching, information synthesis, and report generation, minimizing the "hallucination" risk by grounding responses in real-time data.
 
