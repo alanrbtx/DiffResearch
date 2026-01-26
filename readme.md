@@ -33,14 +33,22 @@ This project uses `uv` for lightning-fast Python package management.
 1. **Clone repository**
    ```bash
    git clone https://github.com/alanrbtx/simple_deep_research
-   cd simple_deep_research```
+   cd simple_deep_research
+   ```
    
-3. **Install uv**:
+2. **Install uv**:
    Follow the [official uv installation guide](https://github.com/astral-sh/uv).
-   
-5. **Install Dependencies**:
+
+3. **Create venv**:
    ```bash
-   uv pip install -r requirements.txt```
+   uv venv
+   ```
+
+   
+3. **Install Dependencies**:
+   ```bash
+   uv pip install -r requirements.txt
+   ```
 
 4. **Configure LLM Backend**
 ```bash
