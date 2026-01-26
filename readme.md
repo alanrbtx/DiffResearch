@@ -37,9 +37,10 @@ This project uses `uv` for lightning-fast Python package management.
    ```
    
 2. **Install uv**:
+
    Follow the [official uv installation guide](https://github.com/astral-sh/uv).
 
-3. **Create venv**:
+4. **Create venv**:
    ```bash
    uv venv
    ```
