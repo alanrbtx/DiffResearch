@@ -36,11 +36,11 @@ This project uses `uv` for lightning-fast Python package management.
 ```
 2. **Install uv**:
    Follow the [official uv installation guide](https://github.com/astral-sh/uv).
-
+```
 3. **Install Dependencies**:
    ```bash
    uv pip install -r requirements.txt
-
+```
 
 
 4. **Configure LLM Backend**
