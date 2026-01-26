@@ -46,7 +46,8 @@ This project uses `uv` for lightning-fast Python package management.
 ```bash
 export API_KEY="your_api_key"
 export BASE_URL="http://your-provider-url/v1"
-export MODEL_NAME="your-model-name"```
+export MODEL_NAME="your-model-name"
+```
 
 ## 💻Usage
 
