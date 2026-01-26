@@ -30,14 +30,13 @@ The framework provides two distinct operational modes:
 
 This project uses `uv` for lightning-fast Python package management.
 
-1. ```bash
+1. **Clone repository**
+   ```bash
    git clone https://github.com/alanrbtx/simple_deep_research
-   cd simple_deep_research
-```
-2. **Install uv**:
-   Follow the [official uv installation guide](https://github.com/astral-sh/uv).
-```
-3. **Install Dependencies**:
+   cd simple_deep_research```
+3. **Install uv**:
+   Follow the [official uv installation guide](https://github.com/astral-sh/uv).```
+4. **Install Dependencies**:
    ```bash
    uv pip install -r requirements.txt
 ```
