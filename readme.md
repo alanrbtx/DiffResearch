@@ -62,7 +62,7 @@ export MODEL_NAME="your-model-name"
 
 ### Lite Research
 ```bash
-uv run lite_deep_research.py --prompt "What is GRPO?"
+uv run run_lite_deep_research.py --prompt "What is GRPO?"
 ```
 
 Available Flags:
