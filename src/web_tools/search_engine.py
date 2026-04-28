@@ -28,17 +28,17 @@ S2_PROXIES = [
 def _s2_request(url: str, params: dict, api_key: str) -> requests.Response:
     headers = {"x-api-key": api_key}
     proxy_list = [f"http://{p}" for p in S2_PROXIES] + [None]
+    last_exc: Exception | None = None
     for proxy in proxy_list:
         proxies = {"http": proxy, "https": proxy} if proxy else None
         try:
             r = requests.get(url, params=params, headers=headers, proxies=proxies, timeout=15)
             r.raise_for_status()
             return r
-        except requests.HTTPError:
-            raise
-        except Exception:
+        except Exception as e:
+            last_exc = e
             continue
-    raise RuntimeError("All proxies and direct connection failed.")
+    raise last_exc or RuntimeError("All proxies and direct connection failed.")
 
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
 ARXIV_NS = {'atom': 'http://www.w3.org/2005/Atom'}
@@ -161,6 +161,45 @@ class ArXiv:
         except Exception as e:
             print(f"ArXiv search error: {e}")
             return []
+
+
+class Serper:
+    """Search the web using the Serper Google Search API."""
+
+    SERPER_API_URL = "https://google.serper.dev/search"
+
+    def __init__(self, api_key: str = ""):
+        self.api_key = api_key or os.environ.get("SERPER_API_KEY", "")
+
+    def search(self, query: str, top_n: int = 5) -> list[dict]:
+        """
+        Search the web via Serper.
+
+        Returns a list of dicts with keys:
+            title, url, snippet, source='serper'
+        """
+        headers = {
+            "X-API-KEY": self.api_key,
+            "Content-Type": "application/json",
+        }
+        payload = {"q": query, "num": top_n}
+
+        try:
+            response = requests.post(self.SERPER_API_URL, headers=headers, json=payload, timeout=15)
+            response.raise_for_status()
+        except Exception as e:
+            print(f"Serper search error: {e}")
+            return []
+
+        results = []
+        for item in response.json().get("organic", [])[:top_n]:
+            results.append({
+                "title": item.get("title", "N/A"),
+                "url": item.get("link", "N/A"),
+                "snippet": item.get("snippet", "N/A"),
+                "source": "serper",
+            })
+        return results
 
 
 class SemanticScholar:

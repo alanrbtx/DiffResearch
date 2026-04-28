@@ -15,6 +15,32 @@
 # limitations under the License.
 from src.agents.agent_template import OpenAIAgent
 
+class IntentAgent(OpenAIAgent):
+    """Decides whether a query should be answered via web search or academic databases."""
+
+    def generate(self, prompt: str) -> str:
+        """Returns 'web' or 'academic'."""
+        completion = self.client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {"role": "user", "content": (
+                    "Analyze the following research query and decide whether it is best answered by:\n"
+                    "- \"web\": searching the Internet for recent news, current events, company/product info, "
+                    "non-academic practical topics, or very recent developments (post-2024)\n"
+                    "- \"academic\": searching academic paper databases (ArXiv, Semantic Scholar) for scientific "
+                    "research, peer-reviewed studies, technical papers, or established academic topics\n\n"
+                    "Return only one word: \"web\" or \"academic\".\n\n"
+                    f"Query: {prompt}"
+                )},
+            ],
+            extra_body={
+                "chat_template_kwargs": {"enable_thinking": False}
+            }
+        )
+        result = completion.choices[0].message.content.strip().lower()
+        return "web" if "web" in result else "academic"
+
+
 class QueryFormattingAgent(OpenAIAgent):
 
     def generate(self, prompt):

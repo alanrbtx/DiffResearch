@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 import re
 import xml.etree.ElementTree as ET
 from urllib.parse import urlparse, parse_qs, unquote
@@ -20,6 +21,8 @@ from urllib.parse import urlparse, parse_qs, unquote
 import requests
 import trafilatura
 from bs4 import BeautifulSoup
+
+SERPER_SCRAPE_URL = "https://scrape.serper.dev"
 
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
 ARXIV_NS = {'atom': 'http://www.w3.org/2005/Atom'}
@@ -111,22 +114,46 @@ def _extract_with_bs4(html: str) -> str:
     return soup.get_text(separator=' ', strip=True)
 
 
-def visit_site(url: str) -> str:
+def _fetch_with_serper_scrape(url: str, api_key: str) -> str | None:
+    """Use the Serper Scraping API to extract page text. Returns None on failure."""
+    try:
+        response = requests.post(
+            SERPER_SCRAPE_URL,
+            headers={"X-API-KEY": api_key, "Content-Type": "application/json"},
+            json={"url": url},
+            timeout=20,
+        )
+        response.raise_for_status()
+        data = response.json()
+        text = data.get("text") or data.get("content") or ""
+        return text.strip() or None
+    except Exception as e:
+        print(f"Serper scrape error for {url}: {e}")
+        return None
+
+
+def visit_site(url: str, serper_api_key: str = "") -> str:
     """
     Fetch *url* and return its main textual content.
 
-    Special handling:
-    - ArXiv abstract/PDF URLs: content is fetched via the ArXiv API for
-      clean, structured metadata instead of scraping rendered HTML.
-    - DuckDuckGo redirect URLs: unwrapped before fetching.
-    - Main extraction uses trafilatura; falls back to BeautifulSoup.
-    - Output is capped at MAX_CHARS characters.
+    Extraction priority:
+    1. ArXiv URLs → ArXiv API (clean metadata, no scraping).
+    2. Serper Scraping API (if SERPER_API_KEY env var or serper_api_key arg is set).
+    3. Direct HTTP fetch → trafilatura → BeautifulSoup fallback.
+
+    Output is capped at MAX_CHARS characters.
     """
     url = _resolve_url(url)
 
     arxiv_id = _arxiv_id_from_url(url)
     if arxiv_id:
         return _fetch_arxiv_metadata(arxiv_id)
+
+    api_key = serper_api_key or os.environ.get("SERPER_API_KEY", "")
+    if api_key:
+        text = _fetch_with_serper_scrape(url, api_key)
+        if text:
+            return text[:MAX_CHARS]
 
     try:
         response = requests.get(url, timeout=15, headers=_HEADERS, allow_redirects=True)

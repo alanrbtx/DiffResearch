@@ -3,7 +3,7 @@ import json
 import argparse
 from pathlib import Path
 from src.agents.agents_collection import SummarizationAgent, DecomposeAgent, JudgeAgent, ComplexityAgent
-from src.web_tools.search_engine import DuckDuckGo
+from src.web_tools.search_engine import ArXiv, SemanticScholar
 from src.web_tools.visit_site import visit_site
 
 api_key = os.environ['API_KEY']
@@ -23,7 +23,40 @@ sum_agent = SummarizationAgent(api_key=api_key, base_url=base_url, model=model)
 comp_agent = ComplexityAgent(api_key=api_key, base_url=base_url, model=model)
 judge_agent = JudgeAgent(api_key=api_key, base_url=base_url, model=model)
 decompose_agent = DecomposeAgent(api_key=api_key, base_url=base_url, model=model)
-ddg = DuckDuckGo(url='https://html.duckduckgo.com/html/')
+arxiv = ArXiv()
+s2 = SemanticScholar()
+
+
+def _format_result(result: dict) -> str:
+    abstract = result.get('abstract', '')
+    if abstract and abstract != 'N/A':
+        return (
+            f"Title: {result['title']}\n"
+            f"Authors: {result.get('authors', 'N/A')}\n"
+            f"Year: {result.get('year', 'N/A')}\n\n"
+            f"Abstract:\n{abstract}"
+        )
+    url = result['url']
+    if 'semanticscholar.org' in url:
+        return (
+            f"Title: {result['title']}\n"
+            f"Authors: {result.get('authors', 'N/A')}\n"
+            f"Year: {result.get('year', 'N/A')}"
+        )
+    return visit_site(url)
+
+
+def search_all(query: str, top_n: int = 3) -> list[dict]:
+    """Search ArXiv and Semantic Scholar, deduplicated by title."""
+    s2_results = s2.search(query, top_n=top_n) if query.isascii() else []
+    results = arxiv.search(query, top_n=top_n) + s2_results
+    seen, combined = set(), []
+    for r in results:
+        key = r['title'].lower().strip()
+        if key not in seen:
+            seen.add(key)
+            combined.append(r)
+    return combined
 
 
 def run_research(prompt: str) -> str:
@@ -37,11 +70,11 @@ def run_research(prompt: str) -> str:
             merged_result = ''
 
             for q in sub_queries:
-                result_text = ''
-                search_results = ddg.search(q, top_n=2)
-                for idx, result in enumerate(search_results):
-                    clean_text = visit_site(result['url'])
-                    result_text += f'\n\nSite {idx + 1}:\n\n{clean_text}'
+                search_results = search_all(q, top_n=2)
+                result_text = ''.join(
+                    f'\n\nPaper {idx + 1}:\n\n{_format_result(r)}'
+                    for idx, r in enumerate(search_results)
+                )
                 partial = sum_agent.generate(q, result_text)
                 merged_result += f'\n\nResult:\n{partial}'
 
@@ -53,11 +86,11 @@ def run_research(prompt: str) -> str:
 
             queries = is_enough
     else:
-        result_text = ''
-        search_results = ddg.search(prompt, top_n=5)
-        for idx, result in enumerate(search_results):
-            clean_text = visit_site(result['url'])
-            result_text += f'\n\nSite {idx + 1}:\n\n{clean_text}'
+        search_results = search_all(prompt, top_n=3)
+        result_text = ''.join(
+            f'\n\nPaper {idx + 1}:\n\n{_format_result(r)}'
+            for idx, r in enumerate(search_results)
+        )
         return sum_agent.generate(prompt, result_text)
 
 
