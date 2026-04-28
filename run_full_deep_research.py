@@ -2,7 +2,7 @@ import os
 from tqdm import tqdm
 import argparse
 from src.agents.agents_collection import SummarizationAgent, DecomposeAgent, JudgeAgent, ComplexityAgent
-from src.web_tools.search_engine import DuckDuckGo
+from src.web_tools.search_engine import ArXiv
 from src.web_tools.visit_site import visit_site
 
 # vLLM / OpenAI
@@ -45,7 +45,7 @@ decompose_agent = DecomposeAgent(
 
 # search engine
 
-ddg = DuckDuckGo(url='https://html.duckduckgo.com/html/')
+ddg = ArXiv()
     
 args = parser.parse_args()
 
