@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import time
 import requests
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
@@ -59,10 +60,12 @@ class DuckDuckGo:
 class ArXiv:
     """Search the ArXiv API and return paper metadata."""
 
-    def __init__(self, max_results=10, sort_by='relevance', sort_order='descending'):
+    def __init__(self, max_results=10, sort_by='relevance', sort_order='descending', request_delay=3.0):
         self.max_results = max_results
         self.sort_by = sort_by
         self.sort_order = sort_order
+        self.request_delay = request_delay  # seconds between requests (ArXiv asks for ≥3s)
+        self._last_request_time = 0.0
 
     def search(self, query, top_n=None):
         """
@@ -72,6 +75,10 @@ class ArXiv:
             title, url, abstract, authors, year
         Compatible with the DuckDuckGo result format (title + url always present).
         """
+        elapsed = time.time() - self._last_request_time
+        if elapsed < self.request_delay:
+            time.sleep(self.request_delay - elapsed)
+
         n = top_n if top_n is not None else self.max_results
         params = {
             'search_query': query,
@@ -81,10 +88,27 @@ class ArXiv:
             'sortOrder': self.sort_order,
         }
 
-        try:
-            response = requests.get(ARXIV_API_URL, params=params, timeout=15)
-            response.raise_for_status()
+        for attempt in range(5):
+            try:
+                response = requests.get(ARXIV_API_URL, params=params, timeout=15)
+                if response.status_code == 429:
+                    wait = 2 ** attempt * 10
+                    print(f"ArXiv rate limit hit, retrying in {wait}s...")
+                    time.sleep(wait)
+                    continue
+                response.raise_for_status()
+                self._last_request_time = time.time()
+                break
+            except requests.RequestException as e:
+                if attempt == 4:
+                    print(f"ArXiv search error: {e}")
+                    return []
+                time.sleep(2 ** attempt * 5)
+        else:
+            print("ArXiv search error: max retries exceeded")
+            return []
 
+        try:
             root = ET.fromstring(response.text)
             results = []
 
