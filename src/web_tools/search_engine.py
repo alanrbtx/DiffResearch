@@ -13,10 +13,32 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 import time
 import requests
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
+
+S2_PROXIES = [
+    "177.93.132.244:3128",
+    "208.87.243.199:7878",
+]
+
+
+def _s2_request(url: str, params: dict, api_key: str) -> requests.Response:
+    headers = {"x-api-key": api_key}
+    proxy_list = [f"http://{p}" for p in S2_PROXIES] + [None]
+    for proxy in proxy_list:
+        proxies = {"http": proxy, "https": proxy} if proxy else None
+        try:
+            r = requests.get(url, params=params, headers=headers, proxies=proxies, timeout=15)
+            r.raise_for_status()
+            return r
+        except requests.HTTPError:
+            raise
+        except Exception:
+            continue
+    raise RuntimeError("All proxies and direct connection failed.")
 
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
 ARXIV_NS = {'atom': 'http://www.w3.org/2005/Atom'}
@@ -139,4 +161,48 @@ class ArXiv:
         except Exception as e:
             print(f"ArXiv search error: {e}")
             return []
+
+
+class SemanticScholar:
+    """Search the Semantic Scholar API and return paper metadata."""
+
+    S2_API = "https://api.semanticscholar.org/graph/v1/paper/search"
+    FIELDS = "title,authors,year,abstract,citationCount,url"
+
+    def __init__(self, api_key: str = "", max_results: int = 10):
+        self.api_key = os.environ.get("S2_API_KEY", "")
+        self.max_results = max_results
+
+    def search(self, query: str, top_n: int | None = None) -> list[dict]:
+        """
+        Search Semantic Scholar for papers matching *query*.
+
+        Returns a list of dicts with keys:
+            title, url, abstract, authors, year, citation_count
+        Compatible with the ArXiv result format (title + url always present).
+        """
+        n = top_n if top_n is not None else self.max_results
+        try:
+            response = _s2_request(
+                self.S2_API,
+                {"query": query, "limit": n, "fields": self.FIELDS},
+                self.api_key,
+            )
+        except Exception as e:
+            print(f"Semantic Scholar search error: {e}")
+            return []
+
+        results = []
+        for paper in response.json().get("data", []):
+            authors = ", ".join(a["name"] for a in paper.get("authors", []))
+            results.append({
+                "title": paper.get("title") or "N/A",
+                "url": paper.get("url") or "N/A",
+                "abstract": paper.get("abstract") or "N/A",
+                "authors": authors or "N/A",
+                "year": str(paper.get("year") or "N/A"),
+                "citation_count": paper.get("citationCount", 0),
+                "source": "S2",
+            })
+        return results
 

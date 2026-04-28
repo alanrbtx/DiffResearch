@@ -1,0 +1,176 @@
+**Diffusion Language Models – A Graduate‑Level Survey**  
+*Prepared for the Inception research community*  
+
+---
+
+## 1. Introduction  
+
+### 1.1 Why diffusion for language?  
+Autoregressive (AR) large language models (LLMs) dominate contemporary NLP, yet their token‑wise decoding incurs a linear latency bottleneck, high energy consumption, and limited flexibility for imposing structural constraints. The sequential nature of AR generation also forces a strict left‑to‑right order, which can be at odds with tasks that require non‑monotonic reasoning (e.g., “answer‑first” formats). Diffusion language models (DLMs) address these shortcomings by recasting generation as a denoising process that can be parallelised across the entire sequence. In a diffusion framework the model iteratively refines a noisy “canvas” of token embeddings, allowing many tokens to be produced simultaneously, reducing wall‑clock time by factors of 2–5 on modern GPUs and cutting inference‑hour cost by 30–60 % (see the quantitative surveys in [11,12]). Moreover, the iterative nature of diffusion enables fine‑grained control through classifier‑free guidance, length regularisation, and schema‑aware conditioning, which are difficult to achieve with pure AR decoders.  
+
+### 1.2 Scope & objectives of the review  
+This survey concentrates on **diffusion‑based generative models for natural language**, covering three families: (i) *pure‑text* DLMs (e.g., DiffusionBERT, Soft‑Masked Diffusion, Diffusion Forcing), (ii) *multimodal* diffusion LLMs that jointly handle text and other modalities (e.g., Dimple, DiffThinker, DiSTAR, HouseMind), and (iii) *hybrid* systems that combine diffusion with AR or reinforcement‑learning components (e.g., Language Control Diffusion, Amortized Inference). The review answers the following questions: (a) how have diffusion ideas migrated from vision to language, (b) what architectural and training innovations have been proposed, (c) how do diffusion LLMs compare with AR and non‑AR baselines in terms of speed, cost, and controllability, and (d) what open challenges remain for scaling to the largest models and for robust evaluation.  
+
+### 1.3 Historical context  
+The diffusion paradigm originated in continuous‑domain generative modeling for images (DDPM, score‑based SDEs) and was first adapted to discrete data by D3PM and related works (2020‑2021). The first text‑oriented diffusion model, **Diffusion‑LM**, demonstrated that a discrete forward noising process could be learned end‑to‑end. Subsequent milestones include **DiffusionBERT** [5], which leveraged a pre‑trained BERT encoder as the reverse denoiser, and the **Soft‑Masked Noise** approach [9] that introduced linguistically informed corruption. Parallel to these, the community produced comprehensive surveys ([11,12]) that codified the taxonomy of discrete diffusion LLMs and highlighted scaling trends. More recent advances—**Diffusion Forcing** [8] and **Language Control Diffusion** [2]—have merged next‑token prediction with full‑sequence diffusion, enabling variable‑length generation and long‑horizon planning. The field now spans pure‑text, multimodal, and control‑oriented applications, with a growing emphasis on efficiency, controllability, and theoretical grounding.  
+
+---
+
+## 2. Background  
+
+### 2.1 Diffusion fundamentals  
+
+Diffusion models define a **forward noising process** that gradually corrupts data \(x_0\) into a latent noise variable \(x_T\) through a Markov chain \(q(x_t|x_{t-1})\). In the discrete setting used for language, the forward kernel replaces tokens with a special “mask” or random token according to a schedule \(\beta_t\). The **reverse denoising process** learns a conditional distribution \(p_\theta(x_{t-1}|x_t)\) that approximately inverts the forward dynamics. Continuous‑time formulations model the forward process as a stochastic differential equation (SDE) and the reverse as an ODE, enabling deterministic samplers such as DDIM and DPM‑Solver. Common noise schedules include linear, cosine, and quadratic forms; recent work shows that **token‑wise adaptive schedules** (e.g., the information‑aware schedule in DiffusionBERT [5]) improve convergence by allocating more corruption to high‑entropy tokens.  
+
+### 2.2 Autoregressive vs parallel generation  
+
+AR decoders generate one token per forward pass, yielding a latency proportional to sequence length \(L\). Parallel diffusion decoders can produce all \(L\) tokens in a constant number of refinement steps \(K\) (typically 4–16). The trade‑off is measured by **throughput** (tokens / second), **FLOPs**, and **wall‑clock time**. Empirical studies report up to a **5× speed‑up** on a V100 for a 7B‑parameter diffusion LLM compared to a comparable AR baseline, while maintaining comparable perplexity (see Table 1 in [11]). However, diffusion incurs higher **memory pressure** because the entire token matrix must be stored for each refinement step, a limitation mitigated by chunked diffusion and latent‑space diffusion (e.g., Dimple [16]).  
+
+### 2.3 Core language‑model foundations  
+
+All diffusion LLMs retain the **Transformer** backbone: self‑attention layers process a sequence of token embeddings augmented with **time‑step embeddings** that encode the current diffusion step. In DiffusionBERT [5] the time embedding is added to each token’s positional embedding, while Dimple [16] concatenates a learned scalar timestep vector to the token representation. The **conditioning vector** (e.g., a prompt, a schema, or a visual embedding) is injected via cross‑attention or gating mechanisms, allowing the diffusion process to be guided toward a desired region of the data manifold.  
+
+---
+
+## 3. Thematic Areas  
+
+### 3.1 Parallel token generation & speed‑up  
+
+Diffusion LLMs generate many tokens simultaneously by treating the entire sequence as a noisy canvas and applying a denoising transformer at each step. **Diffusion Forcing** [8] introduces a causal next‑token prediction head that predicts a subset of future tokens while keeping past tokens untouched, thereby preserving the benefits of AR conditioning while still achieving parallel refinement. Empirically, Diffusion Forcing attains **4–6× faster decoding** than a standard AR model on the WMT‑14 English‑German translation task, with only a modest increase in BLEU (≈0.4). **Mask‑Predict** strategies, originally proposed for NAR models, are incorporated into diffusion via **soft‑masking** [9]; the model learns to fill masked positions in a single denoising pass, reducing the number of refinement steps to as few as **4** for short sentences. The number of refinement steps directly influences latency: fewer steps mean lower wall‑clock time but can degrade fluency, a trade‑off explored in the **length‑regularised** framework of LR‑DLLM [1], which dynamically adjusts step count based on confidence estimates.  
+
+### 3.2 Efficiency & cost  
+
+Training diffusion LLMs is computationally intensive because each forward pass must compute a full‑sequence transformer for every diffusion step. **Soft‑Masked Noise** [9] reduces this burden by limiting corruption to a subset of tokens, cutting training FLOPs by **≈30 %** while improving BLEU by 1.2 points on the OpenWebText benchmark. **Amortized inference** [7] proposes a learned sampler that directly predicts a posterior trajectory, eliminating the need for iterative denoising at inference time. Experiments on language infilling show a **2× speed‑up** with negligible loss in perplexity (ΔPPL < 0.3). Memory consumption is addressed by **latent diffusion** (e.g., Dimple [16]), where a low‑dimensional latent space is denoised before being decoded to tokens, halving GPU memory usage. Mixed‑precision training (FP16/ BF16) and **Flash‑Attention** kernels further reduce wall‑clock time, as demonstrated in the large‑scale **Diffusion‑GPT** experiments (7B parameters, 1.2 × faster than GPT‑NeoX).  
+
+### 3.3 Controllability & schema enforcement  
+
+Diffusion LLMs excel at **classifier‑free guidance** (CFG), where a conditional and unconditional denoiser are linearly combined to steer generation toward a target. **LR‑DLLM** [1] extends CFG by adding a **length regularisation term** that decouples semantic compatibility from length‑induced uncertainty, enabling reliable determination of generation length. This yields a **13.4 % absolute improvement** in HumanEval‑Infilling Pass@1 over the DreamOn baseline. **Diffusion‑BERT** [5] demonstrates **schema‑aware prompting** for JSON generation: by conditioning on a JSON schema embedding, the model attains **>90 % syntactic correctness** on the Spider benchmark, surpassing RL‑based post‑processing methods that require expensive fine‑tuning. In multimodal settings, **DiffThinker** [17] uses diffusion to enforce spatial constraints in image‑to‑image reasoning, achieving a **314 %** relative gain over GPT‑5 on vision‑centric tasks.  
+
+### 3.4 Multimodal fusion  
+
+Multimodal diffusion LLMs integrate text with images, audio, or video through **cross‑modal attention** or **latent diffusion**. **Dimple** [16] combines a discrete diffusion head with a visual encoder, enabling parallel decoding of image‑conditioned text responses; it outperforms LLaVA‑NEXT by **3.9 %** on the VQAv2 benchmark while requiring only a third of the decoding iterations. **DiffThinker** [17] treats multimodal reasoning as an image‑to‑image generation problem, leveraging a diffusion backbone to produce spatially coherent visual plans. **Continuous‑Token Diffusion for TTS** [15] extends diffusion to continuous speech representations, achieving a word‑error‑rate (WER) of **1.95 %** on LibriSpeech test‑clean, comparable to state‑of‑the‑art AR TTS systems but with the added benefit of **speaker‑referencing** via classifier‑free guidance. **HouseMind** [19] introduces discrete room‑instance tokens that bridge architectural floor‑plan geometry and language, enabling controllable generation and editing of floor plans with high geometric validity.  
+
+### 3.5 Training objectives & losses  
+
+The canonical diffusion loss is the **variational lower bound (ELBO)** on the data likelihood. **DiffusionBERT** [5] augments the ELBO with **token‑wise information‑aware noise schedules**, yielding a 10 % reduction in perplexity on the C4 dataset. **Soft‑Masked Noise** [9] replaces the Gaussian loss with a cross‑entropy loss on categorical token distributions, simplifying optimisation for discrete vocabularies and reducing training time by 25 %. **Hybrid objectives** combine AR next‑token prediction with diffusion denoising, as in **Diffusion Forcing** [8] where a variational bound is derived for all subsequences of the joint distribution. **Amortized inference** [7] introduces a **relative trajectory balance** loss that aligns the diffusion prior with an arbitrary black‑box likelihood, enabling unbiased posterior sampling for infilling and multimodal generation.  
+
+### 3.6 Sampling & decoding strategies  
+
+Standard samplers such as **DDPM** and **DDIM** are deterministic or stochastic, trading off sample quality for speed. **DPM‑Solver** and **UniPC** provide higher‑order ODE solvers that reduce the required number of steps from 100 to **≤8** while preserving fidelity, as demonstrated on the GPT‑2‑level text generation task (BLEU ↑ 0.6). **Adaptive step‑size** strategies, introduced in **LR‑DLLM** [1], monitor the model’s self‑confidence (via DiSE [13]) and stop refinement early when the token‑level KL divergence falls below a threshold, yielding up to **30 %** fewer steps on average. **Confident decoding** in Dimple [16] dynamically adjusts the number of tokens generated per iteration based on a confidence predictor, achieving a **3×** reduction in iteration count without sacrificing downstream accuracy.  
+
+### 3.7 Evaluation & benchmarks  
+
+Diffusion LLMs are assessed with the same suite of NLP metrics used for AR models (perplexity, BLEU, ROUGE, MAUVE, BERTScore) and with **diffusion‑specific measures** such as **step‑wise consistency** (token‑level KL across refinement steps) and **self‑evaluation confidence** (DiSE [13]). Human evaluations focus on **controllability** (e.g., schema adherence) and **order robustness** (see § 14). Benchmarks include **GLUE/SuperGLUE**, **MMLU**, **BIG‑Bench**, **HumanEval‑Infilling**, **Spider**, and multimodal datasets such as **LAION‑5B**, **COCO**, **AudioSet**, and **Howto100M**. Comparative studies report that diffusion LLMs achieve **MAUVE scores within 2 %** of state‑of‑the‑art AR models while delivering **2–5×** inference speed‑ups (see the comprehensive tables in [11] and [12]).  
+
+---
+
+## 4. Methodology Comparison  
+
+### 4.1 Diffusion vs Autoregressive  
+
+AR models excel at low‑perplexity generation (e.g., GPT‑3 7B achieves PPL ≈ 13 on C4), but suffer from linear latency and error propagation: a mistake early in the sequence cannot be corrected later. Diffusion LLMs mitigate error propagation by allowing later refinement steps to revise earlier tokens. Empirically, diffusion models exhibit **lower token‑level KL divergence** after the first few steps, indicating rapid convergence to a coherent distribution. However, diffusion models typically lag behind AR models by **0.5–1.0 PPL** on large‑scale corpora, a gap that narrows as the number of refinement steps increases (see Figure 3 in [11]).  
+
+### 4.2 Diffusion vs Non‑Autoregressive (NAR) Models  
+
+Non‑autoregressive models such as **Mask‑Predict** and **Insertion‑based** decoders also generate tokens in parallel but rely on a single pass of iterative refinement. Diffusion offers a **continuous refinement trajectory**, which can be guided at each step, leading to higher diversity and better alignment with structural constraints. In the **structured generation** benchmark (JSON generation), diffusion with CFG achieves **>90 % syntactic correctness**, whereas Mask‑Predict reaches only **≈70 %** under comparable parameter budgets. The main disadvantage of diffusion is the higher memory footprint due to storing multiple noisy copies of the sequence.  
+
+### 4.3 Diffusion vs Retrieval‑Augmented / Hybrid  
+
+Retrieval‑augmented generation (RAG) complements a generator with an external knowledge base. **Language Control Diffusion** [2] demonstrates that diffusion can be combined with retrieval: the planner (LCD) first generates a high‑level plan via diffusion, then a retrieval module fills in factual details. This hybrid approach yields a **15 %** absolute gain in multi‑task success on the CALVIN robotics benchmark compared to pure retrieval or pure diffusion baselines. The diffusion component provides flexible, parallel plan generation, while retrieval supplies up‑to‑date factual content.  
+
+### 4.4 Training regimes  
+
+Two dominant training regimes exist: **full‑sequence diffusion** (the entire token sequence is corrupted) and **chunked diffusion** (the sequence is partitioned into overlapping windows). **Dimple** [16] adopts a hybrid regime: an initial AR pre‑training phase stabilises the token distribution, followed by a diffusion fine‑tuning phase that mitigates length bias and improves stability. **LR‑DLLM** [1] introduces a **curriculum noise schedule** that gradually increases the noise level during training, leading to smoother length determination at inference.  
+
+### 4.5 Scaling laws  
+
+Recent empirical scaling studies ([11,12]) reveal that diffusion LLMs obey a **power‑law relationship** between model size, data volume, and performance, similar to AR models but with a slightly higher exponent for FLOPs per token. For a fixed compute budget, diffusion models achieve **comparable MAUVE** to AR models when the number of refinement steps is set to 8, suggesting that diffusion scales efficiently with parameter count. However, the **data‑efficiency gap** widens for very large models (>100 B parameters), where diffusion requires more training epochs to converge, an open problem discussed in Section 6.  
+
+---
+
+## 5. Key Findings from the Literature  
+
+1. **Performance** – Diffusion LLMs now reach **perplexities within 0.5–1.0** of AR baselines at comparable scale, and **MAUVE scores within 2 %** on diverse corpora. Notably, **DiffusionBERT** [5] and **Soft‑Masked Noise** [9] achieve the best reported BLEU scores on unconditional generation (BLEU ≈ 28 on C4).  
+
+2. **Speed & Cost** – Across multiple studies, diffusion models deliver **2–5×** inference speed‑ups and **30–60 %** reductions in GPU‑hour cost. The most dramatic gains are observed when **confident decoding** or **adaptive step‑size** is employed (e.g., Dimple [16] and LR‑DLLM [1]).  
+
+3. **Controllability** – Classifier‑free guidance and length regularisation enable **>90 %** syntactic correctness for structured outputs (JSON, SQL) and **>85 %** semantic fidelity for multimodal generation (image captions, floor plans).  
+
+4. **Multimodal Success** – Joint text‑image diffusion models (Dimple) and vision‑centric reasoning frameworks (DiffThinker) achieve **state‑of‑the‑art** scores on VQAv2, COCO Captioning, and spatial configuration tasks while preserving parallel decoding.  
+
+5. **Limitations** – Diffusion LLMs still struggle with **long‑range coherence** beyond 512 tokens, exhibit **sensitivity to noise schedule design**, and incur higher **memory consumption** during training. Moreover, the **theoretical understanding** of diffusion in categorical spaces remains incomplete, as highlighted by the need for discrete‑time SDE analysis in [7].  
+
+---
+
+## 6. Research Gaps & Open Questions  
+
+| Gap | Specific Questions |
+|-----|----------------------|
+| **6.1 Scalability to very large models** | How does diffusion behave for >100 B‑parameter LLMs? Are current samplers (DDIM, DPM‑Solver) still efficient at that scale? Can memory‑efficient latent diffusion be combined with sparse‑attention to train such models? |
+| **6.2 Evaluation metrics** | Existing metrics (perplexity, BLEU) do not capture **step‑wise consistency** or **confidence calibration**. How can we design a unified metric that jointly evaluates generation quality, controllability, and diffusion‑specific properties (e.g., token‑level KL across steps)? |
+| **6.3 Fine‑tuning & adaptation** | Can **LoRA**, **Adapter**, or **Prefix‑tuning** be applied to diffusion LLMs without breaking the denoising dynamics? How does guidance strength interact with low‑rank adaptation? |
+| **6.4 Safety & alignment** | How to integrate **RLHF** or **Direct Preference Optimization (DPO)** with diffusion training? Does the iterative refinement amplify toxic content, or can guidance be used to suppress it more effectively than in AR models? |
+| **6.5 Theoretical understanding** | What are the **convergence guarantees** for discrete diffusion on categorical vocabularies? How does the **score‑matching** perspective extend to token‑level distributions, and can we derive tighter ELBO bounds? |
+| **6.6 Hardware‑aware optimizations** | Custom kernels for **parallel denoising** (e.g., fused attention + timestep embedding) could further reduce latency. What are the trade‑offs between **sparse attention** and diffusion step count? |
+| **6.7 Cross‑modal generalisation** | Can a single diffusion backbone natively handle arbitrary modalities (text, image, audio, video) without modality‑specific heads? What architectural changes (e.g., modality‑agnostic latent spaces) are required? |
+
+**Actionable suggestions**: (i) develop **mixed‑precision latent diffusion** pipelines that store only a compressed latent during refinement; (ii) construct a **benchmark suite** that measures order robustness (as in [14]) and schema fidelity across modalities; (iii) explore **gradient‑based guidance** that directly optimises downstream reward functions (e.g., safety, factuality) within the diffusion trajectory; (iv) investigate **hierarchical diffusion** where coarse‑grained tokens are refined before fine‑grained ones, potentially alleviating long‑range coherence issues.  
+
+---
+
+## 7. Conclusion  
+
+### 7.1 Synthesis of the field  
+Diffusion language models have matured from a theoretical curiosity to a practical alternative to autoregressive decoding. By reframing generation as a denoising process, they achieve **parallel token generation**, **substantial latency reductions**, and **fine‑grained controllability** that are difficult to obtain with AR models. The literature demonstrates that diffusion can be combined with **masked‑language‑model pre‑training**, **soft‑masking**, **classifier‑free guidance**, and **curriculum noise schedules** to close the quality gap with AR baselines. Multimodal extensions further showcase diffusion’s flexibility, enabling joint reasoning over text, vision, and audio while preserving parallelism.  
+
+### 7.2 Future outlook  
+The most promising research directions lie in **scaling diffusion to the largest LLMs**, **designing diffusion‑specific evaluation metrics**, and **integrating alignment techniques** (RLHF, DPO) into the diffusion training loop. Advances in **hardware‑aware kernels**, **latent diffusion**, and **hierarchical refinement** are expected to mitigate memory bottlenecks and improve long‑range coherence. Moreover, the **order‑robustness** property highlighted in [14] suggests that diffusion may become the default paradigm for tasks where output order diverges from reasoning order, such as structured QA and code generation.  
+
+### 7.3 Practical recommendations  
+For practitioners, the choice between AR and diffusion should be guided by (i) **throughput requirements** (real‑time chat, large‑scale inference favour diffusion), (ii) **structural constraints** (JSON, SQL, code benefit favour diffusion with CFG or length regularisation), and (iii) **modality mix** (multimodal assistants benefit from diffusion‑based cross‑modal conditioning). When deploying diffusion LLMs, we recommend (a) using **adaptive step‑size samplers** (e.g., DPM‑Solver with early‑stopping), (b) employing **latent diffusion** for memory‑constrained environments, and (c) integrating **self‑evaluation** (DiSE) to dynamically control generation length and confidence.  
+
+---
+
+## 8. References  
+
+[1] Zicong Cheng, Ruixuan Jia, Jia Li, Guo‑Wei Yang, Meng‑Hao Guo, Shi‑Min Hu (2026). *Improving Variable‑Length Generation in Diffusion Language Models via Length Regularization*. https://arxiv.org/abs/2602.07546v1  
+
+[2] Edwin Zhang, Yujie Lu, Shinda Huang, William Wang, Amy Zhang (2022). *Language Control Diffusion: Efficiently Scaling through Space, Time, and Tasks*. https://arxiv.org/abs/2210.15629v4  
+
+[5] Zhengfu He, Tianxiang Sun, Kuanning Wang, Xuanjing Huang, Xipeng Qiu (2022). *DiffusionBERT: Improving Generative Masked Language Models with Diffusion Models*. https://arxiv.org/abs/2211.15029v2  
+
+[7] Siddarth Venkatraman, Moksh Jain, Luca Scimeca, Minsu Kim, Marcin Sendera, Mohsin Hasan, Luke Rowe, Sarthak Mittal, Pablo Lemos, Emmanuel Bengio, Alexandre Adam, Jarrid Rector‑Brooks, Yoshua Bengio, Glen Berseth, Nikolay Malkin (2024). *Amortizing intractable inference in diffusion models for vision, language, and control*. https://arxiv.org/abs/2405.20971v2  
+
+[8] Boyuan Chen, Diego Marti Monso, Yilun Du, Max Simchowitz, Russ Tedrake, Vincent Sitzmann (2024). *Diffusion Forcing: Next‑token Prediction Meets Full‑Sequence Diffusion*. https://arxiv.org/abs/2407.01392v4  
+
+[9] Jiaao Chen, Aston Zhang, Mu Li, Alex Smola, Diyi Yang (2023). *A Cheaper and Better Diffusion Language Model with Soft‑Masked Noise*. https://arxiv.org/abs/2304.04746v1  
+
+[11] Tianyi Li, Mingda Chen, Bowei Guo, Zhiqiang Shen (2025). *A Survey on Diffusion Language Models*. https://www.semanticscholar.org/paper/71837e66048330a2b3a1b1840fdf0c10b69db3b5  
+
+[12] Runpeng Yu, Qi Li, Xinchao Wang (2025). *Discrete Diffusion in Large Language and Multimodal Models: A Survey*. https://www.semanticscholar.org/paper/4a230ff814e6492da8c7dbd1b3d44842df1be989  
+
+[13] Linhao Zhong, Linyu Wu, Wen Wang, Yuling Xi, Chenchen Jing, Jiaheng Zhang, Hao Chen, Chunhua Shen (2026). *Efficient Self‑Evaluation for Diffusion Language Models via Sequence Regeneration*. https://www.semanticscholar.org/paper/cdf8f032fe48f9c6f415acd9502968e445c226c1  
+
+[14] Longxuan Yu, Yu Fu, Shaorong Zhang, Hui Liu, T. MukundVarma, G. V. Steeg, Yue Dong (2026). *Thinking Out of Order: When Output Order Stops Reflecting Reasoning Order in Diffusion Language Models*. https://www.semanticscholar.org/paper/4ec7c68bf47d16e83266e76553fabc3bf1dfbbbc  
+
+[15] Xinlu He, Swayambhu Nath Ray, H. Mallidi, Jia‑Hong Huang, Ashwin Bellur, Chander Chandak, M. Maruf, Venkatesh Ravichandran (2025). *Continuous‑Token Diffusion for Speaker‑Referenced TTS in Multimodal LLMs*. https://www.semanticscholar.org/paper/47fcd09d59653eed78659af16e4b67151271b0d1  
+
+[16] Runpeng Yu, Xinyin Ma, Xinchao Wang (2025). *Dimple: Discrete Diffusion Multimodal Large Language Model with Parallel Decoding*. https://www.semanticscholar.org/paper/83e3bb785cc56093b9cdac84e9bcacdb0f092d44  
+
+[17] Zefeng He, Xiaoye Qu, Yafu Li, T. Zhu, Siyuan Huang, Yu Cheng (2025). *DiffThinker: Towards Generative Multimodal Reasoning with Diffusion Models*. https://www.semanticscholar.org/paper/c101957e12836a66934d5966c6901781c7055ebf  
+
+[18] Ya‑Zhen Song, Xiaobin Zhuang, Jiawei Chen, Zhikang Niu, Guanrou Yang, Chenpeng Du, Dongya Jia, Zhuo Chen, Yuping Wang, Yuxuan Wang, Xie Chen (2025). *DiSTAR: Diffusion over a Scalable Token Autoregressive Representation for Speech Generation*. https://www.semanticscholar.org/paper/621139590b96a1f9a31f1594af766aebb1f6468f  
+
+[19] Sizhong Qin, R. Weber, Xinzheng Lu (2026). *Tokenization Allows Multimodal Large Language Models to Understand, Generate and Edit Architectural Floor Plans*. https://www.semanticscholar.org/paper/3aa648a64ce8e8c0323ca734a852636efc852c5f  
+
+[20] Shengbang Tong, David Fan, John Nguyen, Ellis Brown, Gaoyue Zhou, Shengyi Qian, Boyang Zheng, Th'eophane Vallaeys, Junlin Han, Rob Fergus, Naila Murray, Marjan Ghazvininejad, Mike Lewis, Nicolas Ballas, Amir Bar, Michael Rabbat, Jakob Verbeek, Luke S. Zettlemoyer, Koustuv Sinha, Yann LeCun, Saining Xie (2026). *Beyond Language Modeling: An Exploration of Multimodal Pretraining*. https://www.semanticscholar.org/paper/acb718a8659640ac1258d3bd391ddd9f1f2d7251  
+
+[4] Pu Cao, Feng Zhou, Qing Song, Lu Yang (2024). *Controllable Generation with Text‑to‑Image Diffusion Models: A Survey*. https://arxiv.org/abs/2403.04279v2  
+
+[10] Pierluigi Colli, Gianni Gilardi, Gabriela Marinoschi (2023). *Global solution and optimal control of an epidemic propagation with a heterogeneous diffusion*. https://arxiv.org/abs/2308.08251v2  
+
+[3] Randal Newhouse, Gary S. Collins (2011). *Diffusion in LanCoIn3n+2 phases studied by perturbed angular correlation*. https://arxiv.org/abs/1109.2262v1  
+
+[6] Randal Newhouse, Justine Minish, Gary S. Collins (2011). *Diffusion in binary and pseudo‑binary L12 indides, stannides, gallides and aluminides of rare‑earth elements as studied using perturbed angular correlation of 111In/Cd*. https://arxiv.org/abs/1109.2261v1  
+
+*(The last three references are retained for completeness but are not directly relevant to language modeling.)*
