@@ -1,6 +1,8 @@
-import os
+import torch
 from tqdm import tqdm
 import argparse
+from transformers import AutoTokenizer, AutoModel
+
 from src.agents.agents_collection import (
     RelevanceAgent, ExtractionAgent, SummarizationAgent,
     QueryFormattingAgent, PlanningAgent, PlanCheckAgent,
@@ -8,31 +10,26 @@ from src.agents.agents_collection import (
 from src.web_tools.search_engine import ArXiv, SemanticScholar
 from src.web_tools.visit_site import visit_site
 
-# vLLM / OpenAI
-api_key = os.environ['API_KEY']
-base_url = os.environ['BASE_URL']
-model = os.environ['MODEL_NAME']
-
 # args
 parser = argparse.ArgumentParser('Simple Deep Research')
 parser.add_argument('--prompt', type=str)
+parser.add_argument('--device', type=str, default='cuda')
 parser.add_argument('--squeeze', action='store_true', help='If true then using agent from sites. It helps when context size is crucial')
 parser.add_argument('--relevance', action='store_true', help='For complex prompts')
 
-# agents
-rel_agent = RelevanceAgent(api_key=api_key, base_url=base_url, model=model)
-ext_agent = ExtractionAgent(api_key=api_key, base_url=base_url, model=model)
-sum_agent = SummarizationAgent(api_key=api_key, base_url=base_url, model=model)
-query_agent = QueryFormattingAgent(api_key=api_key, base_url=base_url, model=model)
-planning_agent = PlanningAgent(api_key=api_key, base_url=base_url, model=model)
-plan_check_agent = PlanCheckAgent(api_key=api_key, base_url=base_url, model=model)
 
-# search engines
-arxiv = ArXiv()
-s2 = SemanticScholar()
+def load_llada(device):
+    model = AutoModel.from_pretrained(
+        'GSAI-ML/LLaDA-1.5', trust_remote_code=True, torch_dtype=torch.bfloat16
+    ).to(device).eval()
+    tokenizer = AutoTokenizer.from_pretrained('GSAI-ML/LLaDA-1.5', trust_remote_code=True)
+    if tokenizer.padding_side != 'left':
+        tokenizer.padding_side = 'left'
+    assert tokenizer.pad_token_id != 126336
+    return model, tokenizer
 
 
-def fetch_papers(search_query, prompt, paper_offset, use_relevance, use_squeeze):
+def fetch_papers(search_query, prompt, paper_offset, use_relevance, use_squeeze, rel_agent, ext_agent):
     """Search ArXiv + Semantic Scholar, filter, and fetch paper content. Returns (result_text, references, next_offset)."""
     print("  [ArXiv] searching...")
     arxiv_results = arxiv.search(search_query)
@@ -84,6 +81,22 @@ def fetch_papers(search_query, prompt, paper_offset, use_relevance, use_squeeze)
 def main():
     args = parser.parse_args()
 
+    print("Loading LLaDA model...")
+    model, tokenizer = load_llada(args.device)
+
+    # agents — all share the same model and tokenizer
+    rel_agent = RelevanceAgent(model=model, tokenizer=tokenizer)
+    ext_agent = ExtractionAgent(model=model, tokenizer=tokenizer)
+    sum_agent = SummarizationAgent(model=model, tokenizer=tokenizer)
+    query_agent = QueryFormattingAgent(model=model, tokenizer=tokenizer)
+    planning_agent = PlanningAgent(model=model, tokenizer=tokenizer)
+    plan_check_agent = PlanCheckAgent(model=model, tokenizer=tokenizer)
+
+    # search engines
+    global arxiv, s2
+    arxiv = ArXiv()
+    s2 = SemanticScholar()
+
     print("\n\n\n||QUERY FORMATTING AGENT|| Formatting prompt for search\n\n\n")
     search_query = query_agent.generate(args.prompt)
     print(f"Search query: {search_query}")
@@ -93,34 +106,11 @@ def main():
     print(f"Plan:\n{plan}\n")
 
     result_text, references, paper_num = fetch_papers(
-        search_query, args.prompt, 0, args.relevance, args.squeeze
+        search_query, args.prompt, 0, args.relevance, args.squeeze, rel_agent, ext_agent
     )
 
     print("\n\n\n||SUMMARIZATION AGENT|| Writing literature review\n\n\n")
     review = sum_agent.generate(args.prompt, result_text, references='\n'.join(references), plan=plan)
-
-#    while True:
-#        print("\n\n\n||PLAN CHECK AGENT|| Checking plan coverage\n\n\n")
-#        gap_queries = plan_check_agent.generate(plan, review)
-
-#        if '0' in gap_queries:
-#            print("\n\n\n||PLAN CHECK AGENT|| Plan fully covered — writing report\n\n\n")
-#            break
-#
-#        print(f"\n\n\n||PLAN CHECK AGENT|| Gaps found, searching for missing topics:\n{gap_queries}\n\n\n")
-#        for q in gap_queries.strip().splitlines():
-#            q = q.strip()
-#            if not q:
-#                continue
-#            formatted_q = query_agent.generate(q)
-#            extra_text, extra_refs, paper_num = fetch_papers(
-#                formatted_q, args.prompt, paper_num, args.relevance, args.squeeze
-#            )
-#            result_text += extra_text
-#            references.extend(extra_refs)
-#
-#        print("\n\n\n||SUMMARIZATION AGENT|| Re-writing literature review with new sources\n\n\n")
-#        review = sum_agent.generate(args.prompt, result_text, references='\n'.join(references), plan=plan)
 
     with open("report_2.txt", "w", encoding="utf-8") as file:
         file.write(review)
