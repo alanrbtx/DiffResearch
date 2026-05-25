@@ -1,6 +1,6 @@
-# 🔍 Simple Deep Research
+# 🔍 DiffResearch
 
-**Simple Deep Research** is an open-source, easy-to-run framework for building autonomous deep research systems. It works seamlessly with both open-source (via vLLM/llama.cpp) and proprietary LLM providers. **Simple Deep Research** is built without heavy abstractions like LangChain or LangGraph.
+**DiffResearch** is an open-source, easy-to-run framework for building autonomous deep research systems. It works seamlessly with both open-source (via vLLM/llama.cpp) and proprietary LLM providers. **DiffResearch** is built without heavy abstractions like LangChain or LangGraph.
 
 The framework is designed to automate the process of web searching, information synthesis, and report generation, minimizing the "hallucination" risk by grounding responses in real-time data.
 
@@ -32,8 +32,8 @@ This project uses `uv` for lightning-fast Python package management.
 
 1. **Clone repository**
    ```bash
-   git clone https://github.com/alanrbtx/simple_deep_research
-   cd simple_deep_research
+   git clone https://github.com/alanrbtx/DiffResearch
+   cd DiffResearch
    ```
    
 2. **Install uv**:
