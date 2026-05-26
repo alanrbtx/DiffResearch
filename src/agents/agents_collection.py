@@ -15,21 +15,23 @@
 # limitations under the License.
 from src.agents.agent_template import OpenAIAgent
 
+
 class RelevanceAgent(OpenAIAgent):
 
-    def generate(self, prompt, search_result):        
+    def generate(self, prompt, search_result):
         completion = self.client.chat.completions.create(
-            model=self.model, 
+            model=self.model,
             messages=[
-                {"role": "user", "content": f"Act as a relevance filter. Compare the search result title with the user query. Query: {prompt} Title: {search_result}. If relevant, return only 1, else 0" },
+                {'role': 'user', 'content': (
+                    f'You are a relevance filter for a research pipeline.\n'
+                    f'Research question: {prompt}\n'
+                    f'Search result title/snippet: {search_result}\n\n'
+                    f'Does this result likely contain useful information to answer the research question? '
+                    f'Reply with only 1 (relevant) or 0 (not relevant).'
+                )},
             ],
-            extra_body={
-            "chat_template_kwargs": {
-                "enable_thinking": False
-                }
-            }
-            )
-
+            **self._extra()
+        )
         return completion.choices[0].message.content
 
 
@@ -37,17 +39,19 @@ class ExtractionAgent(OpenAIAgent):
 
     def generate(self, prompt, results):
         completion = self.client.chat.completions.create(
-            model=self.model, 
+            model=self.model,
             messages=[
-                {"role": "user", "content": f"Extract information relevant to tre query: {prompt}. Text for extraction: {results}"},
+                {'role': 'user', 'content': (
+                    f'You are an information extraction specialist.\n'
+                    f'Research question: {prompt}\n\n'
+                    f'Extract ALL facts, data points, statistics, expert opinions, and key claims '
+                    f'that are relevant to the research question from the text below. '
+                    f'Preserve specific numbers, dates, names, and citations.\n\n'
+                    f'Text: {results}'
+                )},
             ],
-            extra_body={
-            "chat_template_kwargs": {
-                "enable_thinking": False
-                }
-            }
-            )
-
+            **self._extra()
+        )
         return completion.choices[0].message.content
 
 
@@ -55,66 +59,104 @@ class SummarizationAgent(OpenAIAgent):
 
     def generate(self, prompt, result):
         completion = self.client.chat.completions.create(
-            model=self.model, 
+            model=self.model,
             messages=[
-                {"role": "user", "content": f"""Create a single detailed report based on multiple search snippets. \n\nUser Query: {prompt}. \n\nResults to process: {result}. If result is empty, just skip it.\n\nFinal Report:"""},
+                {'role': 'user', 'content': (
+                    f'You are a senior research analyst writing a comprehensive research report.\n\n'
+                    f'Research question: {prompt}\n\n'
+                    f'Source material collected from web research:\n{result}\n\n'
+                    f'Write a detailed, well-structured research report that fully answers the research question. '
+                    f'The report must:\n'
+                    f'- Start with a concise executive summary (2-3 sentences)\n'
+                    f'- Cover background/context\n'
+                    f'- Present key findings with specific facts, data, and evidence\n'
+                    f'- Analyze different perspectives or subtopics\n'
+                    f'- End with conclusions\n'
+                    f'- Use clear section headers\n'
+                    f'- Be at least 600 words\n\n'
+                    f'If the source material is empty or insufficient, write what is known from general knowledge '
+                    f'and clearly note where additional sources would be needed.\n\n'
+                    f'Research Report:'
+                )},
             ],
-            extra_body={
-            "chat_template_kwargs": {
-                "enable_thinking": False
-                }
-            }
-            )
-
+            **self._extra()
+        )
         return completion.choices[0].message.content
 
 
 class ComplexityAgent(OpenAIAgent):
+
     def generate(self, prompt):
         completion = self.client.chat.completions.create(
-            model=self.model, 
+            model=self.model,
             messages=[
-                {"role": "user", "content": f'Analyze the prompt. Decide whether the question requires multiple queries or just one. If multiple, return only 1; otherwise, return 0. Prompt: {prompt}'},
+                {'role': 'user', 'content': (
+                    f'You are a research query analyzer.\n'
+                    f'Determine whether the following research question requires multiple targeted search queries '
+                    f'(because it has several distinct sub-topics, requires comparing different sources, or involves '
+                    f'specialized knowledge areas) OR can be answered well with a single broad search.\n\n'
+                    f'Research question: {prompt}\n\n'
+                    f'If multiple queries are needed, reply with only: 1\n'
+                    f'If a single query suffices, reply with only: 0\n\n'
+                    f'Note: Prefer 1 for any question that is multifaceted, technical, comparative, or historical.'
+                )},
             ],
-            extra_body={
-            "chat_template_kwargs": {
-                "enable_thinking": False
-                }
-            }
-            )
-
+            **self._extra()
+        )
         return completion.choices[0].message.content
+
 
 class DecomposeAgent(OpenAIAgent):
 
     def generate(self, prompt):
         completion = self.client.chat.completions.create(
-            model=self.model, 
+            model=self.model,
             messages=[
-                {"role": "user", "content": f'Analyze the user prompt and break it down into 2 diverse search queries. Each simple query must target a different sub-part of the original prompt to ensure maximum information coverage. Example:\nUser Prompt: "How to build a local RAG system with Llama 3?"\nSearch Queries:\nLlama 3 hardware requirements and quantization for local inference\nBest vector databases and embedding models for RAG in 2026\nStep-by-step tutorial for LangChain and Llama 3 local RAG setup. \n\nPrompt: {prompt}. Return only queries separated by "\n\n"'},
+                {'role': 'user', 'content': (
+                    f'You are a research strategist. Decompose the following research question into '
+                    f'4-5 specific, diverse search queries that together provide comprehensive coverage.\n\n'
+                    f'Each query should target a DIFFERENT aspect:\n'
+                    f'- Background and definitions\n'
+                    f'- Key mechanisms, methods, or historical events\n'
+                    f'- Quantitative data, statistics, or empirical results\n'
+                    f'- Expert analysis, recent developments, or controversies\n'
+                    f'- Practical implications, applications, or comparisons\n\n'
+                    f'Research question: {prompt}\n\n'
+                    f'Rules:\n'
+                    f'- Each query must be self-contained and searchable\n'
+                    f'- Queries must NOT overlap — each covers a unique sub-topic\n'
+                    f'- Use precise terminology relevant to the domain\n'
+                    f'- Output ONLY the queries, one per line, no numbering or bullets\n\n'
+                    f'Search queries:'
+                )},
             ],
-            extra_body={
-            "chat_template_kwargs": {
-                "enable_thinking": False
-                }
-            }
-            )
-
+            **self._extra()
+        )
         return completion.choices[0].message.content
-    
+
 
 class JudgeAgent(OpenAIAgent):
+
     def generate(self, prompt, result):
         completion = self.client.chat.completions.create(
-            model=self.model, 
+            model=self.model,
             messages=[
-                {"role": "user", "content": f'Analyze the result and decide whether additional queries need to be made. If so, return only the new queries, separated by newlines; otherwise, return 0. Prompt: {prompt}. Answer: {result}'},
+                {'role': 'user', 'content': (
+                    f'You are a research quality judge evaluating whether a research report adequately answers '
+                    f'a research question.\n\n'
+                    f'Research question: {prompt}\n\n'
+                    f'Current report:\n{result}\n\n'
+                    f'Evaluate the report on these criteria:\n'
+                    f'1. Does it answer all key aspects of the question?\n'
+                    f'2. Does it include specific facts, data, or evidence (not just vague statements)?\n'
+                    f'3. Is it comprehensive enough (covers multiple angles/perspectives)?\n'
+                    f'4. Are there significant knowledge gaps that web search could fill?\n\n'
+                    f'If the report is SUFFICIENT (criteria 1-3 met, no critical gaps), reply with only: 0\n\n'
+                    f'If the report is INSUFFICIENT, reply with 2-3 specific follow-up search queries '
+                    f'(one per line, no numbering) that would fill the most critical gaps. '
+                    f'Focus on what is concretely missing, not minor improvements.'
+                )},
             ],
-            extra_body={
-            "chat_template_kwargs": {
-                "enable_thinking": False
-                }
-            }
-            )
-
+            **self._extra()
+        )
         return completion.choices[0].message.content

@@ -1,4 +1,18 @@
-# 🔍 Simple Deep Research
+# 🔍 DiffResearch — DeepResearchBench Adapter (`drb_adapt` branch)
+
+This branch adapts **DiffResearch** for evaluation on [DeepResearchBench](https://github.com/google-deepmind/deep_research_bench) — a benchmark of 100 complex research questions across diverse domains.
+
+**Key changes vs `deep_research_bench` branch:**
+
+- Prompts rewritten for research-quality output (structured reports, 600+ words)
+- `DecomposeAgent` generates 4-5 diverse sub-queries covering different aspects
+- `SummarizationAgent` produces structured reports with headers, evidence, and analysis
+- `JudgeAgent` checks concrete coverage gaps, not just vague sufficiency
+- `extra_body` / `enable_thinking` is now opt-in via `DISABLE_THINKING=1` env var
+- `run_bench.py` adds `--always-complex`, `--search-delay`, `--top-n-*`, `--max-judge-iters` flags
+- Bounded judge loop (default 2 iterations) to prevent infinite refinement
+
+---
 
 **Simple Deep Research** is an open-source, easy-to-run framework for building autonomous deep research systems. It works seamlessly with both open-source (via vLLM/llama.cpp) and proprietary LLM providers. **Simple Deep Research** is built without heavy abstractions like LangChain or LangGraph.
 
@@ -77,9 +91,45 @@ Available Flags:
 ```bash
 uv run run_full_deep_research.py --prompt "What is GRPO and how can I apply it to robotics?"
 ```
+### DeepResearchBench
+
+Place the benchmark data at `../deep_research_bench/data/prompt_data/query.jsonl`
+(standard DeepResearchBench repo layout), then:
+
+```bash
+# Standard OpenAI-compatible API (e.g. OpenAI, Together, Fireworks)
+export API_KEY="your_api_key"
+export BASE_URL="https://api.openai.com/v1"
+export MODEL_NAME="gpt-4o"
+
+uv run run_bench.py --model-name gpt-4o --always-complex
+
+# vLLM-served model with thinking disabled (e.g. Qwen3)
+export DISABLE_THINKING=1
+uv run run_bench.py --model-name qwen3-32b --always-complex --search-delay 3.0
+
+# Resume an interrupted run
+uv run run_bench.py --model-name gpt-4o --resume
+```
+
+Available flags for `run_bench.py`:
+
+| Flag | Default | Description |
+|---|---|---|
+| `--model-name` | required | Output file stem |
+| `--resume` | off | Skip already completed IDs |
+| `--always-complex` | off | Skip complexity check; always use multi-query pipeline (recommended for bench) |
+| `--search-delay` | 2.0s | Pause between DuckDuckGo requests |
+| `--top-n-complex` | 4 | Sites per sub-query (complex mode) |
+| `--top-n-simple` | 6 | Sites for single-query mode |
+| `--max-judge-iters` | 2 | Max judge refinement rounds |
+
+Output is written to `../deep_research_bench/data/test_data/raw_data/<model-name>.jsonl`.
+
 ### Important Note
 
-Due to DuckDuckGo's strict rate limits, frequent automated queries are often restricted
+Due to DuckDuckGo's strict rate limits, frequent automated queries may be throttled.
+Use `--search-delay 3.0` or higher for long benchmark runs.
 
 
 ### 📄License
