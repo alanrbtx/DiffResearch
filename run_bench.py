@@ -4,7 +4,7 @@ import time
 import argparse
 from pathlib import Path
 from src.agents.agents_collection import SummarizationAgent, DecomposeAgent, JudgeAgent, ComplexityAgent
-from src.web_tools.search_engine import DuckDuckGo
+from src.web_tools.search_engine import make_search_engine
 from src.web_tools.visit_site import visit_site
 
 api_key = os.environ['API_KEY']
@@ -37,7 +37,7 @@ sum_agent = SummarizationAgent(api_key=api_key, base_url=base_url, model=model)
 comp_agent = ComplexityAgent(api_key=api_key, base_url=base_url, model=model)
 judge_agent = JudgeAgent(api_key=api_key, base_url=base_url, model=model)
 decompose_agent = DecomposeAgent(api_key=api_key, base_url=base_url, model=model)
-ddg = DuckDuckGo(url='https://html.duckduckgo.com/html/')
+search_engine = make_search_engine()
 
 
 def scrape_queries(queries: list[str], top_n: int) -> str:
@@ -46,9 +46,10 @@ def scrape_queries(queries: list[str], top_n: int) -> str:
     for q in queries:
         result_text = ''
         time.sleep(args.search_delay)
-        search_results = ddg.search(q, top_n=top_n)
+        search_results = search_engine.search(q, top_n=top_n)
         for idx, res in enumerate(search_results):
-            clean_text = visit_site(res['url'])
+            # Pass the search snippet as fallback if the site is unreachable
+            clean_text = visit_site(res['url'], fallback_snippet=res.get('snippet', ''))
             result_text += f'\n\nSite {idx + 1}:\n\n{clean_text}'
         partial = sum_agent.generate(q, result_text)
         merged += f'\n\n### Sub-topic: {q}\n\n{partial}'
@@ -82,9 +83,9 @@ def run_research(prompt: str) -> str:
     else:
         result_text = ''
         time.sleep(args.search_delay)
-        search_results = ddg.search(prompt, top_n=args.top_n_simple)
+        search_results = search_engine.search(prompt, top_n=args.top_n_simple)
         for idx, res in enumerate(search_results):
-            clean_text = visit_site(res['url'])
+            clean_text = visit_site(res['url'], fallback_snippet=res.get('snippet', ''))
             result_text += f'\n\nSite {idx + 1}:\n\n{clean_text}'
         return sum_agent.generate(prompt, result_text)
 
