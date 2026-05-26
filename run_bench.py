@@ -31,6 +31,8 @@ parser.add_argument('--max-judge-iters', type=int, default=2,
                     help='Max number of judge refinement iterations (default: 2)')
 parser.add_argument('--visit-workers', type=int, default=4,
                     help='Parallel workers for visiting sites within a sub-query (default: 4)')
+parser.add_argument('--limit', type=int, default=None,
+                    help='Stop after processing this many tasks (useful for testing)')
 args = parser.parse_args()
 
 BENCH_DIR = Path(__file__).parent.parent / 'deep_research_bench'
@@ -222,8 +224,12 @@ def main():
           f'visit_workers={args.visit_workers}')
     print(f'Output: {OUTPUT_FILE}\n')
 
+    processed = 0
     with open(OUTPUT_FILE, mode, encoding='utf-8') as out_f:
         for item in queries:
+            if args.limit is not None and processed >= args.limit:
+                break
+
             task_id = item['id']
             prompt = item['prompt']
             language = LANG_NAMES.get(item.get('language', 'en'), 'English')
@@ -242,6 +248,7 @@ def main():
             record = {'id': task_id, 'prompt': prompt, 'article': article}
             out_f.write(json.dumps(record, ensure_ascii=False) + '\n')
             out_f.flush()
+            processed += 1
             print(f'  Done ({len(article)} chars)')
 
     print(f'\nOutput saved to: {OUTPUT_FILE}')

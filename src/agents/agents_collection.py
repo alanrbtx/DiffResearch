@@ -21,6 +21,7 @@ class RelevanceAgent(OpenAIAgent):
     def generate(self, prompt, search_result):
         completion = self.client.chat.completions.create(
             model=self.model,
+            max_tokens=10,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are a relevance filter for a research pipeline.\n'
@@ -40,6 +41,7 @@ class ExtractionAgent(OpenAIAgent):
     def generate(self, prompt, results):
         completion = self.client.chat.completions.create(
             model=self.model,
+            max_tokens=1000,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are an information extraction specialist.\n'
@@ -60,6 +62,7 @@ class SummarizationAgent(OpenAIAgent):
     def generate(self, prompt, result, language: str = 'English'):
         completion = self.client.chat.completions.create(
             model=self.model,
+            max_tokens=2000,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are a senior research analyst writing a comprehensive research report.\n\n'
@@ -90,6 +93,7 @@ class ComplexityAgent(OpenAIAgent):
     def generate(self, prompt):
         completion = self.client.chat.completions.create(
             model=self.model,
+            max_tokens=10,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are a research query analyzer.\n'
@@ -112,6 +116,7 @@ class DecomposeAgent(OpenAIAgent):
     def generate(self, prompt):
         completion = self.client.chat.completions.create(
             model=self.model,
+            max_tokens=400,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are a research strategist. Decompose the following research question into '
@@ -142,6 +147,7 @@ class JudgeAgent(OpenAIAgent):
     def generate(self, prompt, result):
         completion = self.client.chat.completions.create(
             model=self.model,
+            max_tokens=200,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are a research quality judge evaluating whether a research report adequately answers '
