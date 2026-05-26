@@ -62,7 +62,7 @@ class SummarizationAgent(OpenAIAgent):
     def generate(self, prompt, result, language: str = 'English'):
         completion = self.client.chat.completions.create(
             model=self.model,
-            max_tokens=2000,
+            max_tokens=4000,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are a senior research analyst writing a comprehensive research report.\n\n'
@@ -77,7 +77,7 @@ class SummarizationAgent(OpenAIAgent):
                     f'- Analyze different perspectives or subtopics\n'
                     f'- End with conclusions\n'
                     f'- Use clear section headers\n'
-                    f'- Be at least 600 words\n\n'
+                    f'- Be at least 1000 words\n\n'
                     f'If the source material is empty or insufficient, write what is known from general knowledge '
                     f'and clearly note where additional sources would be needed.\n\n'
                     f'Research Report:'
