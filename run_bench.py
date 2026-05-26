@@ -40,18 +40,33 @@ decompose_agent = DecomposeAgent(api_key=api_key, base_url=base_url, model=model
 search_engine = make_search_engine()
 
 
-def scrape_queries(queries: list[str], top_n: int) -> str:
+def log(msg: str, indent: int = 0):
+    prefix = '  ' * indent
+    print(f'{prefix}{msg}', flush=True)
+
+
+def scrape_queries(queries: list[str], top_n: int, indent: int = 1) -> str:
     """Search and scrape websites for a list of queries; return concatenated synthesized text."""
     merged = ''
-    for q in queries:
+    for q_idx, q in enumerate(queries, 1):
         result_text = ''
+        log(f'[{q_idx}/{len(queries)}] Search: "{q[:80]}"', indent)
         time.sleep(args.search_delay)
         search_results = search_engine.search(q, top_n=top_n)
+        log(f'  -> {len(search_results)} results found', indent)
+
         for idx, res in enumerate(search_results):
-            # Pass the search snippet as fallback if the site is unreachable
+            url_short = res['url'][:70]
+            log(f'  Visiting [{idx + 1}/{len(search_results)}]: {url_short}', indent)
             clean_text = visit_site(res['url'], fallback_snippet=res.get('snippet', ''))
+            chars = len(clean_text)
+            status = 'snippet fallback' if clean_text == res.get('snippet', '') else f'{chars} chars'
+            log(f'    -> {status}', indent)
             result_text += f'\n\nSite {idx + 1}:\n\n{clean_text}'
+
+        log(f'  Summarizing sub-topic...', indent)
         partial = sum_agent.generate(q, result_text)
+        log(f'    -> {len(partial)} chars', indent)
         merged += f'\n\n### Sub-topic: {q}\n\n{partial}'
     return merged
 
@@ -60,33 +75,53 @@ def run_research(prompt: str) -> str:
     is_complex = '1' if args.always_complex else comp_agent.generate(prompt)
 
     if '1' in is_complex:
+        log('Decomposing query into sub-queries...')
         raw_queries = decompose_agent.generate(prompt)
         sub_queries = [q.strip() for q in raw_queries.split('\n') if q.strip()]
+        log(f'-> {len(sub_queries)} sub-queries:')
+        for i, q in enumerate(sub_queries, 1):
+            log(f'  {i}. {q[:90]}')
 
+        log('Scraping sub-queries...')
         merged_result = scrape_queries(sub_queries, args.top_n_complex)
+
+        log('Generating final report...')
         final_report = sum_agent.generate(prompt, merged_result)
+        log(f'-> Report: {len(final_report)} chars')
 
         for iteration in range(args.max_judge_iters):
+            log(f'Judge evaluating report (iter {iteration + 1}/{args.max_judge_iters})...')
             verdict = judge_agent.generate(prompt, final_report)
             if '0' in verdict:
+                log('-> Judge: report is sufficient')
                 break
             follow_up = [q.strip() for q in verdict.split('\n') if q.strip()]
             if not follow_up:
                 break
-            print(f'  Judge iteration {iteration + 1}: fetching {len(follow_up)} follow-up queries')
+            log(f'-> Judge: needs {len(follow_up)} follow-up queries:')
+            for i, q in enumerate(follow_up, 1):
+                log(f'  {i}. {q[:90]}')
             extra_result = scrape_queries(follow_up, args.top_n_complex)
             combined = merged_result + '\n\n### Follow-up Research\n\n' + extra_result
+            log('Regenerating report with follow-up data...')
             final_report = sum_agent.generate(prompt, combined)
+            log(f'-> Report: {len(final_report)} chars')
             merged_result = combined
 
         return final_report
     else:
-        result_text = ''
+        log('Simple mode: single search query')
         time.sleep(args.search_delay)
         search_results = search_engine.search(prompt, top_n=args.top_n_simple)
+        log(f'-> {len(search_results)} results found')
+        result_text = ''
         for idx, res in enumerate(search_results):
+            url_short = res['url'][:70]
+            log(f'  Visiting [{idx + 1}/{len(search_results)}]: {url_short}')
             clean_text = visit_site(res['url'], fallback_snippet=res.get('snippet', ''))
+            log(f'    -> {len(clean_text)} chars')
             result_text += f'\n\nSite {idx + 1}:\n\n{clean_text}'
+        log('Generating report...')
         return sum_agent.generate(prompt, result_text)
 
 
