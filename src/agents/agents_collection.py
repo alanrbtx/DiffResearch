@@ -57,12 +57,13 @@ class ExtractionAgent(OpenAIAgent):
 
 class SummarizationAgent(OpenAIAgent):
 
-    def generate(self, prompt, result):
+    def generate(self, prompt, result, language: str = 'English'):
         completion = self.client.chat.completions.create(
             model=self.model,
             messages=[
                 {'role': 'user', 'content': (
                     f'You are a senior research analyst writing a comprehensive research report.\n\n'
+                    f'IMPORTANT: Write the entire report in {language}.\n\n'
                     f'Research question: {prompt}\n\n'
                     f'Source material collected from web research:\n{result}\n\n'
                     f'Write a detailed, well-structured research report that fully answers the research question. '
@@ -126,7 +127,8 @@ class DecomposeAgent(OpenAIAgent):
                     f'- Each query must be self-contained and searchable\n'
                     f'- Queries must NOT overlap — each covers a unique sub-topic\n'
                     f'- Use precise terminology relevant to the domain\n'
-                    f'- Output ONLY the queries, one per line, no numbering or bullets\n\n'
+                    f'- Output ONLY the raw query text, one per line\n'
+                    f'- NO numbering, NO bullets, NO dashes, NO prefixes of any kind\n\n'
                     f'Search queries:'
                 )},
             ],
@@ -151,10 +153,11 @@ class JudgeAgent(OpenAIAgent):
                     f'2. Does it include specific facts, data, or evidence (not just vague statements)?\n'
                     f'3. Is it comprehensive enough (covers multiple angles/perspectives)?\n'
                     f'4. Are there significant knowledge gaps that web search could fill?\n\n'
-                    f'If the report is SUFFICIENT (criteria 1-3 met, no critical gaps), reply with only: 0\n\n'
-                    f'If the report is INSUFFICIENT, reply with 2-3 specific follow-up search queries '
-                    f'(one per line, no numbering) that would fill the most critical gaps. '
-                    f'Focus on what is concretely missing, not minor improvements.'
+                    f'Reply format rules — follow exactly:\n'
+                    f'- If the report is sufficient: reply with exactly the single word SUFFICIENT\n'
+                    f'- If the report needs improvement: reply with INSUFFICIENT on the first line, '
+                    f'then 2-3 specific follow-up search queries on separate lines (no numbering, no bullets)\n\n'
+                    f'Your reply:'
                 )},
             ],
             **self._extra()
