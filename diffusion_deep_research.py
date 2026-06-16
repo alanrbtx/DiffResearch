@@ -521,9 +521,8 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> None:
+def run_deep_research(args: argparse.Namespace) -> dict[str, Any]:
     pipeline_start = time.perf_counter()
-    args = parse_args()
     agent_kwargs = build_agent_kwargs(args)
     latencies: dict[str, float | None] = {}
 
@@ -645,6 +644,16 @@ def main() -> None:
     print(f"Report written to {output_path}", flush=True)
     print(f"Metadata written to {metadata_path}", flush=True)
     print(f"E2E latency: {latencies['e2e_ms']:.1f} ms", flush=True)
+    return {
+        "review": review,
+        "metadata": metadata,
+        "output": str(output_path),
+        "metadata_output": str(metadata_path),
+    }
+
+
+def main() -> None:
+    run_deep_research(parse_args())
 
 
 if __name__ == "__main__":
