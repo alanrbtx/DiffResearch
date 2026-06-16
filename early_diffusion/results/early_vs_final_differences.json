@@ -1,0 +1,2382 @@
+{
+  "first_exact6_differs_from_final": [
+    {
+      "query_id": "q001",
+      "source_query": "diffusion LLM",
+      "first_exact6_ms": 1553.0905271880329,
+      "full_generation_ms": 1749.5070667937398,
+      "first_exact6_subqueries": [
+        "diffusion models for language language survey and definitions",
+        "discrete diffusion diffusion models for text generation architectures",
+        "training objectives for diffusion-based language models",
+        "inference acceleration and sampling algorithms for diffusion LLMs",
+        "benchmarking and of diffusion diffusion vs language models",
+        "limitations and challenges of diffusion vs autoregressivegressive models"
+      ],
+      "final_subqueries": [
+        "diffusion models for language modeling survey and definitions",
+        "discrete and continuous diffusion for text generation architecture",
+        "training objectives for diffusion-based language models",
+        "inference acceleration and sampling methods for diffusion LLMs",
+        "benchmarking performance evaluation of diffusion large language models",
+        "limitations and challenges of diffusion vs autoregressive transformers"
+      ]
+    },
+    {
+      "query_id": "q002",
+      "source_query": "retrieval augmented generation for medical question answering",
+      "first_exact6_ms": 264.07867996022105,
+      "full_generation_ms": 506.28603994846344,
+      "first_exact6_subqueries": [
+        "retrieval-augmented generation for medical question answering survey",
+        "large language models for medical RAG architectures and families",
+        "fine-tuning RAG systems for clinical domain knowledge knowledge methods",
+        "inference strategies and sampling methods for medical RAG",
+        "benchmarks for evaluation medical for medical question and evaluation",
+        "limitations and hallucinations in medical retrieval-augmented generation systems"
+      ],
+      "final_subqueries": [
+        "retrieval-augmented generation for medical question answering survey",
+        "large language models for medical RAG architectures and families",
+        "fine-tuning RAG models for clinical domain knowledge and training",
+        "inference strategies and sampling methods for medical RAG",
+        "benchmarks for evaluating medical RAG performance and accuracy",
+        "limitations and hallucinations in medical retrieval-augmented generation systems"
+      ]
+    },
+    {
+      "query_id": "q003",
+      "source_query": "scaling laws for multimodal transformers",
+      "first_exact6_ms": 252.5258231908083,
+      "full_generation_ms": 548.7927193753421,
+      "first_exact6_subqueries": [
+        "scaling laws for multimodal transformers survey and theoretical frameworks",
+        "empirical- laws laws vision-language models and scaling models",
+        "data efficiency and multimodal multimodal pre-training-training",
+        "inference efficiency and activation scaling for large multimodal models",
+        "benchmarking performance for for multimodal scaling scaling",
+        "limitations and saturation in in scaling scaling multimodal architectures"
+      ],
+      "final_subqueries": [
+        "scaling laws for multimodal transformers survey and theoretical foundations",
+        "empirical scaling laws for vision-language models and multimodal LL",
+        "data efficiency and compute scaling in multimodal pre-training",
+        "inference efficiency and activation scaling of large multimodal models",
+        "benchmarking performance scaling across multimodal downstream tasks",
+        "limitations and saturation points in scaling multimodal transformer architectures"
+      ]
+    },
+    {
+      "query_id": "q004",
+      "source_query": "benchmarking long context language models",
+      "first_exact6_ms": 252.52940878272057,
+      "full_generation_ms": 493.3466459624469,
+      "first_exact6_subqueries": [
+        "survey of long context window language models and definitions",
+        "architectures for scaling long context window transformer models",
+        "training techniques for scaling context length length- and- training",
+        "inference optimization and sampling strategies for long context",
+        "retrieval- and benchmarks for long long context models",
+        "limitations and performance degradation in long context LLMs"
+      ],
+      "final_subqueries": [
+        "survey of long context window language models and definitions",
+        "architectures for long-context transformer models review",
+        "training techniques for scaling context length RoPE and ALi",
+        "inference optimization and sampling strategies for long context",
+        "retrieval and reasoning benchmarks for long context LLMs",
+        "limitations and performance degradation in long context window models"
+      ]
+    },
+    {
+      "query_id": "q005",
+      "source_query": "efficient fine tuning methods for large language models",
+      "first_exact6_ms": 253.17753292620182,
+      "full_generation_ms": 641.7678711004555,
+      "first_exact6_subqueries": [
+        "survey of parameter-efficient fine-tuning techniques large language models",
+        "LoRA and LoRA and-- tuning techniques comparison",
+        "prompt tuning and prefix tuning methods for LLMs",
+        "quantization- fine fine- Q QRARA",
+        "benchbenchmarks evaluating evaluating- of fine tuning performance",
+        "limitations and challenges of low-rank fine in tuning"
+      ],
+      "final_subqueries": [
+        "survey of parameter-efficient fine tuning techniques for large language models",
+        "LoRA and adapter-based fine tuning architectures performance comparison",
+        "prompt tuning and prefix tuning methods for LLMs",
+        "quantization-aware fine tuning QLoRA technical report",
+        "benchmarks evaluating memory-efficient fine tuning performance",
+        "limitations and challenges of low-rank adaptation in transformers"
+      ]
+    },
+    {
+      "query_id": "q006",
+      "source_query": "safety alignment in open source language models",
+      "first_exact6_ms": 254.02418291196227,
+      "full_generation_ms": 495.78765593469143,
+      "first_exact6_subqueries": [
+        "taxonomy of safety alignment in open opensource language models",
+        "open open source LLM families Llamalamaral Falcon safety safety",
+        "RLHF and DPO techniques for alignment open source models",
+        "inference-time safety guard and and decoding strategies for open models",
+        "benchmarks and evaluation metrics for open model safety",
+        "limitations and jailbreaking vulnerabilities in open source language models"
+      ],
+      "final_subqueries": [
+        "taxonomy of safety alignment in open-source language models",
+        "open-source LLM families Llama Mistral Falcon safety alignment",
+        "RLHF and DPO techniques for aligning open source models",
+        "inference-time safety filtering and constrained decoding for open LLMs",
+        "benchmarks and evaluation metrics for open model safety",
+        "limitations and jailbreaking vulnerabilities in open source AI models"
+      ]
+    },
+    {
+      "query_id": "q007",
+      "source_query": "tool use and planning in autonomous LLM agents",
+      "first_exact6_ms": 290.46143498271704,
+      "full_generation_ms": 483.6679622530937,
+      "first_exact6_subqueries": [
+        "survey of autonomous LLM agents for tool use and planning planning",
+        "architectures for LLM-based agents with API interaction",
+        "fine-tuning methods for large language models in tool call calling",
+        "inference strategies for chain-of-thought and inic agents",
+        "benchmarks for evaluating agent performance planning and tool execution",
+        "limitations and safety challenges in multi-step LL LLic workflows"
+      ],
+      "final_subqueries": [
+        "survey of autonomous LLM agents for tool use and task planning",
+        "architectures for LLM-based agents with API interaction",
+        "fine-tuning methods for large language models in tool calling tasks",
+        "inference strategies for chain-of-thought and reasoning in agents",
+        "benchmarks for evaluating agentic planning and tool execution",
+        "limitations and safety challenges in multi-step autonomous LLM workflows"
+      ]
+    },
+    {
+      "query_id": "q008",
+      "source_query": "mixture of experts routing stability in transformers",
+      "first_exact6_ms": 290.50296591594815,
+      "full_generation_ms": 436.0702750273049,
+      "first_exact6_subqueries": [
+        "mixture of experts routing stability mechanisms transformers survey",
+        "MoE load load and and balancing strategies",
+        "auxiliary losses for stable expert routing in transformers",
+        "deterministic vs deterministic routing stability in transformers transformers",
+        "benchmarks for MoE routing distribution stability",
+        "limitations of expert routing in in MoE models"
+      ],
+      "final_subqueries": [
+        "mixture of experts routing stability mechanisms transformers survey",
+        "MoE load balancing and routing collapse methods",
+        "auxiliary losses for stable expert routing in transformers",
+        "deterministic vs stochastic routing stability in MoE",
+        "benchmarks for MoE routing distribution consistency",
+        "limitations of expert routing in large scale language models"
+      ]
+    },
+    {
+      "query_id": "q009",
+      "source_query": "speculative decoding for faster text generation",
+      "first_exact6_ms": 338.66687724366784,
+      "full_generation_ms": 485.8562690205872,
+      "first_exact6_subqueries": [
+        "speculative decoding survey of large language model inference acceleration",
+        "draft model architectures for speculative decoding de-generation",
+        "speculative decoding algorithms and verification mechanisms",
+        "optimizing speculative decoding inference methods and sampling strategies",
+        "performance benchmarks of speculative decoding across LLMMs",
+        "limitations and overhead analysis of speculative decoding techniques"
+      ],
+      "final_subqueries": [
+        "speculative decoding survey of large language model inference acceleration",
+        "draft model architectures for speculative decoding de-generation",
+        "speculative decoding algorithms and verification mechanisms",
+        "optimizing speculative decoding inference methods and sampling strategies",
+        "performance benchmarks of speculative decoding across LLM families",
+        "limitations and overhead analysis of speculative decoding techniques"
+      ]
+    },
+    {
+      "query_id": "q010",
+      "source_query": "quantization effects on reasoning in large language models",
+      "first_exact6_ms": 292.2791140154004,
+      "full_generation_ms": 533.84546097368,
+      "first_exact6_subqueries": [
+        "impact of bit precision quantization on large language model reasoning capabilities",
+        "comparison of GPTQ and Llama quantization on LLM logic performance",
+        "post-training quantization vs quantization-aware training for logical tasks",
+        "quantization effects on chain of thought prompting and mathematical",
+        "benchmarks for evaluating reasoning in quantized large language models",
+        "limitations of low bit quantization in complex problem solving"
+      ],
+      "final_subqueries": [
+        "impact of bitwise quantization on large language model reasoning capabilities",
+        "comparison of GPTQ AWQ llama quantization on LLM logic performance",
+        "post-training quantization vs quantization-aware training for reasoning tasks",
+        "quantization effects on chain of thought prompting and inference",
+        "benchmarks for evaluating reasoning in quantized large language models",
+        "limitations of low bit quantization in complex problem solving"
+      ]
+    },
+    {
+      "query_id": "q011",
+      "source_query": "graph neural networks for molecular property prediction",
+      "first_exact6_ms": 243.12019860371947,
+      "full_generation_ms": 393.4902008622885,
+      "first_exact6_subqueries": [
+        "survey of graph neural networks for molecular property prediction",
+        "message passing neural networks vs graph attention networks for chemistry",
+        "self-supervised learning learning for molecular graph representations",
+        "generative graph models for molecular design design and sampling",
+        "molecular property benchmarks and datasets for graph neural networks",
+        "limitations and challenges of graph neural networks in drug modeling"
+      ],
+      "final_subqueries": [
+        "survey of graph neural networks for molecular property prediction",
+        "message passing neural networks vs graph attention networks for chemistry",
+        "self-supervised learning methods for molecular graph representations",
+        "generative graph neural networks for molecular design and sampling",
+        "molecular property benchmarks and datasets for graph neural networks",
+        "limitations and challenges of graph neural networks in drug discovery"
+      ]
+    },
+    {
+      "query_id": "q012",
+      "source_query": "foundation models for protein structure and function",
+      "first_exact6_ms": 241.5616773068905,
+      "full_generation_ms": 531.863016076386,
+      "first_exact6_subqueries": [
+        "survey of foundation models for protein structure prediction and function",
+        "evolutionary scale models and transformer- for protein protein sequences",
+        "self-supervised learning objectives objectives for protein sequence and embeddings",
+        "diffusion models and generative models for protein de novo design",
+        "benchmarks for protein foundation models functional functional annotation",
+        "limitations and challenges of foundation models in structural biology"
+      ],
+      "final_subqueries": [
+        "survey of foundation models for protein structure prediction and function",
+        "evolutionary scale models and transformer-based protein language models",
+        "self-supervised learning objectives for protein sequence-structure modeling",
+        "diffusion models and generative architectures for protein de novo design",
+        "benchmarks for protein foundation models on functional annotation",
+        "limitations and challenges of foundation models in structural biology"
+      ]
+    },
+    {
+      "query_id": "q013",
+      "source_query": "AI methods for drug repurposing",
+      "first_exact6_ms": 193.39259713888168,
+      "full_generation_ms": 434.49281994253397,
+      "first_exact6_subqueries": [
+        "review of artificial intelligence methods for drug repurposing strategies",
+        "deep learning architectures for drug-target interaction prediction",
+        "graphgraph and and unsupervised learning for drug drug repurposing",
+        "generative models and diffusion models for drug repur discovery",
+        "benchmarks and datasets for AI- drug drug repurposing",
+        "limitations and challenges of AI- in drug repurposing"
+      ],
+      "final_subqueries": [
+        "review of artificial intelligence methods for drug repurposing strategies",
+        "deep learning architectures for drug-target interaction prediction",
+        "graph neural networks and reinforcement learning in drug drugargeting",
+        "generative models and transformers for de novo drug discovery",
+        "benchmarks and datasets for evaluating AI based drug repurposing",
+        "limitations and challenges of machine learning in clinical drug repurposing"
+      ]
+    },
+    {
+      "query_id": "q014",
+      "source_query": "causal inference with deep learning in healthcare",
+      "first_exact6_ms": 241.91525671631098,
+      "full_generation_ms": 483.94684260711074,
+      "first_exact6_subqueries": [
+        "survey of causal inference using deep learning for healthcare",
+        "deep learning architectures for causal treatment effect estimation in medicine",
+        "variational autoencoders and generative for for causal discovery",
+        "counterfactual inference and deep learning for healthcare data",
+        "benchmarks and datasets for causal deep in healthcare",
+        "limitations and interpretability challenges of deep causal causal models"
+      ],
+      "final_subqueries": [
+        "survey of causal inference using deep learning in healthcare",
+        "deep learning architectures for causal treatment effect estimation in medicine",
+        "variational autoencoders and generative models for causal discovery",
+        "counterfactual reasoning deep learning for clinical decision support",
+        "benchmarks and datasets for causal inference in healthcare",
+        "limitations and interpretability challenges of deep causal models"
+      ]
+    },
+    {
+      "query_id": "q015",
+      "source_query": "privacy preserving federated learning for hospitals",
+      "first_exact6_ms": 248.92846401780844,
+      "full_generation_ms": 443.3578378520906,
+      "first_exact6_subqueries": [
+        "survey of privacy preserving federated learning in healthcare",
+        "differential privacy and multi-party computation for medical image analysis",
+        "secure aggregation algorithms for federated learning clinical clinical data",
+        "inference attacks and mechanisms in medical federated learning",
+        "benchmarks and datasets for federated learning in hospitals",
+        "limitations and challenges of decentralized federated learning in clinical settings"
+      ],
+      "final_subqueries": [
+        "survey of privacy preserving federated learning in healthcare",
+        "differential privacy and multi-party computation for medical image analysis",
+        "secure aggregation algorithms for federated learning clinical data",
+        "inference attacks and defense mechanisms in medical federated learning",
+        "benchmarks and datasets for federated learning in hospitals",
+        "limitations and challenges of decentralized federated learning in clinical settings"
+      ]
+    },
+    {
+      "query_id": "q016",
+      "source_query": "medical image segmentation with vision transformers",
+      "first_exact6_ms": 242.8435399197042,
+      "full_generation_ms": 388.18972697481513,
+      "first_exact6_subqueries": [
+        "survey of vision transformers for medical image segmentation",
+        "Unetet and hybrid transformer architectures for medical imaging",
+        "self-supervised pre pretraining for medical vision transformers",
+        "efficient vision transformers and real- medical segmentation",
+        "bench and and metrics for medical medical segmentation",
+        "limitations and computational challenges of transformers in clinical AI"
+      ],
+      "final_subqueries": [
+        "survey of vision transformers for medical image segmentation",
+        "Unetet and hybrid transformer architectures for medical imaging",
+        "self-supervised learning pretraining for medical vision transformers",
+        "efficient vision transformers for real-time medical segmentation",
+        "benchmarks and datasets for medical transformer segmentation",
+        "limitations and computational challenges of transformers in clinical AI"
+      ]
+    },
+    {
+      "query_id": "q017",
+      "source_query": "uncertainty estimation in clinical AI systems",
+      "first_exact6_ms": 242.9710770957172,
+      "full_generation_ms": 485.18945230171084,
+      "first_exact6_subqueries": [
+        "definitions of aleatoric and epist uncertainty in clinical AI",
+        "Bayesian neural networks and deep ensembles for medical imaging",
+        "deepidential methods for uncertainty estimation in clinical decision learning",
+        "Monte Carlo dropout and deep methods for clinical diagnosis",
+        "benchmarks and datasets for uncertainty estimation in healthcare",
+        "limitations and ethical challenges of uncertainty-aware clinical AI"
+      ],
+      "final_subqueries": [
+        "definitions of aleatoric and epistemic uncertainty in healthcare",
+        "Bayesian neural networks and deep ensembles for medical imaging",
+        "evidential deep learning uncertainty estimation in clinical decision support",
+        "Monte Carlo dropout and calibration methods for medical prediction",
+        "benchmarks and datasets for uncertainty quantification in healthcare",
+        "limitations and ethical challenges of uncertainty-aware clinical AI"
+      ]
+    },
+    {
+      "query_id": "q018",
+      "source_query": "large language models for radiology report generation",
+      "first_exact6_ms": 242.52126598730683,
+      "full_generation_ms": 581.1551213264465,
+      "first_exact6_subqueries": [
+        "large language models for automated radiology report generation survey",
+        "multimodal large language models for medical imaging and radiology analysis",
+        "fine-tuning strategies for LLMs in clinical clinical reporting",
+        "prompt engineering and decoding strategies for for radiology text generation",
+        "evaluation benchmarks and metrics for automated radiology report accuracy",
+        "hallucination and clinical limitations of LLM generated radiology reports"
+      ],
+      "final_subqueries": [
+        "large language models for automated radiology report generation survey",
+        "multimodal large language models for medical imaging and radiology analysis",
+        "fine-tuning strategies for LLMs in clinical radiology reporting",
+        "prompt engineering and decoding methods for medical report text generation",
+        "evaluation benchmarks and metrics for automated radiology report accuracy",
+        "hallucination and clinical safety of LLM generated radiology reports"
+      ]
+    },
+    {
+      "query_id": "q019",
+      "source_query": "self supervised learning for electronic health records",
+      "first_exact6_ms": 241.70768400654197,
+      "full_generation_ms": 387.30855332687497,
+      "first_exact6_subqueries": [
+        "survey of self-supervised learning for electronic health records",
+        "transformer-based self-supervised models for EHR data",
+        "pretext coding and contrastive learning for clinical health data",
+        "temporal modeling and imputation strategies for longitudinal EHR records",
+        "benchmarks and evaluation metrics for self-supervised EHR representation",
+        "challenges and limitations of self-supervised learning in clinical healthcare"
+      ],
+      "final_subqueries": [
+        "survey of self-supervised learning for electronic health records",
+        "transformer-based self-supervised models for EHR data",
+        "pretext tasks and contrastive learning in clinical sequence modeling",
+        "temporal sampling and imputation strategies for longitudinal EHR records",
+        "benchmarks and evaluation metrics for self-supervised EHR representations",
+        "challenges and limitations of self-supervised learning in healthcare informatics"
+      ]
+    },
+    {
+      "query_id": "q020",
+      "source_query": "robustness of AI diagnosis under distribution shift",
+      "first_exact6_ms": 290.9217537380755,
+      "full_generation_ms": 488.99573972448707,
+      "first_exact6_subqueries": [
+        "definitions and taxonomy of robustness in medical AI under distribution shift",
+        "deep learning models for medical imaging robustness under distribution shift",
+        "domain adaptation and transfer learning for robust clinical diagnosis",
+        "uncertainty quantification and out of distribution detection in clinical AI",
+        "bench and and for for AI diagnostic robustness",
+        "limitations and safety risks of AI diagnosis under distribution shift"
+      ],
+      "final_subqueries": [
+        "definitions and taxonomy of robustness in medical AI under distribution shift",
+        "deep learning models for medical imaging sensitive to covariate shift",
+        "domain adaptation and transfer learning for robust clinical diagnosis",
+        "uncertainty quantification and out of distribution detection in healthcare",
+        "benchmarks and datasets for evaluating AI diagnostic robustness",
+        "limitations and safety risks of AI diagnosis under distribution shift"
+      ]
+    },
+    {
+      "query_id": "q021",
+      "source_query": "reinforcement learning from human feedback",
+      "first_exact6_ms": 241.6398269124329,
+      "full_generation_ms": 339.4616339355707,
+      "first_exact6_subqueries": [
+        "reinforcement learning from human feedback survey and theoretical foundations",
+        "large language model alignment via RLHF architectures and architectures",
+        "proximal policy optimization vs direct preference optimization for RLHF",
+        "reward model modeling and human preference techniques techniques",
+        "benchmarks for metrics metrics for RL alignment",
+        "ations and safety challenges in reinforcement learning in human feedback"
+      ],
+      "final_subqueries": [
+        "reinforcement learning from human feedback survey and theoretical foundations",
+        "large language model alignment via RLHF architectures and methods",
+        "proximal policy optimization vs direct preference optimization in RLHF",
+        "reward model training and human preference data techniques",
+        "benchmarks and evaluation metrics for aligned models",
+        "limitations and safety challenges in reinforcement learning from human feedback"
+      ]
+    },
+    {
+      "query_id": "q022",
+      "source_query": "offline reinforcement learning for robotics",
+      "first_exact6_ms": 241.79263599216938,
+      "full_generation_ms": 436.9484670460224,
+      "first_exact6_subqueries": [
+        "survey of offline reinforcement learning for robotic manipulation",
+        "policy- and value-- offline offline RL robotics",
+        "model-based offline reinforcement learning for robotic manipulation",
+        "sim-to-real transfer reinforcement learning reinforcement robotic learning",
+        "benchmarks and datasets for offline reinforcement RL",
+        "challenges and distribution shift in offline RL for robotics"
+      ],
+      "final_subqueries": [
+        "survey of offline reinforcement learning for robotic manipulation",
+        "policy-constrained and value-based offline RL algorithms",
+        "model-based offline reinforcement learning for continuous control",
+        "sim-to-real transfer in offline reinforcement learning robotics",
+        "benchmarks and datasets for offline reinforcement learning",
+        "challenges and distribution shift in offline RL for robotics"
+      ]
+    },
+    {
+      "query_id": "q023",
+      "source_query": "world models for embodied AI",
+      "first_exact6_ms": 292.162642814219,
+      "full_generation_ms": 486.91594367846847,
+      "first_exact6_subqueries": [
+        "survey of world models for embodied artificial intelligence and robotics",
+        "latent world models and generative world models for reinforcement learning",
+        "unsupervised learning of world models in embodied agents",
+        "planning-based control and sampling in learned world models",
+        "benchmarks and datasets for evaluating world model accuracy",
+        "challenges and limitations of world models in for real-time robotics"
+      ],
+      "final_subqueries": [
+        "survey of world models for embodied artificial intelligence and robotics",
+        "latent world models and generative world models for reinforcement learning",
+        "unsupervised learning of world models in embodied agents",
+        "planning-based control and sampling in learned world models",
+        "benchmarks and datasets for evaluating world model accuracy",
+        "challenges and limitations of world models in complex real-world environments"
+      ]
+    },
+    {
+      "query_id": "q024",
+      "source_query": "sim to real transfer for robot manipulation",
+      "first_exact6_ms": 386.6345747373998,
+      "full_generation_ms": 628.6778789944947,
+      "first_exact6_subqueries": [
+        "survey of sim-to-real transfer for robotic manipulation",
+        "domain randomization vs domain adaptation in robot manipulation",
+        "system identification and tactile sensing for sim-to-real",
+        "deep reinforcement learning for real-world robot robot grasping",
+        "sim-to-real benchmarks and datasets for manipulation",
+        "challenges and limitations of physics-based sim in-- transfer"
+      ],
+      "final_subqueries": [
+        "survey of sim-to-real transfer for robotic manipulation",
+        "domain randomization vs domain adaptation in robot manipulation",
+        "system identification and tactile sensing for sim-to-real",
+        "deep reinforcement learning for real-world robot grasping transfer",
+        "sim-to-real benchmarks and datasets for manipulation",
+        "challenges and limitations of physics-based simulation in robot task transfer"
+      ]
+    },
+    {
+      "query_id": "q025",
+      "source_query": "multi agent reinforcement learning coordination",
+      "first_exact6_ms": 194.16515715420246,
+      "full_generation_ms": 387.15637288987637,
+      "first_exact6_subqueries": [
+        "survey of multi-agent reinforcement learning coordination mechanisms and definitions",
+        "centralized training decentralized execution MARL algorithms",
+        "co protocols protocols in multi multi-agent reinforcement learning",
+        "credit protocols and in multi-agentL",
+        "benchbench and environments for multi-agent reinforcement reinforcement coordination",
+        "scalability and and-stationarity in multi-agent reinforcement learning"
+      ],
+      "final_subqueries": [
+        "survey of multi-agent reinforcement learning coordination mechanisms and definitions",
+        "centralized training decentralized execution MARL algorithms",
+        "coordination protocols and communication in multi-agent reinforcement learning",
+        "credit assignment and reward decomposition in MARL",
+        "benchmarks and environments for multi-agent reinforcement learning coordination",
+        "scalability challenges and non-stationarity in multi-agent reinforcement learning"
+      ]
+    },
+    {
+      "query_id": "q026",
+      "source_query": "safe exploration in reinforcement learning",
+      "first_exact6_ms": 299.124825745821,
+      "full_generation_ms": 452.90640788152814,
+      "first_exact6_subqueries": [
+        "survey of safe reinforcement learning definitions and frameworks",
+        "constrained Markov decision processes algorithms for safe exploration",
+        "safety-constrained reinforcement learning using Lyapunov-based methods",
+        "safe exploration via recovery-based methods in reinforcement learning",
+        "reinforcement learning benchmarks for safety and robustness",
+        "challenges and trade-offs in safe reinforcement learning methods"
+      ],
+      "final_subqueries": [
+        "survey of safe reinforcement learning definitions and frameworks",
+        "constrained Markov decision processes algorithms for safe exploration",
+        "safety-constrained reinforcement learning using Lyapunov and barrier functions",
+        "safe exploration via recovery-based methods in reinforcement learning",
+        "reinforcement learning benchmarks for safety and robustness",
+        "challenges and trade-offs in safe reinforcement learning deployment"
+      ]
+    },
+    {
+      "query_id": "q027",
+      "source_query": "language guided robotic planning",
+      "first_exact6_ms": 251.42121501266956,
+      "full_generation_ms": 397.1431441605091,
+      "first_exact6_subqueries": [
+        "survey of language-guided robotic planning and task planning",
+        "large language models for robotic task planning architectures",
+        "fine-tuning methods for language-conditioned robot control",
+        "zero-shot learning and for for robotic planning",
+        "benchmarks and datasets for language-conditioned robotic manipulation",
+        "limitations and generalization challenges in open- robotic planning"
+      ],
+      "final_subqueries": [
+        "survey of language-guided robotic planning and task planning",
+        "large language models for robotic task planning architectures",
+        "fine-tuning methods for language-conditioned robot control",
+        "zero-shot robotic planning using natural language instructions",
+        "benchmarks and datasets for language-based robotic manipulation",
+        "limitations and generalization challenges in open-vocabulary robotics"
+      ]
+    },
+    {
+      "query_id": "q028",
+      "source_query": "vision language action models for robots",
+      "first_exact6_ms": 290.57993926107883,
+      "full_generation_ms": 533.3187063224614,
+      "first_exact6_subqueries": [
+        "survey of vision language-action models for robotic manipulation",
+        "large scale vision languagelanguage- models architectures RT-2 VVE",
+        "pretraining and fine-tuning methods for robotic action policies",
+        "inference strategies and diffusion policies for robotic action models",
+        "benchmarks and datasets for evaluating vision-action evaluation",
+        "limitations and challenges of VLA models in open robotics"
+      ],
+      "final_subqueries": [
+        "survey of vision language-action models for robotic manipulation",
+        "large scale vision language-action models architectures RT-2 PaLME",
+        "pretraining and fine-tuning methods for robotic action policies",
+        "inference strategies and diffusion policies for vision action models",
+        "benchmarks and datasets for evaluating vision language action models",
+        "limitations and challenges of generalist agents in embodied AI"
+      ]
+    },
+    {
+      "query_id": "q029",
+      "source_query": "imitation learning from human demonstrations",
+      "first_exact6_ms": 240.54828425869346,
+      "full_generation_ms": 434.1293671168387,
+      "first_exact6_subqueries": [
+        "survey of imitation learning from human demonstrations definitions",
+        "behavioral cloning vs inverse reinforcement learning learning",
+        "generative adversarial imitation learning for human learning",
+        "diffusion models for learning learning learning learning",
+        "benchmarks and datasets for robotic imitation learning",
+        "distribution shift and robustness limitations in imitation learning"
+      ],
+      "final_subqueries": [
+        "survey of imitation learning from human demonstrations definitions",
+        "behavioral cloning vs inverse reinforcement learning methods",
+        "generative adversarial imitation learning GAIL algorithms",
+        "diffusion models for imitation learning from demonstrations",
+        "benchmarks and datasets for robotic imitation learning",
+        "distribution shift and covariate shift in imitation learning"
+      ]
+    },
+    {
+      "query_id": "q030",
+      "source_query": "benchmark datasets for embodied navigation",
+      "first_exact6_ms": 242.38172778859735,
+      "full_generation_ms": 630.4925610311329,
+      "first_exact6_subqueries": [
+        "survey of embodied AI navigation datasets and environments",
+        "deep learning architectures for embodied navigation navigation navigation",
+        "reinforcement learning methods for navigation navigation navigation navigation",
+        "----real transfer and embodied navigation navigation",
+        "--- and and- navigation navigation navigation",
+        "limit and and and in in embodied navigation navigation"
+      ],
+      "final_subqueries": [
+        "survey of embodied AI navigation datasets and benchmarks",
+        "deep learning architectures for embodied robot navigation agents",
+        "reinforcement learning methods for visual-spatial navigation tasks",
+        "simulation-to-real transfer challenges in embodied navigation",
+        "cross-embodiment and foundation models for navigation tasks",
+        "limitations and open challenges in embodied navigation benchmarks"
+      ]
+    },
+    {
+      "query_id": "q031",
+      "source_query": "climate modeling with machine learning",
+      "first_exact6_ms": 195.05691714584827,
+      "full_generation_ms": 534.3512780964375,
+      "first_exact6_subqueries": [
+        "survey of machine learning applications in climate modeling",
+        "deep learning architectures for weather prediction and weather prediction",
+        "physics-informed neural networks for climate simulation",
+        "generative models for GANs for climate down",
+        "benchbench and metrics for machine learning climate models",
+        "limitations and interpretability of machine learning climate climate"
+      ],
+      "final_subqueries": [
+        "survey of machine learning applications in climate modeling",
+        "deep learning architectures for weather prediction and climate forecasting",
+        "physics-informed neural networks for climate simulation",
+        "generative models and diffusion for climate downscaling",
+        "benchmarks and datasets for machine learning climate models",
+        "limitations and interpretability of AI in climate science"
+      ]
+    },
+    {
+      "query_id": "q032",
+      "source_query": "AI for extreme weather forecasting",
+      "first_exact6_ms": 243.6359883286059,
+      "full_generation_ms": 582.6192260719836,
+      "first_exact6_subqueries": [
+        "deep learning architectures for extreme weather event detection and prediction review",
+        "transformers and CNNs for high-resolution weather forecasting",
+        "transfer learning and data data techniques for rare extreme weather events",
+        "generative models and diffusion models for stochastic weather simulation",
+        "benchmarks and evaluation metrics for AI-based weather forecasting",
+        "limitations and uncertainty challenges of AI in extreme weather forecasting"
+      ],
+      "final_subqueries": [
+        "deep learning architectures for extreme weather event detection and prediction review",
+        "transformers and CNNs for high-resolution meteorological forecasting",
+        "transfer learning and data augmentation techniques for rare extreme weather events",
+        "generative models and diffusion models for stochastic weather simulation",
+        "benchmarks and evaluation metrics for AI-based atmospheric forecasting",
+        "limitations and uncertainty quantification of AI in extreme climate modeling"
+      ]
+    },
+    {
+      "query_id": "q033",
+      "source_query": "remote sensing foundation models",
+      "first_exact6_ms": 193.17862438037992,
+      "full_generation_ms": 386.45114935934544,
+      "first_exact6_subqueries": [
+        "survey of remote sensing foundation models and definitions",
+        "vision transformers and large models for for satellite sensing",
+        "self-supervised pre-training methods for satellite imagery imagery",
+        "zero-shot and few-shot learning in sensing sensing",
+        "benchmarks and evaluation metrics for remote foundation models",
+        "challenges and limitations of of remote foundation foundation models"
+      ],
+      "final_subqueries": [
+        "survey of remote sensing foundation models and architectures",
+        "vision transformers and masked autoencoders for satellite imagery",
+        "self-supervised pre-training methods for earth observation data",
+        "zero-shot and few-shot learning in remote sensing",
+        "benchmarks and evaluation metrics for RS foundation models",
+        "challenges and limitations of foundation models in remote sensing"
+      ]
+    },
+    {
+      "query_id": "q034",
+      "source_query": "satellite image change detection",
+      "first_exact6_ms": 247.4753470160067,
+      "full_generation_ms": 441.03866117075086,
+      "first_exact6_subqueries": [
+        "satellite of change detection change detection survey and fundamental concepts",
+        "deep learning architectures for multi-temporal change detection",
+        "unsupervised and semi-supervised satellite change detection methods",
+        "temporaltemporal change detection and for data methods",
+        "benchmark datasets and evaluation metrics for satellite change detection",
+        "challenges and limitations in optical-based change detection"
+      ],
+      "final_subqueries": [
+        "review of satellite image change detection techniques and fundamental concepts",
+        "deep learning architectures for multi-temporal change detection",
+        "unsupervised and semi-supervised satellite change detection methods",
+        "temporal registration and data fusion for change detection",
+        "benchmark datasets and evaluation metrics for satellite change detection",
+        "challenges and limitations in optical and SAR change detection"
+      ]
+    },
+    {
+      "query_id": "q035",
+      "source_query": "machine learning for carbon capture materials",
+      "first_exact6_ms": 289.5566779188812,
+      "full_generation_ms": 387.13937858119607,
+      "first_exact6_subqueries": [
+        "review of machine learning for carbon capture and materials discovery",
+        "deep learning architectures for MOF and MO adsorption prediction",
+        "active learning strategies for high throughput screening of capture materials",
+        "generative models for designing novel carbon capture frameworks",
+        "benchmarks and datasets for carbon capture material performance",
+        "challenges and data scarcity in machine learning for carbon capture research"
+      ],
+      "final_subqueries": [
+        "review of machine learning for carbon capture and materials discovery",
+        "deep learning architectures for MOF and zeolite adsorption prediction",
+        "active learning strategies for high throughput screening of capture materials",
+        "generative models for designing novel carbon capture adsorb",
+        "benchmarks and datasets for carbon capture material performance",
+        "challenges and data scarcity in machine learning for carbon capture research"
+      ]
+    },
+    {
+      "query_id": "q036",
+      "source_query": "energy efficient data center scheduling",
+      "first_exact6_ms": 242.21244687214494,
+      "full_generation_ms": 483.67952974513173,
+      "first_exact6_subqueries": [
+        "survey of energy- data center scheduling and and management techniques",
+        "reinforcement learning for power-aware data center optimization",
+        "deep learning models for power-aware workload placement",
+        "dynamic resource scaling and scheduling for green data centers",
+        "benchmarks and datasets for data center energy efficiency evaluation",
+        "challenges and limitations of real-time energy center energy scheduling"
+      ],
+      "final_subqueries": [
+        "survey of energy efficient data center scheduling and resource management techniques",
+        "reinforcement learning for power-aware data center optimization",
+        "deep learning models for energy-efficient workload placement",
+        "dynamic VM scaling and scheduling in green data centers",
+        "benchmarks and datasets for data center energy efficiency evaluation",
+        "challenges and limitations of real-time energy-efficient scheduling"
+      ]
+    },
+    {
+      "query_id": "q037",
+      "source_query": "deep learning for solar power forecasting",
+      "first_exact6_ms": 241.81095324456692,
+      "full_generation_ms": 436.4122664555907,
+      "first_exact6_subqueries": [
+        "survey of deep learning architectures for solar power and and forecasting",
+        "comparison of LSTM GRU and Transformers for solar irradiance prediction",
+        "transfer learning and domain adaptation for spatial power power forecasting",
+        "probabilistic deep learning and uncertainty estimation for solar power",
+        "benchmark datasets and metrics for for learning solar power forecasting",
+        "challenges and limitations of deep learning in intermittent- power forecasting"
+      ],
+      "final_subqueries": [
+        "survey of deep learning architectures for solar energy power output forecasting",
+        "comparison of LSTM GRU and Transformers for solar irradiance prediction",
+        "transfer learning and domain adaptation for spatial solar power forecasting",
+        "probabilistic deep learning and uncertainty quantification in solar forecasting",
+        "benchmark datasets and evaluation metrics for solar power prediction models",
+        "challenges and limitations of deep learning in intermittent solar energy forecasting"
+      ]
+    },
+    {
+      "query_id": "q038",
+      "source_query": "AI methods for biodiversity monitoring",
+      "first_exact6_ms": 241.91820109263062,
+      "full_generation_ms": 536.4293158054352,
+      "first_exact6_subqueries": [
+        "review of artificial intelligence methods for biodiversity monitoring and conservation",
+        "deep learning architectures for species identification in acoustic monitoring",
+        "unsupervised learning and transfersupervised learning for ecological data data",
+        "remote sensing and satellite imagery techniques for biodiversity assessment",
+        "benchmarks and datasets for AI-based biodiversity assessment",
+        "challenges and limitations of machine learning in ecological monitoring monitoring"
+      ],
+      "final_subqueries": [
+        "review of artificial intelligence methods for biodiversity monitoring and conservation",
+        "deep learning architectures for species identification and acoustic monitoring",
+        "unsupervised and semi-supervised learning for ecological data analysis",
+        "remote sensing and satellite imagery analysis for habitat assessment",
+        "benchmarks and datasets for AI-based biodiversity monitoring",
+        "challenges and limitations of machine learning in wildlife population tracking"
+      ]
+    },
+    {
+      "query_id": "q039",
+      "source_query": "climate risk assessment with graph models",
+      "first_exact6_ms": 241.2257748655975,
+      "full_generation_ms": 484.645816963166,
+      "first_exact6_subqueries": [
+        "climate risk assessment using graph-based modeling and and survey",
+        "graph neural networks for climate impact prediction and vulnerability mapping",
+        "training methods for for graph models in climate risk models",
+        "probabilistic graph models and sampling for climate risk uncertainty",
+        "benchmarks and datasets for graph-based climate risk analysis",
+        "limitations and challenges of graph models for climate risk modeling"
+      ],
+      "final_subqueries": [
+        "climate risk assessment using graph-based modeling review and survey",
+        "graph neural networks for climate change prediction and vulnerability mapping",
+        "training methods for temporal graph models in climate data analysis",
+        "probabilistic graph models and sampling for climate uncertainty quantification",
+        "benchmarks and datasets for graph-based climate risk evaluation",
+        "limitations and challenges of graph models in climate risk modeling"
+      ]
+    },
+    {
+      "query_id": "q040",
+      "source_query": "machine learning for wildfire prediction",
+      "first_exact6_ms": 195.84824237972498,
+      "full_generation_ms": 438.5022893548012,
+      "first_exact6_subqueries": [
+        "survey of machine learning techniques for wildfire detection and prediction",
+        "deep learning architectures. random forest for wildfire fire spread",
+        "sp- learning for for- for wildfire fire prediction",
+        "real-time inference and satellite data for wildfire wildfire monitoring",
+        "bench datasets and datasets for wildfire wildfire prediction",
+        "challenges and interpret interpretability in wildfire wildfire models"
+      ],
+      "final_subqueries": [
+        "survey of machine learning techniques for wildfire detection and prediction",
+        "deep learning architectures versus random forest for fire spread modeling",
+        "spatio-temporal neural networks for wildfire risk assessment",
+        "real-time inference and satellite data fusion for fire monitoring",
+        "benchmark datasets and metrics for wildfire prediction models",
+        "challenges and interpretability in machine learning wildfire forecasting"
+      ]
+    },
+    {
+      "query_id": "q041",
+      "source_query": "neural information retrieval benchmarks",
+      "first_exact6_ms": 291.1014980636537,
+      "full_generation_ms": 484.479914419353,
+      "first_exact6_subqueries": [
+        "survey of neural information retrieval architectures and definitions",
+        "encoder-encoder vs cross-encoder models for dense retrieval",
+        "contrastive learning objectives for neural dense retrieval",
+        "efficient inference and vector techniques techniques for neural search",
+        "MS MARCO and BEIRIR benchmarks performance analysis",
+        "limitations and challenges in neural information retrieval systems"
+      ],
+      "final_subqueries": [
+        "survey of neural information retrieval architectures and definitions",
+        "encoder-encoder vs cross-encoder models for dense retrieval",
+        "contrastive learning objectives for neural dense retrieval",
+        "efficient inference and vector indexing techniques for neural search",
+        "MS MARCO and BEIR benchmark results performance analysis",
+        "limitations and challenges in neural information retrieval systems"
+      ]
+    },
+    {
+      "query_id": "q042",
+      "source_query": "dense retrieval for scientific literature search",
+      "first_exact6_ms": 240.91648403555155,
+      "full_generation_ms": 385.97382279112935,
+      "first_exact6_subqueries": [
+        "survey of dense retrieval methods for scientific documents",
+        "bi-encoder vs cross-encoder architectures for text search",
+        "contrastive learning and hard negative mining for dense retrieval",
+        "efficient inference and vector for for dense retrieval",
+        "benchmarks for dense retrieval in in literature literature",
+        "limitations and challenges of dense retrieval for technical text"
+      ],
+      "final_subqueries": [
+        "survey of dense retrieval methods for scientific documents",
+        "bi-encoder vs cross-encoder architectures for literature search",
+        "contrastive learning and hard negative mining for dense retrieval",
+        "efficient inference and vector indexing for scientific search",
+        "benchmarks for dense information retrieval in specialized domains",
+        "limitations and challenges of dense retrieval in technical text"
+      ]
+    },
+    {
+      "query_id": "q043",
+      "source_query": "hybrid search combining BM25 and embeddings",
+      "first_exact6_ms": 291.26010509207845,
+      "full_generation_ms": 532.7402907423675,
+      "first_exact6_subqueries": [
+        "hybrid information retrieval survey BM25 and dense embeddings survey",
+        "architectures for combining sparse and dense vector retrieval",
+        "cross-encoder vs bi-encoder for hybrid search",
+        "reciprocal rank fusion vs alpha fusion methods for hybrid search",
+        "performance benchmarks of hybrid search retrieval systems",
+        "limitations and challenges of lexical- in dense retrieval"
+      ],
+      "final_subqueries": [
+        "hybrid information retrieval survey BM25 and dense embeddings",
+        "architectural patterns for combining sparse and dense vector retrieval",
+        "cross-encoder vs bi-encoder in hybrid search",
+        "reciprocal rank fusion vs alpha fusion methods for hybrid search",
+        "performance benchmarks of hybrid search retrieval systems",
+        "limitations and challenges of lexical and semantic search fusion"
+      ]
+    },
+    {
+      "query_id": "q044",
+      "source_query": "query rewriting for conversational search",
+      "first_exact6_ms": 195.56410098448396,
+      "full_generation_ms": 486.2280711531639,
+      "first_exact6_subqueries": [
+        "definitions and frameworks of query rewriting in conversational search systems",
+        "large language model architectures for conversational rewriting and rewriting",
+        "fine-tuning and and methods for conversational query rewriting",
+        "inference strategies and sampling strategies for conversational conversational query rewriting",
+        "benchmarks and evaluation metrics for conversational rewriting performance",
+        "limitations and challenges in query rewriting in conversational conversational"
+      ],
+      "final_subqueries": [
+        "definitions and taxonomy of query rewriting in conversational information retrieval",
+        "large language model architectures for conversational query deconstruction",
+        "fine-tuning and prompt engineering techniques for query rewriting",
+        "inference strategies and decoding methods for multi-turn dialogue",
+        "benchmarks and evaluation metrics for query rewriting performance",
+        "limitations and challenges in query rewriting for conversational search systems"
+      ]
+    },
+    {
+      "query_id": "q045",
+      "source_query": "learning to rank with large language models",
+      "first_exact6_ms": 243.28698683530092,
+      "full_generation_ms": 487.2912270948291,
+      "first_exact6_subqueries": [
+        "survey of large language models for learning to rank",
+        "LLM-based re-ranking architectures and information retrieval",
+        "fine-tuning large language models for information retrieval tasks",
+        "zero-shot LLM ranking vs.M-generated ranking",
+        "benchmarks and datasets for LLM information ranking",
+        "limitations and computational efficiency of LLMs in information retrieval"
+      ],
+      "final_subqueries": [
+        "survey of large language models for learning to rank",
+        "LLM-based re-ranking architectures and model families",
+        "fine-tuning large language models for information retrieval ranking",
+        "zero-shot and few-shot ranking with large language models",
+        "benchmarks and datasets for LLM ranking performance",
+        "limitations and computational efficiency of LLMs in information retrieval"
+      ]
+    },
+    {
+      "query_id": "q046",
+      "source_query": "evaluation metrics for retrieval augmented generation",
+      "first_exact6_ms": 289.5130501128733,
+      "full_generation_ms": 531.9503489881754,
+      "first_exact6_subqueries": [
+        "survey of evaluation metrics for retrieval augmented generation RAG",
+        "RAGAS framework faithfulness answer relevance metrics metrics",
+        "automated vs vs human evaluation for R RAG systems",
+        "retrieval- vs generation metrics metrics in RAG",
+        "benchmarks for datasets for evaluating augmented generation performance",
+        "limitations and challenges in current RAG evaluation methods"
+      ],
+      "final_subqueries": [
+        "survey of evaluation metrics for retrieval augmented generation RAG",
+        "RAGAS framework faithfulness answer relevance context precision metrics",
+        "automated vs human evaluation methods for RAG systems",
+        "retrieval quality vs generation quality metrics in LLMs",
+        "benchmarks and datasets for evaluating retrieval augmented generation",
+        "limitations and challenges in current RAG evaluation methodologies"
+      ]
+    },
+    {
+      "query_id": "q047",
+      "source_query": "citation recommendation in academic search",
+      "first_exact6_ms": 289.89647841081023,
+      "full_generation_ms": 531.4259021542966,
+      "first_exact6_subqueries": [
+        "survey and survey of citation recommendation systems in academic literature",
+        "graph neural networks and transformer models for citation prediction",
+        "supervised and and learning learning for citation recommendation",
+        "context-aware recommendation strategies for citation generation",
+        "benchmarks and evaluation metrics for citation recommendation systems",
+        "challenges and biases in automated citation recommendation"
+      ],
+      "final_subqueries": [
+        "survey and review of citation recommendation systems in academic literature",
+        "graph neural networks and transformer models for citation prediction",
+        "supervised and unsupervised learning methods for citation recommendation",
+        "context-aware citation recommendation and sampling strategies",
+        "benchmarks and evaluation metrics for citation recommendation tasks",
+        "challenges and limitations in automated citation recommendation systems"
+      ]
+    },
+    {
+      "query_id": "q048",
+      "source_query": "entity linking for knowledge graph construction",
+      "first_exact6_ms": 241.72193696722388,
+      "full_generation_ms": 483.5785678587854,
+      "first_exact6_subqueries": [
+        "entity linking for knowledge graph construction survey review",
+        "deep learning architectures for entity linking and knowledge graphs",
+        "unsupervised and self-supervised learning for entity linking",
+        "real-time entity linking inference and and for techniques",
+        "bench and and datasets for entity linking knowledge graph",
+        "challenges and limitations of of entity for for large-scale knowledge graphs"
+      ],
+      "final_subqueries": [
+        "entity linking for knowledge graph construction survey review",
+        "deep learning architectures for entity linking and disambiguation",
+        "unsupervised and self-supervised learning for entity linking",
+        "real-time entity linking inference and scalable sampling methods",
+        "benchmarks and datasets for knowledge graph entity linking performance",
+        "challenges and limitations of automated entity linking in large-scale graphs"
+      ]
+    },
+    {
+      "query_id": "q049",
+      "source_query": "semantic search for code repositories",
+      "first_exact6_ms": 241.60728976130486,
+      "full_generation_ms": 483.2635698840022,
+      "first_exact6_subqueries": [
+        "survey of semantic search for for code code repositories",
+        "transformer-based models for code embedding and retrieval",
+        "pre-training and contrastive learning for code code",
+        "vector databases and and techniques for code code search",
+        "benchmarks for semantic code search performance evaluation",
+        "limitations and challenges in cross-modal code search"
+      ],
+      "final_subqueries": [
+        "survey of semantic search techniques for source code repositories",
+        "transformer-based models for code embedding and retrieval",
+        "pre-training and contrastive learning for code representation",
+        "vector database and dense retrieval for software code search",
+        "benchmarks for semantic code search performance evaluation",
+        "limitations and challenges in cross-lingual code semantic search"
+      ]
+    },
+    {
+      "query_id": "q050",
+      "source_query": "personalized search with privacy constraints",
+      "first_exact6_ms": 242.46096098795533,
+      "full_generation_ms": 393.8478883355856,
+      "first_exact6_subqueries": [
+        "survey of privacy-preserving personalized recommendation systems and engines",
+        "federated learning for personalized search engines techniques",
+        "differential privacy in personalized information retrieval models",
+        "on-device computation for private- search search",
+        "benchmarks for privacy-preserving personalized search systems",
+        "challenges and trade-offs between personalization relevance and privacy privacy"
+      ],
+      "final_subqueries": [
+        "survey of privacy-preserving personalized recommendation systems and search",
+        "federated learning for personalized search engines techniques",
+        "differential privacy in personalized information retrieval models",
+        "on-device computation for private personalized search architectures",
+        "benchmarks for privacy-preserving personalized ranking algorithms",
+        "challenges and trade-offs between personalization accuracy and user privacy"
+      ]
+    },
+    {
+      "query_id": "q051",
+      "source_query": "adversarial attacks on vision language models",
+      "first_exact6_ms": 242.50249797478318,
+      "full_generation_ms": 534.8707549273968,
+      "first_exact6_subqueries": [
+        "survey of adversarial attacks on vision-language pre- models",
+        "vulnerabilities of CLIP and BLIP to adversarial perturbations",
+        "adversarial training defenses for multimodal visionlanguage models",
+        "cross-modal adversarial attacks and text- text injection",
+        "benchmarks for robustness of vision-language models",
+        "limitations and transferability of vision-language attacks"
+      ],
+      "final_subqueries": [
+        "survey of adversarial attacks on vision-language pretraining models",
+        "vulnerabilities of CLIP and BLIP to adversarial perturbations",
+        "adversarial training defenses for multimodal vision language models",
+        "cross-modal adversarial attacks on image-text alignment",
+        "benchmarks for robustness of vision-language models",
+        "limitations and transferability of adversarial examples in multimodal systems"
+      ]
+    },
+    {
+      "query_id": "q052",
+      "source_query": "watermarking generated text from language models",
+      "first_exact6_ms": 291.2822589278221,
+      "full_generation_ms": 484.91112189367414,
+      "first_exact6_subqueries": [
+        "survey of text watermarking techniques for large language models",
+        "statistical watermarking methods for generative AI text",
+        "watermarking during model training and inference strategies",
+        "watermarking during inference and log distribution strategies",
+        "benchmarking text watermarking robustness and detection quality",
+        "limitations and attacks against LLM text watermarking"
+      ],
+      "final_subqueries": [
+        "survey of text watermarking techniques for large language models",
+        "statistical watermarking methods for generative AI text",
+        "watermarking during model training vs inference strategies",
+        "watermarking sampling algorithms and logit manipulation",
+        "benchmarking text watermarking robustness and detection quality",
+        "limitations and attacks against LLM text watermarking"
+      ]
+    },
+    {
+      "query_id": "q053",
+      "source_query": "detecting synthetic media with deep learning",
+      "first_exact6_ms": 291.7825970798731,
+      "full_generation_ms": 678.093935828656,
+      "first_exact6_subqueries": [
+        "survey of synthetic media detection using deep learning techniques",
+        "deep learning architectures for deepfake detection in video",
+        "unsupervised and self-supervised learning for synthetic image detection",
+        "generalization and robustness robustness of synthetic media detectors",
+        "benchmarks and datasets for synthetic media detection",
+        "limitations and adversarial attacks on deep learning based detectors"
+      ],
+      "final_subqueries": [
+        "survey of synthetic media detection using deep learning techniques",
+        "deep learning architectures for deepfake detection in video",
+        "unsupervised and self-supervised learning for synthetic image forgery",
+        "generalization and robustness of synthetic media detectors models",
+        "benchmarks and datasets for synthetic media evaluation",
+        "limitations and adversarial attacks on deep learning based detectors"
+      ]
+    },
+    {
+      "query_id": "q054",
+      "source_query": "red teaming large language models",
+      "first_exact6_ms": 242.43199871852994,
+      "full_generation_ms": 629.890478681773,
+      "first_exact6_subqueries": [
+        "survey of red teaming teaming methodologies for large language models",
+        "adversarial attacks and jailbreaking techniques in LL LLMs",
+        "automated red teaming and LL-based LL LLMs",
+        "jail alignment techniques and safety alignment in LLM models",
+        "benchmarks for evaluating LLM safety and robustness",
+        "limitations and ethical challenges of manual teaming teaming in AI"
+      ],
+      "final_subqueries": [
+        "survey of red teaming frameworks methodologies for large language models",
+        "adversarial attacks and jailbreaking techniques in LLM inference",
+        "automated red teaming and LLM-based vulnerability discovery",
+        "safety guardrails and alignment techniques during language model training",
+        "benchmarks for evaluating LLM safety and robustness",
+        "limitations and ethical challenges in red teaming generative AI models"
+      ]
+    },
+    {
+      "query_id": "q055",
+      "source_query": "data poisoning attacks on foundation models",
+      "first_exact6_ms": 241.45630421116948,
+      "full_generation_ms": 875.2915263175964,
+      "first_exact6_subqueries": [
+        "survey of data poisoning attacks on large scale foundation models",
+        "backdoordoor in in large language models and vision transformers",
+        "fine-tuning data poisoning and and- learning techniques",
+        "backback attacks and and attacks in generative generative models",
+        "benchmarks and datasets for evaluating data poisoning robustness",
+        "defense mechanisms and robustness against data poisoning in foundation models"
+      ],
+      "final_subqueries": [
+        "survey of data poisoning attacks on large scale foundation models",
+        "backdoor attacks on pretraining language models and vision transformers",
+        "fine-tuning data poisoning vulnerabilities and adaptive learning attacks",
+        "poisoning-based inference time attacks on generative AI",
+        "benchmarks and datasets for evaluating data poisoning robustness",
+        "defense mechanisms and mitigation of data poisoning in foundation models"
+      ]
+    },
+    {
+      "query_id": "q056",
+      "source_query": "privacy leakage in language model memorization",
+      "first_exact6_ms": 290.69857811555266,
+      "full_generation_ms": 533.0906598828733,
+      "first_exact6_subqueries": [
+        "privacy leakage and definitions in large language model memorization",
+        "memorization vulnerabilities vulnerabilities in transformer-based models language models",
+        "differential privacy techniques for mitigating language model memorization",
+        "inference attacks and membership attacks on language models",
+        "benchmarks for measuring sensitive data extraction in LLMs",
+        "limitations and risks of privacy-preserving training model methods"
+      ],
+      "final_subqueries": [
+        "privacy leakage and definitions of large language model memorization",
+        "memorization vulnerabilities in transformer-based models and GPT family",
+        "differential privacy techniques for mitigating training data memorization",
+        "inference attacks and membership inference on language models",
+        "benchmarks for measuring sensitive information extraction in LLMs",
+        "limitations and risks of privacy-preserving sampling methods"
+      ]
+    },
+    {
+      "query_id": "q057",
+      "source_query": "jailbreak defenses for chat assistants",
+      "first_exact6_ms": 241.58391868695617,
+      "full_generation_ms": 483.21861680597067,
+      "first_exact6_subqueries": [
+        "taxonomy of LLM jailbreak attacks and defense mechanisms survey",
+        "adversarial training and safety alignment for large language models",
+        "safety-- reinforcement learning from human feedback forHFHF",
+        "inference-time safety filters and input filtering filtering for assistants",
+        "benchmarks for evaluating LLM robustness against jail injection",
+        "limitations and evasion attacks of current current defense defenses"
+      ],
+      "final_subqueries": [
+        "taxonomy of LLM jailbreak attacks and defense mechanisms survey",
+        "adversarial training and safety alignment for large language models",
+        "safety-constrained reinforcement learning from human feedback jailbreak prevention",
+        "inference-time safety filters and input output moderation chat assistants",
+        "benchmarks for evaluating LLM robustness against prompt injection",
+        "limitations and vulnerabilities of current LLM safety defenses"
+      ]
+    },
+    {
+      "query_id": "q058",
+      "source_query": "model extraction attacks on deployed APIs",
+      "first_exact6_ms": 244.82583487406373,
+      "full_generation_ms": 440.627024974674,
+      "first_exact6_subqueries": [
+        "survey of model extraction attacks on machine learning APIs",
+        "vulnerability of deep learning models to model model attacks",
+        "active learning and transfer learning for model extraction techniques",
+        "defense mechanisms and query limiting against API model extraction",
+        "benchmarks for evaluating model extraction efficiency and accuracy",
+        "limitations and constraints of modelbasedbased attacks"
+      ],
+      "final_subqueries": [
+        "survey of model extraction attacks on machine learning APIs",
+        "vulnerability of deep learning models to function estimation attacks",
+        "active learning and transfer learning for model extraction attacks",
+        "defense mechanisms and query limiting against API model extraction",
+        "benchmarks for evaluating model extraction efficiency and accuracy",
+        "limitations and constraints of synthetic data generation attacks"
+      ]
+    },
+    {
+      "query_id": "q059",
+      "source_query": "secure inference for neural networks on edge devices",
+      "first_exact6_ms": 293.2299077510834,
+      "full_generation_ms": 534.5909628085792,
+      "first_exact6_subqueries": [
+        "survey of privacy-preserving neural network for edge computing",
+        "homomorphic encryption for lightweight neural networks on hardware",
+        "secure multi-party computation for distributed edge learning edge devices",
+        "TEE based secure inference of deep learning networks",
+        "benchmarking performance overhead of secure inference on mobile devices",
+        "limitations and attack models of secure edge AI AI"
+      ],
+      "final_subqueries": [
+        "survey of privacy-preserving neural network inference edge computing",
+        "homomorphic encryption for lightweight neural networks on hardware",
+        "secure multi-party computation for distributed edge-cloud inference",
+        "TEE based secure execution for deep learning models",
+        "benchmarking performance overhead of secure inference on mobile devices",
+        "limitations and attack vectors against encrypted edge AI models"
+      ]
+    },
+    {
+      "query_id": "q060",
+      "source_query": "formal verification of neural network robustness",
+      "first_exact6_ms": 290.3269459493458,
+      "full_generation_ms": 484.0988512150943,
+      "first_exact6_subqueries": [
+        "formal verification of neural network robustness survey definitions",
+        "formal verification of deep neural networks and CNNs",
+        "robustness training methods formal verification methods",
+        "sampling-based and and sampling for neural networks",
+        "benchmarks for neural network robustness verification",
+        "limitations and scalability challenges of formal verification in AI"
+      ],
+      "final_subqueries": [
+        "formal verification of neural network robustness survey definitions",
+        "formal verification of deep neural networks and CNNs",
+        "robustness training methods using formal verification",
+        "sampling-based and probabilistic verification for neural networks",
+        "benchmarks for neural network robustness verification",
+        "limitations and scalability challenges of formal verification in AI"
+      ]
+    },
+    {
+      "query_id": "q061",
+      "source_query": "diffusion models for image editing",
+      "first_exact6_ms": 241.51969607919455,
+      "full_generation_ms": 482.77472611516714,
+      "first_exact6_subqueries": [
+        "survey of diffusion models for image editing and manipulation",
+        "latent diffusion models for image-to-image translation",
+        "control-free guidance and inversion for image image editing",
+        "efficient sampling methods for fast diffusionbased image editing",
+        "benchmarks and metrics for image image editing quality",
+        "limitations and challenges in diffusion-based image editing"
+      ],
+      "final_subqueries": [
+        "survey of diffusion models for image editing and manipulation",
+        "latent diffusion models for image-to-image translation",
+        "classifier-free guidance and inversion techniques for diffusion editing",
+        "efficient sampling methods for fast diffusion-based editing",
+        "benchmarks and metrics for generative image editing quality",
+        "limitations and challenges in diffusion-based image consistency"
+      ]
+    },
+    {
+      "query_id": "q062",
+      "source_query": "text to video generation evaluation",
+      "first_exact6_ms": 241.6909085586667,
+      "full_generation_ms": 435.2594008669257,
+      "first_exact6_subqueries": [
+        "survey of text-to-video generation evaluation metrics",
+        "diffusion models and transformer architectures for video synthesis",
+        "training functions and loss functions for temporal video synthesis",
+        "temporal consistency and sampling methods for video video synthesis",
+        "benchmarks for video quality and and and video quality",
+        "limitations and challenges in generative video video evaluation"
+      ],
+      "final_subqueries": [
+        "survey of text-to-video generation evaluation metrics",
+        "diffusion models and transformer architectures for video synthesis",
+        "training objectives and loss functions for temporal video generation",
+        "temporal consistency and sampling methods in generative video models",
+        "benchmarks for video quality and semantic alignment FVD",
+        "limitations and challenges in automated video quality assessment"
+      ]
+    },
+    {
+      "query_id": "q063",
+      "source_query": "3D generation with neural radiance fields and diffusion",
+      "first_exact6_ms": 342.7529507316649,
+      "full_generation_ms": 537.8571846522391,
+      "first_exact6_subqueries": [
+        "survey of neural radiance fields and diffusion models for 3D generation",
+        "score distillation sampling for 3D NeRF reconstruction",
+        "latent diffusion models for 3D asset synthesis",
+        "efficient training and optimization for for -D Ne radiance fields",
+        "benchmarks for generative 3D models quality and diversity",
+        "limitations and challenges in diffusion-based 3D scene reconstruction"
+      ],
+      "final_subqueries": [
+        "survey of neural radiance fields and diffusion models for 3D generation",
+        "score distillation sampling for 3D NeRF reconstruction",
+        "latent diffusion models for 3D asset synthesis",
+        "efficient training and optimization methods for 3D neural radiance fields",
+        "benchmarks for generative 3D models quality and diversity",
+        "limitations and challenges in diffusion-based 3D scene generation"
+      ]
+    },
+    {
+      "query_id": "q064",
+      "source_query": "controllable music generation with transformers",
+      "first_exact6_ms": 243.03346686065197,
+      "full_generation_ms": 388.6557617224753,
+      "first_exact6_subqueries": [
+        "survey of controllable music generation generation using transformer models",
+        "transformer architectures for symbolic and audio music synthesis",
+        "conditional music generation transformers conditioning and and mechanisms",
+        "inference techniques and sampling methods for music music transformers",
+        "bench and and metrics for controllable music generation models",
+        "limitations and challenges in transformer-based music synthesis"
+      ],
+      "final_subqueries": [
+        "survey of controllable music generation models using transformer architectures",
+        "transformer architectures for symbolic and audio music generation",
+        "conditional music generation transformers training objectives and objectives",
+        "inference techniques and sampling methods for music transformers",
+        "benchmarks and evaluation metrics for controllable music generation models",
+        "limitations and challenges in transformer-based music synthesis"
+      ]
+    },
+    {
+      "query_id": "q065",
+      "source_query": "speech synthesis with discrete audio tokens",
+      "first_exact6_ms": 338.0281860008836,
+      "full_generation_ms": 533.6719360202551,
+      "first_exact6_subqueries": [
+        "neural speech synthesis using discrete audio tokens survey",
+        "neural codebook-based text-to-speech models",
+        "language modeling for discrete audio representations in-",
+        "sampling methods for discrete audio token speech generation",
+        "benchmarks and metrics for token-based neural TTS",
+        "limitations and artifacts of discrete audio representation in synthesis"
+      ],
+      "final_subqueries": [
+        "neural speech synthesis using discrete audio tokens survey",
+        "neural codebook-based text-to-speech models",
+        "language modeling for discrete audio representations VQVAE",
+        "sampling methods for discrete audio token speech generation",
+        "benchmarks and metrics for token-based neural TTS",
+        "limitations and artifacts of discrete audio representation in speech"
+      ]
+    },
+    {
+      "query_id": "q066",
+      "source_query": "multimodal chain of thought reasoning",
+      "first_exact6_ms": 245.41041674092412,
+      "full_generation_ms": 492.1654867939651,
+      "first_exact6_subqueries": [
+        "multimodal chain of thought reasoning survey and definitions",
+        "vision-modal large language models with chain of thought architectures",
+        "training methods for multimodal chain-of-thought",
+        "inference strategies and sampling for multimodal CoT",
+        "benchmarks for evaluating multimodal chain of thought performance",
+        "limitations and challenges in multimodal chain of thought reasoning"
+      ],
+      "final_subqueries": [
+        "multimodal chain of thought reasoning survey and definitions",
+        "vision-language large language models with chain of thought architectures",
+        "training methods for multimodal reasoning and de novo prompting",
+        "inference strategies and sampling for multimodal CoT",
+        "benchmarks for evaluating multimodal chain of thought performance",
+        "limitations and challenges in multimodal chain of thought reasoning"
+      ]
+    },
+    {
+      "query_id": "q067",
+      "source_query": "visual question answering with large multimodal models",
+      "first_exact6_ms": 244.64611615985632,
+      "full_generation_ms": 390.61852591112256,
+      "first_exact6_subqueries": [
+        "survey of large multimodal models for visual question answering",
+        "architectures of vision language models for VQA",
+        "training strategies and fine-tuning for multimodal multimodal VQA",
+        "inference optimization and decoding methods for multimodal LLMs",
+        "benchmarks and evaluation metrics for large multimodal VQA",
+        "limitations and hallucinations in in large multimodal question answering"
+      ],
+      "final_subqueries": [
+        "survey of large multimodal models for visual question answering",
+        "architectures of vision language models for VQA",
+        "training strategies and fine-tuning for multimodal VQA models",
+        "inference optimization and decoding methods for multimodal LLMs",
+        "benchmarks and evaluation metrics for large scale VQA",
+        "limitations and hallucinations in large multimodal visual question answering"
+      ]
+    },
+    {
+      "query_id": "q068",
+      "source_query": "document understanding with layout aware transformers",
+      "first_exact6_ms": 297.93608328327537,
+      "full_generation_ms": 395.33864613622427,
+      "first_exact6_subqueries": [
+        "survey of document understanding with layout-aware transformers",
+        "layout-aware transformer architectures for document image analysis",
+        "pre-training strategies for multimodal document-layout models",
+        "efficient inference and sampling for layout-aware models",
+        "benchmarks for document layout and information extraction",
+        "limitations and challenges in layout-aware document understanding"
+      ],
+      "final_subqueries": [
+        "survey of document understanding with layout-aware transformers",
+        "layout-aware transformer architectures for visual document analysis",
+        "pre-training strategies for multimodal document-layout models",
+        "efficient inference and sampling for layout-aware transformers",
+        "benchmarks for document structure and information extraction",
+        "limitations and challenges in layout-aware document understanding"
+      ]
+    },
+    {
+      "query_id": "q069",
+      "source_query": "OCR free visual document models",
+      "first_exact6_ms": 290.29730055481195,
+      "full_generation_ms": 581.6670409403741,
+      "first_exact6_subqueries": [
+        "end-to-end visual document understanding without OCR survey",
+        "multimodal large models for document document analysis and- analysis",
+        "pre-training strategies for visual-free document models",
+        "inference optimization for document-free visual document models",
+        "benchmarks for OCR-free document document information extraction",
+        "limitations and challenges of direct- document document models"
+      ],
+      "final_subqueries": [
+        "end-to-end visual document understanding without OCR survey",
+        "multimodal LLMs for document image analysis and text extraction",
+        "pre-training strategies for vision-language document models",
+        "inference optimization for real-time visual document models",
+        "benchmarks for OCR-free visual document information extraction",
+        "limitations and challenges of direct visual text processing models"
+      ]
+    },
+    {
+      "query_id": "q070",
+      "source_query": "evaluation of image captioning factuality",
+      "first_exact6_ms": 242.05876514315605,
+      "full_generation_ms": 435.7340419664979,
+      "first_exact6_subqueries": [
+        "definitions and metrics for factuality and hallucinations in image captioning",
+        "large vision-language models for factual image captioning",
+        "training methods for reducing hallucinations in image captioning",
+        "inference strategies and sampling techniques for factual image captioning",
+        "benchmarks and datasets for evaluating image captioning factuality",
+        "limitations and error in in automated caption caption evaluation"
+      ],
+      "final_subqueries": [
+        "definitions and metrics for factuality and hallucinations in image captioning",
+        "large vision-language models for factual image captioning",
+        "training methods for reducing hallucinations in image captioning",
+        "inference strategies and sampling techniques for factual image captioning",
+        "benchmarks and datasets for evaluating image captioning factuality",
+        "limitations and error analysis of automated image caption evaluation"
+      ]
+    },
+    {
+      "query_id": "q071",
+      "source_query": "time series forecasting with foundation models",
+      "first_exact6_ms": 290.033140219748,
+      "full_generation_ms": 493.4728052467108,
+      "first_exact6_subqueries": [
+        "survey of foundation models for time series forecasting",
+        "transformer-based and foundation models for multivariate time series analysis",
+        "self-supervised pre- strategies strategies for time series models",
+        "zero-shot and few-shot forecasting capabilities of time foundation models",
+        "benchmarks and evaluation metrics for time foundation models",
+        "limitations and challenges of scaling models in temporal data forecasting"
+      ],
+      "final_subqueries": [
+        "survey of foundation models for time series forecasting",
+        "transformer-based large language models for multivariate time series",
+        "self-supervised pre-training strategies for time series foundation models",
+        "zero-shot and few-shot forecasting capabilities of time series models",
+        "benchmarks and evaluation metrics for temporal foundation models",
+        "limitations and challenges of scaling models in temporal data forecasting"
+      ]
+    },
+    {
+      "query_id": "q072",
+      "source_query": "anomaly detection in industrial sensor data",
+      "first_exact6_ms": 193.44361778348684,
+      "full_generation_ms": 488.7389251962304,
+      "first_exact6_subqueries": [
+        "survey of anomaly detection methods in industrial sensor data",
+        "deep learning architectures for industrial time-series anomaly anomaly detection",
+        "unsupervised anomaly detection methods for industrial industrial data data",
+        "real-time anomaly detection algorithms for industrial IoT computing",
+        "bench datasets and datasets for industrial anomaly anomaly detection",
+        "challenges limitations limitations of industrial detection in anomaly detection"
+      ],
+      "final_subqueries": [
+        "survey of anomaly detection methods in industrial sensor data",
+        "deep learning architectures for industrial time-series anomaly detection",
+        "unsupervised and semi-supervised learning for industrial sensor streams",
+        "real-time anomaly detection algorithms for industrial IoT devices",
+        "benchmark datasets and metrics for industrial equipment fault detection",
+        "challenges and limitations of anomaly detection in manufacturing environments"
+      ]
+    },
+    {
+      "query_id": "q074",
+      "source_query": "neural operators for partial differential equations",
+      "first_exact6_ms": 243.26527630910277,
+      "full_generation_ms": 486.0405554063618,
+      "first_exact6_subqueries": [
+        "introduction and foundations of neural operators for partial differential equations",
+        "Fourier Neural Operator FONet DeepON Operator comparison",
+        "training strategies and loss functions for for neural PDE solvers",
+        "inference-shot and andshot in neural operators operators",
+        "bench and and datasets for neural operator PDE solvers",
+        "limitations and generalization challenges of neural operators for PDEs"
+      ],
+      "final_subqueries": [
+        "introduction and foundations of neural operators for partial differential equations",
+        "Fourier Neural Operator FNO and DeepONet comparison",
+        "training strategies and loss functions for neural operator PDE solvers",
+        "inference speed and zero-shot sampling in neural operators",
+        "benchmarks and datasets for neural operator scientific modeling",
+        "limitations and generalization challenges of neural operators in PDEs"
+      ]
+    },
+    {
+      "query_id": "q075",
+      "source_query": "physics informed neural networks limitations",
+      "first_exact6_ms": 243.49720403552055,
+      "full_generation_ms": 486.0121668316424,
+      "first_exact6_subqueries": [
+        "fundamentals to physics informed neural networks definitions and theoretical foundations",
+        "architectures of physics informed neural networks partial differential equations",
+        "optimization challenges and loss function weighting in PINNs",
+        "inference speed and sampling methods in physics informed machine learning",
+        "bench and performance performance metrics for informed machine learning",
+        "computational and generalization issues of physics informed neural networks"
+      ],
+      "final_subqueries": [
+        "introduction to physics informed neural networks definitions and theoretical foundations",
+        "architectures and model families for solving partial differential equations",
+        "optimization challenges and loss function weighting in PINNs",
+        "inference speed and sampling methods in physics informed machine learning",
+        "benchmarks and performance metrics for scientific machine learning",
+        "computational limitations and generalization of physics informed neural networks"
+      ]
+    },
+    {
+      "query_id": "q076",
+      "source_query": "surrogate modeling for computational fluid dynamics",
+      "first_exact6_ms": 245.0042893178761,
+      "full_generation_ms": 392.05082319676876,
+      "first_exact6_subqueries": [
+        "survey of surrogate modeling techniques in computational fluid dynamics",
+        "machine learning surrogate models for fluid flow flow prediction",
+        "physics-informed neural networks and Gaussian-based surrogate models for CFD",
+        "active learning and experimental design for CFD surrogate training",
+        "benchmarking and performance analysis of CFD surrogate models",
+        "limitations and challenges of surrogate modeling in complex fluid flows"
+      ],
+      "final_subqueries": [
+        "survey of surrogate modeling techniques in computational fluid dynamics",
+        "machine learning surrogate models for fluid flow prediction",
+        "physics-informed neural networks vs Gaussian process-based surrogates in CFD",
+        "active learning and experimental design for CFD surrogate training",
+        "benchmarking and performance analysis of CFD surrogate models",
+        "limitations and challenges of surrogate modeling in complex fluid flows"
+      ]
+    },
+    {
+      "query_id": "q077",
+      "source_query": "Bayesian optimization for materials discovery",
+      "first_exact6_ms": 243.3618730865419,
+      "full_generation_ms": 455.01127280294895,
+      "first_exact6_subqueries": [
+        "survey of Bayesian optimization for materials science and engineering",
+        "Gaussian process vs deep deep neural models for materials discovery",
+        "multi-fidelity Bayesian optimization for high-throughput materials screening",
+        "acquisition functions for batch- in in materials design",
+        "benchmarks and datasets for Bayesian optimization in informatics",
+        "challenges and limitations of Bayesian optimization in experimental materials design"
+      ],
+      "final_subqueries": [
+        "survey of Bayesian optimization for materials science and engineering",
+        "Gaussian process vs deep neural network models for materials discovery",
+        "multi-fidelity Bayesian optimization for high-throughput materials screening",
+        "acquisition functions for batch Bayesian optimization in materials design",
+        "benchmarks and datasets for Bayesian optimization in informatics",
+        "challenges and limitations of Bayesian optimization in experimental materials science"
+      ]
+    },
+    {
+      "query_id": "q078",
+      "source_query": "active learning for expensive simulations",
+      "first_exact6_ms": 195.8931810222566,
+      "full_generation_ms": 487.5552733428776,
+      "first_exact6_subqueries": [
+        "active learning for high-fidelity-fidelity simulations survey",
+        "surrogate modeling and Gaussian learning for expensive simulations",
+        "query strategies for expensive-- physics simulations",
+        "Gaussian process and learning learning for expensive",
+        "bench and datasets for learning in expensive simulations",
+        "challenges and limitations of active learning in high- simulations"
+      ],
+      "final_subqueries": [
+        "active learning for high-fidelity expensive computer simulations survey",
+        "surrogate modeling and active learning for expensive evaluations",
+        "query strategies for active learning in physics simulations",
+        "Gaussian process active learning for expensive functions",
+        "benchmarks and datasets for active learning in engineering",
+        "challenges and limitations of active learning in high-dimensional simulations"
+      ]
+    },
+    {
+      "query_id": "q079",
+      "source_query": "probabilistic forecasting for supply chains",
+      "first_exact6_ms": 243.9654041081667,
+      "full_generation_ms": 438.0400371737778,
+      "first_exact6_subqueries": [
+        "survey of probabilistic forecasting in supply chain management management management",
+        "deep learning architectures for probabilistic time forecasting supply chains",
+        "Bayesian neural networks for uncertainty supply chain uncertainty",
+        "quantile regression and generative methods methods for supply chain forecasting",
+        "bench and and evaluation metrics for supply chain forecasting",
+        "challenges and limitations of probabilistic models in supply chain"
+      ],
+      "final_subqueries": [
+        "survey of probabilistic forecasting methods in supply chain demand management",
+        "deep learning architectures for probabilistic time series forecasting logistics",
+        "Bayesian neural networks for supply chain uncertainty quantification",
+        "quantile regression and generative models for supply chain demand prediction",
+        "benchmarks and evaluation metrics for probabilistic inventory forecasting",
+        "challenges and limitations of probabilistic modeling in global supply chains"
+      ]
+    },
+    {
+      "query_id": "q080",
+      "source_query": "foundation models for tabular data",
+      "first_exact6_ms": 245.98333705216646,
+      "full_generation_ms": 440.12224301695824,
+      "first_exact6_subqueries": [
+        "survey of foundation models for tabular data machine learning",
+        "transformer-based architectures for heterogeneous tabular data",
+        "self-supervised pre-training methods for for foundation datasets",
+        "generative models and synthetic data data data",
+        "benchmarks and evaluation metrics for tabular foundation models",
+        "limitations and challenges of scaling models in structured data"
+      ],
+      "final_subqueries": [
+        "survey of foundation models for tabular data machine learning",
+        "transformer-based architectures for heterogeneous tabular data",
+        "self-supervised pre-training objectives for large tabular datasets",
+        "generative models and synthetic tabular data generation",
+        "benchmarks and evaluation metrics for tabular foundation models",
+        "limitations and challenges of scaling models to structured data"
+      ]
+    },
+    {
+      "query_id": "q081",
+      "source_query": "AI assisted theorem proving",
+      "first_exact6_ms": 247.59189365431666,
+      "full_generation_ms": 494.42803068086505,
+      "first_exact6_subqueries": [
+        "survey of AI- theorem theorem and and verification verification",
+        "large language models for formal theorem proving Lean IsabelleqHOL",
+        "reinforcement learning from feedback for automated theorem proving",
+        "search strategies and sampling methods for neural theorem proving",
+        "benchmarks and datasets for evaluating mathematical theorem proving",
+        "limitations and challenges of neural methods in formal reasoning"
+      ],
+      "final_subqueries": [
+        "survey of AI-assisted theorem proving and formal verification",
+        "large language models for formal theorem proving Lean Isabelle Coq",
+        "reinforcement learning from feedback for automated theorem proving",
+        "search strategies and sampling methods for neural theorem proving",
+        "benchmarks and datasets for evaluating automated theorem proving",
+        "limitations and challenges of neural symbolic in mathematical reasoning"
+      ]
+    },
+    {
+      "query_id": "q082",
+      "source_query": "program synthesis with large language models",
+      "first_exact6_ms": 242.17800423502922,
+      "full_generation_ms": 437.1596942655742,
+      "first_exact6_subqueries": [
+        "survey of program synthesis using large language models",
+        "large language model architectures for automated code generation and synthesis",
+        "fine-tuning strategies for LLMs in code programming tasks",
+        "inference-- and- and and for LL for program synthesis",
+        "benchmarks for evaluating large language based code synthesis",
+        "limitations and safety challenges in LLMbased program synthesis"
+      ],
+      "final_subqueries": [
+        "survey of program synthesis using large language models",
+        "large language model architectures for automated code generation and synthesis",
+        "fine-tuning strategies for LLMs in competitive programming tasks",
+        "inference-time search and sampling-based methods for program synthesis",
+        "benchmarks for evaluating large language model code generation",
+        "limitations and safety challenges in LLM based program synthesis"
+      ]
+    },
+    {
+      "query_id": "q083",
+      "source_query": "automated code repair with neural models",
+      "first_exact6_ms": 195.00256702303886,
+      "full_generation_ms": 437.36220709979534,
+      "first_exact6_subqueries": [
+        "survey of automated program repair using neural networks",
+        "transformer-based and large language models for bug fixing",
+        "fine-tuning techniques for neural neural code repair",
+        "decoder strategies and sampling strategies for neural code repair",
+        "bench and and metrics for automated automated code repair",
+        "limitations and challenges of of neural neural code repair"
+      ],
+      "final_subqueries": [
+        "survey of automated program repair using deep learning",
+        "transformer-based and large language models for bug fixing",
+        "fine-tuning techniques for neural code-repair models",
+        "decoder strategies and sampling methods for neural code generation",
+        "benchmarks and datasets for evaluating automated code repair",
+        "limitations and challenges in neural-based software engineering"
+      ]
+    },
+    {
+      "query_id": "q084",
+      "source_query": "software engineering agents for bug fixing",
+      "first_exact6_ms": 241.9723910279572,
+      "full_generation_ms": 532.5558688491583,
+      "first_exact6_subqueries": [
+        "survey of automated software engineering agents for software bug fixing",
+        "large language model architectures for automated code repair and debugging",
+        "fine-tuning techniques for LLMs in software engineering fixing tasks",
+        "agentic workflows and iterative inference strategies for automated bug fixing",
+        "benchmarks and evaluating and of automated bug fixing agents",
+        "limitations and challenges of AI-driven automated repair engineering"
+      ],
+      "final_subqueries": [
+        "survey of automated software engineering agents for autonomous bug fixing",
+        "large language model architectures for automated code repair and debugging",
+        "fine-tuning techniques for LLMs in software vulnerability repair tasks",
+        "agentic workflows and iterative reasoning strategies for software bug fixing",
+        "benchmarks and datasets for evaluating automated bug fixing agents",
+        "limitations and challenges of AI-driven automated software repair"
+      ]
+    },
+    {
+      "query_id": "q085",
+      "source_query": "unit test generation using language models",
+      "first_exact6_ms": 193.26244993135333,
+      "full_generation_ms": 532.2616086341441,
+      "first_exact6_subqueries": [
+        "survey of large language models for automated unit test generation",
+        "large language model architectures for code generation and unit test generation",
+        "fine-tuning techniques for LLMs in in unit test generation",
+        "prompt engineering and few-shot learning for automated code testing",
+        "benchmarks and metrics metrics for LL unit test quality",
+        "limitations and security challenges of LL--generated unit testing"
+      ],
+      "final_subqueries": [
+        "survey of large language models for automated unit test generation",
+        "transformer-based architectures for code generation and test case synthesis",
+        "fine-tuning strategies for LLMs in software testing task performance",
+        "prompt engineering and few-shot learning for automated code testing",
+        "benchmarks and evaluation metrics for generated unit test quality",
+        "limitations and security vulnerabilities in LLM-generated unit tests"
+      ]
+    },
+    {
+      "query_id": "q086",
+      "source_query": "code retrieval augmented generation",
+      "first_exact6_ms": 242.1110300347209,
+      "full_generation_ms": 387.3047772794962,
+      "first_exact6_subqueries": [
+        "survey of retrieval augmented generation for source code generation",
+        "large language models for RAG code generation architectures",
+        "fine-tuning strategies for code-based retrieval code models",
+        "inference strategies and sampling methods for code R R generation",
+        "benchmarks for evaluating retrieval augmented generation code performance",
+        "limitations and challenges of retrieval- generation in software engineering"
+      ],
+      "final_subqueries": [
+        "survey of retrieval augmented generation for source code generation",
+        "large language models for RAG code generation architectures",
+        "fine-tuning techniques for code-specific retrieval augmented generation",
+        "inference strategies and sampling methods for code RAG systems",
+        "benchmarks for evaluating retrieval augmented code generation performance",
+        "limitations and challenges of retrieval augmented generation in software engineering"
+      ]
+    },
+    {
+      "query_id": "q087",
+      "source_query": "benchmarking coding assistants on real repositories",
+      "first_exact6_ms": 242.59975319728255,
+      "full_generation_ms": 533.1465522758663,
+      "first_exact6_subqueries": [
+        "survey of large language models for software engineering tasks",
+        "benchmarking LLMs assistants on code- on code repositories",
+        "fine-tuning techniques for coding assistants on large scale codebases",
+        "inference strategies and sampling methods for code generation models",
+        "evaluation metrics of coding assistants on real-world software repositories",
+        "limitations and security concerns of AI coding assistants in production environments"
+      ],
+      "final_subqueries": [
+        "survey of large language models for software engineering tasks",
+        "benchmarking LLMs on code generation and GitHub repository data",
+        "fine-tuning techniques for coding assistants on large scale codebases",
+        "inference strategies and sampling methods for code generation models",
+        "evaluation metrics for code assistants in real-world software development",
+        "limitations and security vulnerabilities of AI coding assistants in production"
+      ]
+    },
+    {
+      "query_id": "q088",
+      "source_query": "static analysis enhanced neural code models",
+      "first_exact6_ms": 339.49254592880607,
+      "full_generation_ms": 539.3078248016536,
+      "first_exact6_subqueries": [
+        "survey of neural code models integrated with static analysis techniques",
+        "large language models for automated static analysis and vulnerability detection",
+        "training neural code models with static analysis feedback loops",
+        "constrained decoding and sampling for neural code generation",
+        "benchmarks for neural neural static analysis tools code performance",
+        "limitations of neural models in formal software program verification"
+      ],
+      "final_subqueries": [
+        "survey of neural code models integrated with static analysis techniques",
+        "large language models for automated static analysis and vulnerability detection",
+        "training neural code models with static analysis feedback loops",
+        "constrained decoding and sampling for neural code generation",
+        "benchmarks for neural static analysis tools and code repair",
+        "limitations of neural models in formal software program analysis"
+      ]
+    },
+    {
+      "query_id": "q089",
+      "source_query": "security vulnerability detection in source code",
+      "first_exact6_ms": 241.5668093599379,
+      "full_generation_ms": 483.2302322611213,
+      "first_exact6_subqueries": [
+        "survey of automated security vulnerability detection in source code",
+        "deep learning architectures for source software vulnerability discovery",
+        "self-supervised and self- learning for for vulnerability detection",
+        "large language models for code for security vulnerability analysis",
+        "benchmarks and datasets for software vulnerability detection evaluation",
+        "challenges and false positive limitations in AI-based vulnerability detection"
+      ],
+      "final_subqueries": [
+        "survey of automated security vulnerability detection in source code",
+        "deep learning architectures for software security vulnerability discovery",
+        "self-supervised learning and transfer learning for code flaw detection",
+        "large language models for static analysis and vulnerability identification",
+        "benchmarks and datasets for software security vulnerability evaluation",
+        "challenges and false positive limitations in AI-based vulnerability detection"
+      ]
+    },
+    {
+      "query_id": "q090",
+      "source_query": "natural language to SQL generation robustness",
+      "first_exact6_ms": 246.38173915445805,
+      "full_generation_ms": 439.8888451978564,
+      "first_exact6_subqueries": [
+        "robustness of natural language to SQL generation survey and definitions",
+        "large language models for text-to-sql architectures architectures",
+        "data augmentation and fine-tuning for robust SQL generation",
+        "inference strategies and decoding methods for for SQL generation",
+        "benchmarks for evaluating text-to-sql robustness and robustness",
+        "limitations and out-of-distribution challenges in natural language to SQL"
+      ],
+      "final_subqueries": [
+        "robustness of natural language to SQL generation survey and definitions",
+        "large language models for text-to-sql architectures comparison",
+        "data augmentation and fine-tuning for robust SQL generation",
+        "inference strategies and decoding methods for reliable SQL synthesis",
+        "benchmarks for evaluating text-to-sql robustness and generalization",
+        "limitations and out-of-distribution challenges in natural language to SQL"
+      ]
+    },
+    {
+      "query_id": "q091",
+      "source_query": "fairness in algorithmic hiring systems",
+      "first_exact6_ms": 245.18918991088867,
+      "full_generation_ms": 438.23468359187245,
+      "first_exact6_subqueries": [
+        "formal fairness definitions and metrics for automated talent recruitment",
+        "bias in machine learning models for job selection systems",
+        "fairness-aware training methods for algorithmic hiring algorithms",
+        "post-processing techniques and and techniques for in hiring hiring",
+        "benchmarks and datasets for evaluating algorithmic hiring fairness",
+        "ethical limitations and legal challenges of algorithmic hiring tools"
+      ],
+      "final_subqueries": [
+        "formal fairness definitions and metrics for automated talent recruitment",
+        "bias in machine learning models for job selection systems",
+        "fairness-aware training methods for algorithmic hiring models",
+        "post-processing techniques and sampling methods for fair hiring inference",
+        "benchmarks and datasets for evaluating algorithmic recruitment fairness",
+        "ethical limitations and legal challenges of AI hiring tools"
+      ]
+    },
+    {
+      "query_id": "q092",
+      "source_query": "explainability methods for deep neural networks",
+      "first_exact6_ms": 242.38393316045403,
+      "full_generation_ms": 484.8655532114208,
+      "first_exact6_subqueries": [
+        "survey of explainable AI methods for deep neural networks",
+        "saliency maps and gradient- methods for deep learning",
+        "inherently interpre deep architectures architectures- learning architectures",
+        "post-based explanations and-based methods for deep learning",
+        "bench and and metrics for evaluating model explainability",
+        "limitations and robustness challenges of neural network explainability"
+      ],
+      "final_subqueries": [
+        "survey of explainable AI methods for deep neural networks",
+        "saliency maps and gradient based attribution in deep learning",
+        "inherently interpretable deep learning architectures and models",
+        "post-hoc explanation methods perturbation and sampling for DNNs",
+        "benchmarks and metrics for evaluating model explainability",
+        "limitations and robustness challenges of neural network explainability"
+      ]
+    },
+    {
+      "query_id": "q093",
+      "source_query": "human AI collaboration in decision making",
+      "first_exact6_ms": 241.4208920672536,
+      "full_generation_ms": 532.8820892609656,
+      "first_exact6_subqueries": [
+        "definitions and frameworks for human-AI collaborative decision making- review",
+        "architectures for human human-AI decision support systems",
+        "reinforcement learning from human feedback for interactive decision making",
+        "interactive inference and adaptive sampling for human--AI loops",
+        "benchmarks for evaluating human-AI team team performance",
+        "limitations and ethical issues in human-AI joint decision making"
+      ],
+      "final_subqueries": [
+        "definitions and frameworks for human-AI collaborative decision making",
+        "architectures for human-in-the-loop AI systems",
+        "reinforcement learning from human feedback for collaborative decision making",
+        "interactive inference and adaptive sampling in human-AI decision loops",
+        "benchmarks for evaluating human-AI team decision performance",
+        "limitations and ethical challenges in human-AI joint decision making"
+      ]
+    },
+    {
+      "query_id": "q094",
+      "source_query": "AI governance frameworks for foundation models",
+      "first_exact6_ms": 289.0856610611081,
+      "full_generation_ms": 482.80672216787934,
+      "first_exact6_subqueries": [
+        "taxonomy and taxonomy of AI governance frameworks for foundation models",
+        "comparative regulatory approaches for large language models and generative models",
+        "governance strategies for foundation model training and data curation",
+        "safety protocols and alignment for model inference and sampling techniques",
+        "standard benchmarks and evaluation metrics for foundation model compliance",
+        "limitations and ethical risks of decentralized AI governance governance"
+      ],
+      "final_subqueries": [
+        "taxonomy and definitions of AI governance frameworks for foundation models",
+        "comparative regulatory approaches for large language models and generative AI",
+        "governance strategies for foundation model training and data curation",
+        "safety protocols and alignment governance for inference and sampling techniques",
+        "standard benchmarks and evaluation metrics for foundation model compliance",
+        "limitations and ethical risks in decentralized AI governance frameworks"
+      ]
+    },
+    {
+      "query_id": "q095",
+      "source_query": "auditing bias in recommendation systems",
+      "first_exact6_ms": 193.61611921340227,
+      "full_generation_ms": 436.6171550936997,
+      "first_exact6_subqueries": [
+        "taxonomy and definitions of bias in recommendation systems survey",
+        "bias auditing methodologies in collaborative filtering and learning models",
+        "debibiasing techniques for training recommendation recommendation models",
+        "algorithmic bias bias and and bias in recommendation inference",
+        "benchmarks and datasets for measuring recommendation fairness",
+        "limitations and ethical challenges of algorithmic auditing auditing"
+      ],
+      "final_subqueries": [
+        "taxonomy and definitions of bias in recommendation systems survey",
+        "bias auditing techniques for collaborative filtering and deep learning models",
+        "debiasing methods in recommendation system training data",
+        "algorithmic fairness and sampling bias in recommendation engine inference",
+        "benchmarks and datasets for evaluating recommendation fairness",
+        "limitations and ethical challenges in automated bias auditing"
+      ]
+    },
+    {
+      "query_id": "q096",
+      "source_query": "economic impacts of generative AI adoption",
+      "first_exact6_ms": 289.46096915751696,
+      "full_generation_ms": 579.610510263592,
+      "first_exact6_subqueries": [
+        "macroeconomic effects of generative AI on labor market productivity",
+        "generative AI displacement vs job creation in by industry",
+        "cost-benefit analysis of large model integration in enterprises",
+        "economic implications of generative AI on global software industries",
+        "impactative AI AI AI AI on on global industries",
+        "ethical risks and regulatory costs of generative AI economic adoption"
+      ],
+      "final_subqueries": [
+        "macroeconomic effects of generative AI on labor market productivity",
+        "generative AI displacement vs job creation analysis by industry",
+        "cost-benefit analysis of LLM integration in enterprises",
+        "economic implications of generative AI on global GDP growth",
+        "impact of generative AI on software development efficiency and wages",
+        "financial risks and regulatory costs of generative AI adoption"
+      ]
+    },
+    {
+      "query_id": "q097",
+      "source_query": "education applications of large language models",
+      "first_exact6_ms": 193.07886715978384,
+      "full_generation_ms": 532.2632822208107,
+      "first_exact6_subqueries": [
+        "survey of large language models applications education education and learning",
+        "LLM architectures for for tutoring and and intelligent tutoring systems",
+        "fine-tuning large language models for educational content tasks",
+        "prompt engineering and and and techniques for for educational assistants",
+        "bench for evaluating evaluating language model performance in educational settings",
+        "limitations ethical concerns of of LL in in academic education"
+      ],
+      "final_subqueries": [
+        "survey of large language model applications in education and pedagogy",
+        "LLM architectures for personalized learning and intelligent tutoring systems",
+        "fine-tuning large language models for specialized educational content generation",
+        "prompt engineering and few-shot learning for educational AI",
+        "benchmarks for evaluating LLM performance in academic contexts",
+        "limitations ethical concerns and biases of LLMs in education"
+      ]
+    },
+    {
+      "query_id": "q098",
+      "source_query": "mental health chatbots safety evaluation",
+      "first_exact6_ms": 243.48478391766548,
+      "full_generation_ms": 444.9828239157796,
+      "first_exact6_subqueries": [
+        "taxonomy and definitions of of mental health chatbot safety evaluation",
+        "architectures and large language models for mental health support bots",
+        "fine-tuning methods and reinforcement learning for empathetic AI agents",
+        "safety-constrained inference and decoding strategies in therapeutic agents",
+        "automatedmarks and metrics for mental health chatbot safety",
+        "ethical limitations and clinical risks of AI mental health tools"
+      ],
+      "final_subqueries": [
+        "taxonomy and definitions of mental health chatbot safety and risks",
+        "architectures of large language models for mental health support bots",
+        "fine-tuning methods and reinforcement learning for empathetic AI agents",
+        "safety-constrained inference and decoding strategies in therapeutic AI",
+        "automated benchmarks and metrics for mental health chatbot safety",
+        "ethical limitations and clinical risks of automated mental health interventions"
+      ]
+    },
+    {
+      "query_id": "q099",
+      "source_query": "human preference modeling for recommender systems",
+      "first_exact6_ms": 247.13557492941618,
+      "full_generation_ms": 538.2747570984066,
+      "first_exact6_subqueries": [
+        "survey of human preference modeling in recommender systems",
+        "deep learning architectures for explicit user preference in recommendation",
+        "rein learning from human feedback for recommender optimization",
+        "inverse reinforcement learning and active learning for preference modeling",
+        "benchmarks and datasets for human preference modeling",
+        "ations and and in modeling human preference preference modeling"
+      ],
+      "final_subqueries": [
+        "survey of human preference modeling in recommender systems",
+        "deep learning architectures for explicit user preference modeling",
+        "reinforcement learning from human feedback for recommender optimization",
+        "inverse reinforcement learning and active learning for preference modeling",
+        "benchmarks and datasets for evaluating recommendation preference models",
+        "limitations and biases in modeling subjective human preferences"
+      ]
+    },
+    {
+      "query_id": "q100",
+      "source_query": "AI generated misinformation detection and mitigation",
+      "first_exact6_ms": 242.08472203463316,
+      "full_generation_ms": 485.07822398096323,
+      "first_exact6_subqueries": [
+        "taxonomy and definitions of AI-generated misinformation and synthetic media",
+        "deep learning model architectures for synthetic synthetic text detection",
+        "supervised and self-supervised methods for for misinformation detection",
+        "adversarial robustness and watermarking for for AI misinformation",
+        "benchmarks and datasets for evaluating evaluating AIgenerated misinformation misinformation",
+        "limitations and ethical challenges of automated misinformation detection systems"
+      ],
+      "final_subqueries": [
+        "taxonomy and definitions of AI-generated misinformation and synthetic media",
+        "deep learning model architectures for detecting synthetic text images",
+        "supervised and self-supervised training methods for misinformation detection",
+        "adversarial robustness and watermarking techniques for misinformation mitigation",
+        "benchmarks and datasets for evaluating AI-generated content authenticity",
+        "limitations and ethical challenges in automated misinformation detection systems"
+      ]
+    }
+  ],
+  "stable_exact6_differs_from_final": [
+    {
+      "query_id": "q038",
+      "source_query": "AI methods for biodiversity monitoring",
+      "first_stable_exact6_ms": 435.96082692965865,
+      "full_generation_ms": 536.4293158054352,
+      "stable_exact6_subqueries": [
+        "review of artificial intelligence methods for biodiversity monitoring and conservation",
+        "deep learning architectures for species identification and acoustic monitoring",
+        "unsupervised and semi-supervised learning for ecological data analysis",
+        "remote sensing and satellite imagery analysis for habitat assessment",
+        "benchmarks and datasets for AI-based biodiversity monitoring",
+        "challenges and limitations of machine learning in wildlife population modeling"
+      ],
+      "final_subqueries": [
+        "review of artificial intelligence methods for biodiversity monitoring and conservation",
+        "deep learning architectures for species identification and acoustic monitoring",
+        "unsupervised and semi-supervised learning for ecological data analysis",
+        "remote sensing and satellite imagery analysis for habitat assessment",
+        "benchmarks and datasets for AI-based biodiversity monitoring",
+        "challenges and limitations of machine learning in wildlife population tracking"
+      ]
+    },
+    {
+      "query_id": "q043",
+      "source_query": "hybrid search combining BM25 and embeddings",
+      "first_stable_exact6_ms": 387.54852674901485,
+      "full_generation_ms": 532.7402907423675,
+      "stable_exact6_subqueries": [
+        "hybrid information retrieval survey BM25 and dense embeddings survey",
+        "architect for for combining sparse and dense vector retrieval",
+        "cross-encoder vs bi-encoder in hybrid search",
+        "reciprocal rank fusion vs alpha fusion methods for hybrid search",
+        "performance benchmarks of hybrid search retrieval systems",
+        "limitations and challenges of lexical and semantic search fusion"
+      ],
+      "final_subqueries": [
+        "hybrid information retrieval survey BM25 and dense embeddings",
+        "architectural patterns for combining sparse and dense vector retrieval",
+        "cross-encoder vs bi-encoder in hybrid search",
+        "reciprocal rank fusion vs alpha fusion methods for hybrid search",
+        "performance benchmarks of hybrid search retrieval systems",
+        "limitations and challenges of lexical and semantic search fusion"
+      ]
+    },
+    {
+      "query_id": "q053",
+      "source_query": "detecting synthetic media with deep learning",
+      "first_stable_exact6_ms": 581.0480560176075,
+      "full_generation_ms": 678.093935828656,
+      "stable_exact6_subqueries": [
+        "survey of synthetic media detection using deep learning techniques",
+        "deep learning architectures for deepfake detection in video",
+        "unsupervised and self-supervised learning for synthetic image forgery",
+        "generalization and robustness of synthetic media detectors detectors",
+        "benchmarks and datasets for synthetic media evaluation",
+        "limitations and adversarial attacks on deep learning based detectors"
+      ],
+      "final_subqueries": [
+        "survey of synthetic media detection using deep learning techniques",
+        "deep learning architectures for deepfake detection in video",
+        "unsupervised and self-supervised learning for synthetic image forgery",
+        "generalization and robustness of synthetic media detectors models",
+        "benchmarks and datasets for synthetic media evaluation",
+        "limitations and adversarial attacks on deep learning based detectors"
+      ]
+    },
+    {
+      "query_id": "q055",
+      "source_query": "data poisoning attacks on foundation models",
+      "first_stable_exact6_ms": 537.0029699988663,
+      "full_generation_ms": 875.2915263175964,
+      "stable_exact6_subqueries": [
+        "survey of data poisoning attacks on large scale foundation models",
+        "backdoor attacks on pre- language models and vision transformers",
+        "fine-tuning data poisoning vulnerabilities and adaptive learning attacks",
+        "poisoning-based inference time attacks on generative AI",
+        "benchmarks and datasets for evaluating data poisoning robustness",
+        "defense mechanisms and mitigation of data poisoning in foundation models"
+      ],
+      "final_subqueries": [
+        "survey of data poisoning attacks on large scale foundation models",
+        "backdoor attacks on pretraining language models and vision transformers",
+        "fine-tuning data poisoning vulnerabilities and adaptive learning attacks",
+        "poisoning-based inference time attacks on generative AI",
+        "benchmarks and datasets for evaluating data poisoning robustness",
+        "defense mechanisms and mitigation of data poisoning in foundation models"
+      ]
+    },
+    {
+      "query_id": "q060",
+      "source_query": "formal verification of neural network robustness",
+      "first_stable_exact6_ms": 386.7542981170118,
+      "full_generation_ms": 484.0988512150943,
+      "stable_exact6_subqueries": [
+        "formal verification of neural network robustness survey definitions",
+        "formal verification of deep neural networks and CNNs",
+        "robustness training methods using formal methods",
+        "reach-based and probabilistic sampling for neural networks",
+        "benchmarks for neural network robustness verification",
+        "limitations and scalability challenges of formal verification in AI"
+      ],
+      "final_subqueries": [
+        "formal verification of neural network robustness survey definitions",
+        "formal verification of deep neural networks and CNNs",
+        "robustness training methods using formal verification",
+        "sampling-based and probabilistic verification for neural networks",
+        "benchmarks for neural network robustness verification",
+        "limitations and scalability challenges of formal verification in AI"
+      ]
+    },
+    {
+      "query_id": "q061",
+      "source_query": "diffusion models for image editing",
+      "first_stable_exact6_ms": 385.77374489977956,
+      "full_generation_ms": 482.77472611516714,
+      "stable_exact6_subqueries": [
+        "survey of diffusion models for image editing and manipulation",
+        "latent diffusion models for image-to-image translation",
+        "classifier-free guidance and inversion techniques for diffusion editing",
+        "efficient sampling methods for fast diffusion-based editing",
+        "benchmarks and metrics for generative image editing quality",
+        "limitations and challenges in diffusion-based semantic consistency"
+      ],
+      "final_subqueries": [
+        "survey of diffusion models for image editing and manipulation",
+        "latent diffusion models for image-to-image translation",
+        "classifier-free guidance and inversion techniques for diffusion editing",
+        "efficient sampling methods for fast diffusion-based editing",
+        "benchmarks and metrics for generative image editing quality",
+        "limitations and challenges in diffusion-based image consistency"
+      ]
+    },
+    {
+      "query_id": "q066",
+      "source_query": "multimodal chain of thought reasoning",
+      "first_stable_exact6_ms": 346.93303192034364,
+      "full_generation_ms": 492.1654867939651,
+      "stable_exact6_subqueries": [
+        "multimodal chain of thought reasoning survey and definitions",
+        "vision-language large language models with chain of thought architectures",
+        "training methods for multimodal reasoning and de- thought",
+        "inference strategies and sampling for multimodal CoT",
+        "benchmarks for evaluating multimodal chain of thought performance",
+        "limitations and challenges in multimodal chain of thought reasoning"
+      ],
+      "final_subqueries": [
+        "multimodal chain of thought reasoning survey and definitions",
+        "vision-language large language models with chain of thought architectures",
+        "training methods for multimodal reasoning and de novo prompting",
+        "inference strategies and sampling for multimodal CoT",
+        "benchmarks for evaluating multimodal chain of thought performance",
+        "limitations and challenges in multimodal chain of thought reasoning"
+      ]
+    },
+    {
+      "query_id": "q069",
+      "source_query": "OCR free visual document models",
+      "first_stable_exact6_ms": 484.3894587829709,
+      "full_generation_ms": 581.6670409403741,
+      "stable_exact6_subqueries": [
+        "end-to-end visual document understanding without OCR survey",
+        "multimodal LLMs for document image analysis and text extraction",
+        "pre-training strategies for vision-language document transformers",
+        "inference optimization for real-time visual document models",
+        "benchmarks for OCR-free visual document information extraction",
+        "limitations and challenges of direct visual text processing models"
+      ],
+      "final_subqueries": [
+        "end-to-end visual document understanding without OCR survey",
+        "multimodal LLMs for document image analysis and text extraction",
+        "pre-training strategies for vision-language document models",
+        "inference optimization for real-time visual document models",
+        "benchmarks for OCR-free visual document information extraction",
+        "limitations and challenges of direct visual text processing models"
+      ]
+    },
+    {
+      "query_id": "q087",
+      "source_query": "benchmarking coding assistants on real repositories",
+      "first_stable_exact6_ms": 387.6069523394108,
+      "full_generation_ms": 533.1465522758663,
+      "stable_exact6_subqueries": [
+        "survey of large language models for software engineering tasks",
+        "benchmarking LLMs on code generation and GitHub repository repositories",
+        "fine-tuning techniques for coding assistants on large scale codebases",
+        "inference strategies and sampling methods for code generation models",
+        "evaluation metrics for code assistants in real-world software development",
+        "limitations and security vulnerabilities of AI coding assistants in production"
+      ],
+      "final_subqueries": [
+        "survey of large language models for software engineering tasks",
+        "benchmarking LLMs on code generation and GitHub repository data",
+        "fine-tuning techniques for coding assistants on large scale codebases",
+        "inference strategies and sampling methods for code generation models",
+        "evaluation metrics for code assistants in real-world software development",
+        "limitations and security vulnerabilities of AI coding assistants in production"
+      ]
+    }
+  ]
+}

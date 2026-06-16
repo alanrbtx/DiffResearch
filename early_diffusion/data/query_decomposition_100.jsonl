@@ -1,0 +1,100 @@
+{"id":"q001","query":"diffusion LLM"}
+{"id":"q002","query":"retrieval augmented generation for medical question answering"}
+{"id":"q003","query":"scaling laws for multimodal transformers"}
+{"id":"q004","query":"benchmarking long context language models"}
+{"id":"q005","query":"efficient fine tuning methods for large language models"}
+{"id":"q006","query":"safety alignment in open source language models"}
+{"id":"q007","query":"tool use and planning in autonomous LLM agents"}
+{"id":"q008","query":"mixture of experts routing stability in transformers"}
+{"id":"q009","query":"speculative decoding for faster text generation"}
+{"id":"q010","query":"quantization effects on reasoning in large language models"}
+{"id":"q011","query":"graph neural networks for molecular property prediction"}
+{"id":"q012","query":"foundation models for protein structure and function"}
+{"id":"q013","query":"AI methods for drug repurposing"}
+{"id":"q014","query":"causal inference with deep learning in healthcare"}
+{"id":"q015","query":"privacy preserving federated learning for hospitals"}
+{"id":"q016","query":"medical image segmentation with vision transformers"}
+{"id":"q017","query":"uncertainty estimation in clinical AI systems"}
+{"id":"q018","query":"large language models for radiology report generation"}
+{"id":"q019","query":"self supervised learning for electronic health records"}
+{"id":"q020","query":"robustness of AI diagnosis under distribution shift"}
+{"id":"q021","query":"reinforcement learning from human feedback"}
+{"id":"q022","query":"offline reinforcement learning for robotics"}
+{"id":"q023","query":"world models for embodied AI"}
+{"id":"q024","query":"sim to real transfer for robot manipulation"}
+{"id":"q025","query":"multi agent reinforcement learning coordination"}
+{"id":"q026","query":"safe exploration in reinforcement learning"}
+{"id":"q027","query":"language guided robotic planning"}
+{"id":"q028","query":"vision language action models for robots"}
+{"id":"q029","query":"imitation learning from human demonstrations"}
+{"id":"q030","query":"benchmark datasets for embodied navigation"}
+{"id":"q031","query":"climate modeling with machine learning"}
+{"id":"q032","query":"AI for extreme weather forecasting"}
+{"id":"q033","query":"remote sensing foundation models"}
+{"id":"q034","query":"satellite image change detection"}
+{"id":"q035","query":"machine learning for carbon capture materials"}
+{"id":"q036","query":"energy efficient data center scheduling"}
+{"id":"q037","query":"deep learning for solar power forecasting"}
+{"id":"q038","query":"AI methods for biodiversity monitoring"}
+{"id":"q039","query":"climate risk assessment with graph models"}
+{"id":"q040","query":"machine learning for wildfire prediction"}
+{"id":"q041","query":"neural information retrieval benchmarks"}
+{"id":"q042","query":"dense retrieval for scientific literature search"}
+{"id":"q043","query":"hybrid search combining BM25 and embeddings"}
+{"id":"q044","query":"query rewriting for conversational search"}
+{"id":"q045","query":"learning to rank with large language models"}
+{"id":"q046","query":"evaluation metrics for retrieval augmented generation"}
+{"id":"q047","query":"citation recommendation in academic search"}
+{"id":"q048","query":"entity linking for knowledge graph construction"}
+{"id":"q049","query":"semantic search for code repositories"}
+{"id":"q050","query":"personalized search with privacy constraints"}
+{"id":"q051","query":"adversarial attacks on vision language models"}
+{"id":"q052","query":"watermarking generated text from language models"}
+{"id":"q053","query":"detecting synthetic media with deep learning"}
+{"id":"q054","query":"red teaming large language models"}
+{"id":"q055","query":"data poisoning attacks on foundation models"}
+{"id":"q056","query":"privacy leakage in language model memorization"}
+{"id":"q057","query":"jailbreak defenses for chat assistants"}
+{"id":"q058","query":"model extraction attacks on deployed APIs"}
+{"id":"q059","query":"secure inference for neural networks on edge devices"}
+{"id":"q060","query":"formal verification of neural network robustness"}
+{"id":"q061","query":"diffusion models for image editing"}
+{"id":"q062","query":"text to video generation evaluation"}
+{"id":"q063","query":"3D generation with neural radiance fields and diffusion"}
+{"id":"q064","query":"controllable music generation with transformers"}
+{"id":"q065","query":"speech synthesis with discrete audio tokens"}
+{"id":"q066","query":"multimodal chain of thought reasoning"}
+{"id":"q067","query":"visual question answering with large multimodal models"}
+{"id":"q068","query":"document understanding with layout aware transformers"}
+{"id":"q069","query":"OCR free visual document models"}
+{"id":"q070","query":"evaluation of image captioning factuality"}
+{"id":"q071","query":"time series forecasting with foundation models"}
+{"id":"q072","query":"anomaly detection in industrial sensor data"}
+{"id":"q073","query":"graph transformers for traffic forecasting"}
+{"id":"q074","query":"neural operators for partial differential equations"}
+{"id":"q075","query":"physics informed neural networks limitations"}
+{"id":"q076","query":"surrogate modeling for computational fluid dynamics"}
+{"id":"q077","query":"Bayesian optimization for materials discovery"}
+{"id":"q078","query":"active learning for expensive simulations"}
+{"id":"q079","query":"probabilistic forecasting for supply chains"}
+{"id":"q080","query":"foundation models for tabular data"}
+{"id":"q081","query":"AI assisted theorem proving"}
+{"id":"q082","query":"program synthesis with large language models"}
+{"id":"q083","query":"automated code repair with neural models"}
+{"id":"q084","query":"software engineering agents for bug fixing"}
+{"id":"q085","query":"unit test generation using language models"}
+{"id":"q086","query":"code retrieval augmented generation"}
+{"id":"q087","query":"benchmarking coding assistants on real repositories"}
+{"id":"q088","query":"static analysis enhanced neural code models"}
+{"id":"q089","query":"security vulnerability detection in source code"}
+{"id":"q090","query":"natural language to SQL generation robustness"}
+{"id":"q091","query":"fairness in algorithmic hiring systems"}
+{"id":"q092","query":"explainability methods for deep neural networks"}
+{"id":"q093","query":"human AI collaboration in decision making"}
+{"id":"q094","query":"AI governance frameworks for foundation models"}
+{"id":"q095","query":"auditing bias in recommendation systems"}
+{"id":"q096","query":"economic impacts of generative AI adoption"}
+{"id":"q097","query":"education applications of large language models"}
+{"id":"q098","query":"mental health chatbots safety evaluation"}
+{"id":"q099","query":"human preference modeling for recommender systems"}
+{"id":"q100","query":"AI generated misinformation detection and mitigation"}
