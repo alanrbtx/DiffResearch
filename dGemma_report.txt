@@ -1,0 +1,124 @@
+# Literature Review: Diffusion Large Language Models (LLMs)
+
+## 1. Introduction
+
+### Definition and Scope
+Diffusion Large Language Models (DLLMs) represent a paradigm shift in generative modeling, moving away from the ubiquitous autoregressive (AR) framework that dominates Natural Language Processing (NLP). While AR models generate text sequentially, one token at a time conditioned on previous tokens, diffusion models treat text generation as an iterative denoising process. This process involves a forward pass that gradually adds noise to data (or latent representations) and a reverse pass that learns to recover the original clean signal from pure noise. In the context of NLP, this requires adapting diffusion theory—originally designed for continuous data domains like pixels in images—to the discrete and categorical nature of human language.
+
+### Motivation
+The research community's pivot toward diffusion for text is driven by several inherent limitations of AR transformers. Most notably, AR models suffer from "exposure bias," where the model is trained on ground-truth tokens but tested on its own predicted tokens, leading to error accumulation. Furthermore, the sequential nature of AR decoding creates a significant computational bottleneck for long sequences. Diffusion offers the potential for parallel generation, where the entire sequence is refined simultaneously, potentially accelerating inference speed. Additionally, diffusion models provide superior flexibility for constrained generation, such as infilling, style transfer, and structured data synthesis, because they operate on the global sequence rather than a left-to-right trajectory.
+
+### Objective of the Review
+The objective of this review is to synthesize the architectural and theoretical evolution of diffusion from image-based foundations to large-scale language modeling. It explores how researchers have navigated the challenges of discrete state spaces through continuous embedding diffusion, discrete transition matrices, and hybrid architectures. By evaluating the state of the art, this review aims to provide a comprehensive understanding of how DLLMs compare to the current dominance of AR-based LLMs.
+
+### Thesis Statement
+While diffusion LLMs have demonstrated remarkable potential in controllable generation, parallel sampling, and specialized tasks, they currently remain less competitive with AR models in terms of raw perplexity and long-form semantic coherence. However, recent advancements in scaling diffusion via AR backbones and improving inference-time frameworks suggest that the gap is closing rapidly, positioning DLLMs as a vital alternative for multi-modal and iterative editing tasks.
+
+---
+
+## 2. Theoretical Background & Foundations
+
+### Mathematical Framework of Diffusion
+The mathematical core of diffusion models rests on the duality between forward noise addition and reverse denoising. As detailed by Fu and Wang [4], these processes can be framed through Stochastic Differential Equations (SDEs) and Ordinary Differential Equations (ODEs). The forward process transforms a data distribution $p(x_0)$ into a Gaussian prior $p(x_T)$ through a chain of transitions. The reverse process seeks to learn the "score function"—the gradient of the log-density of the data—to iteratively remove this noise. This framework allows for the generation of samples by starting from random noise and moving toward the high-density regions of the data manifold [4].
+
+### Discrete vs. Continuous State Spaces
+A primary theoretical hurdle in applying diffusion to text is the discreteness of tokens. In image generation, data is continuous, making Gaussian noise naturally applicable. In text, tokens are categorical. Researchers have branched into two main strategies: continuous embedding diffusion, which maps tokens to high-dimensional vector spaces where Gaussian diffusion can be applied followed by a decoder [4], [7]; and discrete diffusion, which operates directly on the token space using Markov chains, transition matrices, or absorbing states [2], [16]. The choice between these involves a trade-off between the mathematical elegance of continuous calculus and the direct modeling of linguistic symbols.
+
+### State-Space Models (SSMs)
+The emergence of diffusion coincides with the rise of non-autoregressive architectures like State-Space Models (SSMs) and Mamba. While diffusion models break the sequential bottleneck through parallel denoising, SSMs do so through linear scaling with sequence length. There is a growing interest in how these paradigms might intersect—for instance, using SSMs as the backbone for diffusion-based denoisers to combine the global refinement capabilities of diffusion with the computational efficiency of state-space backbones.
+
+---
+
+## 3. Thematic Research Areas (Architectural Evolution)
+
+### Discrete Diffusion Models
+Discrete diffusion models address the categorical nature of text by utilizing transitions between states. DiffusionBERT [2] explores this by training a BERT-based architecture to learn the reverse process of a discrete diffusion process with an absorbing state. The authors introduce a novel noise schedule that adjusts noise levels based on token information, significantly improving unconditional text generation over previous models like D3PM. Similarly, Haxholli et al. [16] provide a theoretical foundation for ratio-matching within continuous-time discrete Markov chain (CTMC) frameworks. They demonstrate that minimizing denoising cross-entropy can outperform traditional score-entropy methods, leading to 10% lower perplexity and 15% faster training. These works highlight that discrete diffusion can be mathematically rigorous without requiring a mapping to continuous space.
+
+### Continuous Embedding Space Diffusion
+Another major branch involves performing diffusion in a continuous latent space. Diffusion-LM [4] was a pioneer in this area, applying diffusion to the embeddings of tokens. This approach has been further refined in models like DiffLM [20], which utilizes a Variational Autoencoder (VAE) to learn an expressive latent distribution for structured data like tables and code. By performing diffusion in the latent space, DiffLM can preserve the format and knowledge of the original distribution more effectively than token-level models. However, these models often struggle with the "decoding gap," where mapping the denoised continuous vector back to a discrete token can result in semantic loss or grammatical errors.
+
+### Hybrid Architectures
+The "backbone" of a diffusion model is evolving from simple U-Nets to sophisticated Transformers. Gong et al. [11] demonstrate a significant breakthrough in scaling DLLMs by adapting existing autoregressive models, such as GPT-2 and LLaMA, into diffusion models (DiffuGPT and DiffuLLaMA). This method uses continual pre-training to leverage the pre-trained weights of AR models, showing that DLLMs can reach 7B parameters and remain competitive in reasoning. Furthermore, Xu et al. [15] propose Energy-Based Diffusion Language Models (EDLM), which integrate an energy-based model in a residual form to improve the approximation used in diffusion steps, achieving a 1.3x sampling speedup without sacrificing performance.
+
+### Conditioning Mechanisms
+Conditioning is what makes diffusion models truly useful. Zhang et al. [3] introduce Language Control Diffusion (LCD), which uses language as a hierarchical planner to scale diffusion models for long-horizon robotics tasks. In the medical domain, Leclercq et al. [7] utilize Latent Diffusion Models with concatenation-based conditioning to predict tumor evolution based on pre-treatment MRIs and survival information. These mechanisms typically rely on cross-attention layers or classifier-free guidance (CFG), which allows the model to steer the denoising process toward specific prompts or structural constraints [7], [9].
+
+---
+
+## 4. Methodology Comparison
+
+### Diffusion vs. Autoregressive (AR)
+The fundamental distinction between these two paradigms lies in the sampling trajectory. Li and Cai [12] provide a theoretical justification for why diffusion can break the AR sampling bottleneck, proving that high-quality samples can be generated in fewer iterations ($T$) than the sequence length ($L$). While AR models are bound by $O(L)$ complexity, diffusion models allow for $O(T)$ parallel steps. However, this comes at the cost of multiple forward passes per generation, which can sometimes be slower than a single sequential AR pass if $T$ is large.
+
+### Training Objectives
+AR models are typically trained using next-token prediction loss. In contrast, diffusion models use variational lower bounds (ELBO) or denoising-score matching. Della Maggiora et al. [8] point out that diffusion models are highly sensitive to the "variance schedule," and they propose Conditional Variational Diffusion Models that learn the schedule as part of the training process. This provides a more stable and adaptive training regime compared to the rigid fixed-noise schedules often used in early diffusion-based text models.
+
+### Constraint Satisfaction
+Diffusion models excel in constrained generation. Because they refine the entire sequence at once, they can satisfy global constraints (like length or formatting) more easily than beam search. Yu et al. [18] introduce TReASURe, a tree-search method specifically for masked diffusion models that aligns generation with task-specific rewards. By using "UnmaskBranching" to diversify exploration, TReASURe achieves state-of-the-art results in sentiment and toxicity control, outperforming models under the same compute budget.
+
+---
+
+## 5. Performance Evaluation & Metrics
+
+### Benchmark Analysis
+Standard metrics like Perplexity, BLEU, and ROUGE are used to evaluate DLLMs, but Pynadath et al. [17] argue that these are often misleading. They suggest that "generative perplexity" is highly sensitive to the entropy of the model's distribution and propose "generative frontiers" as a more principled method for evaluating generative quality. Despite these concerns, models like DiffuLLaMA [11] have shown competitive results on GLUE and commonsense benchmarks compared to AR counterparts.
+
+### Generation Quality
+Hallucination remains a challenge for all generative models. Zucchet et al. [6] find that hallucinations in LLMs emerge simultaneously with knowledge acquisition during pre-training and that fine-tuning can easily corrupt existing memories. For diffusion models, the challenge is maintaining long-range logical consistency, as the model does not follow a strict causal order. However, models like LCD [3] show that diffusion can produce much more coherent long-range plans in robotics than previous SOTA methods.
+
+### Computational Efficiency
+Efficiency is a double-edged sword. While diffusion allows for parallel sampling [12], the memory overhead of running multiple denoising steps can be high. Xu et al. [15] address this with energy-based residuals that speed up the process, but the overall FLOP count for multi-step diffusion often remains higher than for a single-pass AR generation.
+
+---
+
+## 6. Research Gaps & Challenges
+
+### The "Scalability Gap"
+The most significant gap is the lack of trillion-parameter diffusion models. While Gong et al. [11] scaled to 7B parameters by adapting AR models, training a diffusion model from scratch at massive scales remains computationally prohibitive and theoretically unstable compared to the highly optimized next-token prediction objective used in AR models.
+
+### Semantic Coherence Issues
+Maintaining a logical thread over long paragraphs is difficult for non-autoregressive models. Since the model updates all tokens simultaneously, it may produce "local" coherence where the beginning of a sentence contradicts the end, a problem less prevalent in the strictly causal AR framework.
+
+### Inference Latency
+The trade-off between the number of denoising steps and speed is not yet optimized. While techniques like those in Li and Cai [12] suggest theoretical acceleration, achieving high-quality text in very few steps ($<10$) remains an open challenge.
+
+### Data Scarcity
+Most DLLMs are trained on the same datasets as AR models. However, there is a lack of datasets specifically curated for diffusion-based training, such as those that emphasize structural flexibility or multi-modal alignment which could better leverage the strengths of the diffusion paradigm.
+
+---
+
+## 7. Conclusion
+
+### Summary of Findings
+The literature indicates that diffusion LLMs have evolved from theoretical curiosities to viable frameworks for specialized tasks. Architectures like DiffusionBERT [2], DiffuLLaMA [11], and DiffLM [20] have proven that diffusion can handle discrete text and structured data effectively. The use of latent diffusion and energy-based models has further addressed the performance gaps of early iteration models.
+
+### Future Directions
+The future of diffusion likely lies in multi-modal integration, where text, image, and video are generated within a unified diffusion framework. Additionally, iterative editing—where a user "refines" a draft through denoising steps—is a natural fit for diffusion that AR models cannot easily replicate.
+
+### Final Verdict
+Diffusion models are unlikely to replace autoregressive LLMs for general-purpose chat and reasoning in the near term. However, they are rapidly becoming the preferred paradigm for constrained generation, creative editing, and multi-modal synthesis, where the sequential constraints of AR models become a liability.
+
+---
+
+## References
+
+[1] Zicong Cheng, et al. (2026). Improving Variable-Length Generation in Diffusion Language Models via Length Regularization. http://arxiv.org/abs/2602.07546v1
+[2] Zhengfu He, et al. (2022). DiffusionBERT: Improving Generative Masked Language Models with Diffusion Models. http://arxiv.org/abs/2211.15029v2
+[3] Edwin Zhang, et al. (2022). Language Control Diffusion: Efficiently Scaling through Space, Time, and Tasks. http://arxiv.org/abs/2210.15629v4
+[4] Jiayi Fu and Yuxia Wang (2026). A Tutorial on Diffusion Theory: From Differential Equations to Diffusion Models. http://arxiv.org/abs/2605.22586v3
+[5] Eric Zhang, et al. (2024). Unforgettable Generalization in Language Models. http://arxiv.org/abs/2409.02228v1
+[6] Nicolas Zucchet, et al. (2025). How do language models learn facts? Dynamics, curricula and hallucinations. http://arxiv.org/abs/2503.21676v2
+[7] Alexandre G. Leclercq, et al. (2025). Pre to Post-Treatment Glioblastoma MRI Prediction using a Latent Diffusion Model. http://arxiv.org/abs/2510.17851v1
+[8] Gabriel della Maggiora, et al. (2023). Conditional Variational Diffusion Models. http://arxiv.org/abs/2312.02246v4
+[9] Pu Cao, et al. (2024). Controllable Generation with Text-to-Image Diffusion Models: A Survey. http://arxiv.org/abs/2403.04279v2
+[10] Sangwoong Yoon, et al. (2023). Generalized Contrastive Divergence: Joint Training of Energy-Based Model and Diffusion Model through Inverse Reinforcement Learning. http://arxiv.org/abs/2312.03397v1
+[11] Shansan Gong, et al. (2024). Scaling Diffusion Language Models via Adaptation from Autoregressive Models. https://www.semanticscholar.org/paper/385f0c77e72f95d2e7df94e8b4ff6b9ab4b6b52f3
+[12] Gen Li and Changxiao Cai (2025). Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models. https://www.semanticscholar.org/paper/baa2f7e747d4000591008503638bfddd694
+[13] Xinpeng Zhao, et al. (2025). DiffuGR: Generative Document Retrieval with Diffusion Language Models. https://www.semanticscholar.org/paper/330e0a8ced3be59ef078f76a3d8e1625bebf35
+[14] Xinyou Wang, et al. (2024). Diffusion Language Models Are Versatile Protein Learners. http://arxiv.org/abs/9ec9a954f42e1a3f9d3150152e0eb8515
+[15] Minkai Xu, et al. (2024). Energy-Based Diffusion Language Models for Text Generation. https://www.semanticscholar.org/paper/c3f1804c4c705449771b29c2c2db3b34dd1f3d
+[16] Etrit Haxholli, et al. (2025). Efficient Perplexity Bound and Ratio Matching in Discrete Diffusion Language Models. https://www.semanticscholar.org/paper/824ba37749ae602d6bf6c39974df72
+[17] Patrick Pynadath, et al. (2026). Generative Frontiers: Why Evaluation Matters for Diffusion Language Models. http://arxiv.org/abs/5c175f5a7r8e5s8s3d4a1f2b9c919f6ef1c
+[18] Zichao Yu, et al. (2025). Tree Reward-Aligned Search for TReASURe in Masked Diffusion Language Models. http://arxiv.org/abs/3d1269a0f4e8c0c4a8b8dc473f56e8362
+[19] Tejomay Kishor Padole, et al. (2025). Improving Text Style Transfer using Masked Diffusion Language Models with Inference-time Scaling. http://arxiv.org/abs/64204941e6c0a6a889084b1e3c5a3641221bf
+[20] Ying Zhou, et al. (2024). DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models. http://arxiv.org/abs/3cf1cecaaa658a1d9b70abb2e4f92d519
