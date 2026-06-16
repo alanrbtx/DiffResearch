@@ -4,7 +4,7 @@ import os
 import threading
 import time
 from dataclasses import asdict
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
@@ -30,12 +30,14 @@ startup_load_ms: float | None = None
 class DecomposeRequest(BaseModel):
     query: str = Field(..., min_length=1)
     max_new_tokens: int = Field(default=768, ge=1, le=4096)
-    early_stop: bool = True
+    mode: Literal["fast", "full"] = "fast"
+    early_stop: bool | None = None
 
 
 class DecomposeResponse(BaseModel):
     subqueries: list[str]
     mode: str
+    request_mode: str
     elapsed_ms: float
     draft_step: int | None
     final_text: str | None = None
@@ -96,12 +98,18 @@ def decompose(request: DecomposeRequest) -> DecomposeResponse:
     server_start = time.perf_counter()
     try:
         ensure_model_loaded()
+        request_mode = request.mode
+        early_stop = request.early_stop if request.early_stop is not None else request_mode == "fast"
+        if request_mode == "full":
+            early_stop = False
         with generation_lock:
             result = decompose_fast_mode(
                 query=request.query,
                 model_id=MODEL_ID,
                 max_new_tokens=request.max_new_tokens,
-                early_stop=request.early_stop,
+                early_stop=early_stop,
+                request_mode=request_mode,
+                require_final=request_mode == "full",
             )
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
@@ -110,6 +118,7 @@ def decompose(request: DecomposeRequest) -> DecomposeResponse:
     payload.update(
         {
             "backend": "server_hf_fastapi",
+            "request_mode": request.mode,
             "server_elapsed_ms": elapsed_ms(server_start),
             "model_id": MODEL_ID,
         }

@@ -56,6 +56,7 @@ Requirements:
 class DecompositionResult:
     subqueries: list[str]
     mode: str
+    request_mode: str
     elapsed_ms: float
     draft_step: int | None
     final_text: str | None
@@ -237,6 +238,8 @@ def decompose_fast_mode(
     model_id: str,
     max_new_tokens: int,
     early_stop: bool,
+    request_mode: str = "fast",
+    require_final: bool = False,
 ) -> DecompositionResult:
     runtime = _get_diffusiongemma_runtime(model_id)
     processor = runtime.processor
@@ -269,6 +272,7 @@ def decompose_fast_mode(
         return DecompositionResult(
             subqueries=streamer.first_exact6["subqueries"],
             mode="first_exact6_draft",
+            request_mode=request_mode,
             elapsed_ms=streamer.first_exact6["elapsed_ms"],
             draft_step=streamer.first_exact6["draft_step"],
             final_text=streamer.first_exact6["text"],
@@ -282,14 +286,16 @@ def decompose_fast_mode(
         return DecompositionResult(
             subqueries=final_obj["subqueries"],
             mode="final_exact6",
+            request_mode=request_mode,
             elapsed_ms=elapsed_ms,
             draft_step=streamer.draft_step,
             final_text=final_text,
         )
-    if streamer.first_exact6 is not None:
+    if streamer.first_exact6 is not None and not require_final:
         return DecompositionResult(
             subqueries=streamer.first_exact6["subqueries"],
             mode="first_exact6_draft_no_stop",
+            request_mode=request_mode,
             elapsed_ms=streamer.first_exact6["elapsed_ms"],
             draft_step=streamer.first_exact6["draft_step"],
             final_text=streamer.first_exact6["text"],
@@ -305,6 +311,7 @@ def decompose_via_api(
     base_url: str,
     query: str,
     max_new_tokens: int,
+    mode: str,
     early_stop: bool,
     timeout: float,
 ) -> DecompositionResult:
@@ -312,6 +319,7 @@ def decompose_via_api(
     payload = {
         "query": query,
         "max_new_tokens": max_new_tokens,
+        "mode": mode,
         "early_stop": early_stop,
     }
     request_start = time.perf_counter()
@@ -327,6 +335,7 @@ def decompose_via_api(
     return DecompositionResult(
         subqueries=[str(item) for item in subqueries],
         mode=str(data.get("mode") or "remote_fast_mode"),
+        request_mode=str(data.get("request_mode") or mode),
         elapsed_ms=float(data.get("elapsed_ms") or request_elapsed_ms),
         draft_step=data.get("draft_step"),
         final_text=data.get("final_text"),
@@ -483,6 +492,12 @@ def parse_args() -> argparse.Namespace:
         default=float(os.environ.get("DIFFUSION_DECOMPOSE_TIMEOUT", "180")),
     )
     parser.add_argument(
+        "--decomposition-mode",
+        choices=["fast", "full"],
+        default=os.environ.get("DIFFUSION_DECOMPOSE_MODE", "fast"),
+        help="fast stops on the first exact-6 draft; full waits for final generate output.",
+    )
+    parser.add_argument(
         "--agent-backend",
         default=os.environ.get("RESEARCH_AGENT_BACKEND") or os.environ.get("MODEL_BACKEND") or "gemma4",
         choices=["gemma4", "openai", "diffusiongemma"],
@@ -501,7 +516,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--no-early-stop",
         action="store_true",
-        help="Continue full generation after first exact-6 draft instead of exiting fast mode.",
+        help="Legacy alias for --decomposition-mode full.",
     )
     return parser.parse_args()
 
@@ -526,12 +541,15 @@ def main() -> None:
 
     print("\n||DIFFUSIONGEMMA FAST DECOMPOSITION|| Waiting for first exact-6 draft\n", flush=True)
     stage_start = time.perf_counter()
+    decomposition_mode = "full" if args.no_early_stop else args.decomposition_mode
+    early_stop = decomposition_mode == "fast"
     if args.decomposition_base_url:
         decomposition = decompose_via_api(
             base_url=args.decomposition_base_url,
             query=args.prompt,
             max_new_tokens=args.max_new_tokens,
-            early_stop=not args.no_early_stop,
+            mode=decomposition_mode,
+            early_stop=early_stop,
             timeout=args.decomposition_timeout,
         )
     else:
@@ -539,7 +557,9 @@ def main() -> None:
             query=args.prompt,
             model_id=args.model_id,
             max_new_tokens=args.max_new_tokens,
-            early_stop=not args.no_early_stop,
+            early_stop=early_stop,
+            request_mode=decomposition_mode,
+            require_final=decomposition_mode == "full",
         )
     latencies["decomposition_wall_ms"] = elapsed_ms(stage_start)
     latencies["decomposition_generation_ms"] = decomposition.elapsed_ms
@@ -547,7 +567,8 @@ def main() -> None:
     latencies["decomposition_server_ms"] = decomposition.server_elapsed_ms
     print(
         f"Decomposition backend={decomposition.backend}, mode={decomposition.mode}, "
-        f"generation_ms={decomposition.elapsed_ms:.1f}, wall_ms={latencies['decomposition_wall_ms']:.1f}, "
+        f"request_mode={decomposition.request_mode}, generation_ms={decomposition.elapsed_ms:.1f}, "
+        f"wall_ms={latencies['decomposition_wall_ms']:.1f}, "
         f"draft_step={decomposition.draft_step}",
         flush=True,
     )
