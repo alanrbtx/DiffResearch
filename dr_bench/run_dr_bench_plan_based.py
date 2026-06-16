@@ -1,4 +1,3 @@
-import os
 import json
 import argparse
 import sys
@@ -9,6 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from tqdm import tqdm
+from src.agents.agent_template import agent_kwargs_from_env
 from src.agents.agents_collection import (
     RelevanceAgent, ExtractionAgent, SummarizationAgent,
     QueryFormattingAgent, PlanningAgent, PlanCheckAgent, IntentAgent,
@@ -16,9 +16,7 @@ from src.agents.agents_collection import (
 from src.web_tools.search_engine import ArXiv, SemanticScholar, Serper
 from src.web_tools.visit_site import visit_site
 
-api_key = os.environ['API_KEY']
-base_url = os.environ['BASE_URL']
-model = os.environ['MODEL_NAME']
+agent_kwargs = agent_kwargs_from_env()
 
 parser = argparse.ArgumentParser('Run plan-based DiffResearch on DeepResearchBench')
 parser.add_argument('--model-name', type=str, required=True, help='Output filename (without .jsonl)')
@@ -31,13 +29,13 @@ BENCH_DIR = PROJECT_ROOT.parent / 'deep_research_bench'
 QUERY_FILE = BENCH_DIR / 'data' / 'prompt_data' / 'query.jsonl'
 OUTPUT_FILE = BENCH_DIR / 'data' / 'test_data' / 'raw_data' / f'{args.model_name}.jsonl'
 
-rel_agent = RelevanceAgent(api_key=api_key, base_url=base_url, model=model)
-ext_agent = ExtractionAgent(api_key=api_key, base_url=base_url, model=model)
-sum_agent = SummarizationAgent(api_key=api_key, base_url=base_url, model=model)
-query_agent = QueryFormattingAgent(api_key=api_key, base_url=base_url, model=model)
-planning_agent = PlanningAgent(api_key=api_key, base_url=base_url, model=model)
-plan_check_agent = PlanCheckAgent(api_key=api_key, base_url=base_url, model=model)
-intent_agent = IntentAgent(api_key=api_key, base_url=base_url, model=model)
+rel_agent = RelevanceAgent(**agent_kwargs)
+ext_agent = ExtractionAgent(**agent_kwargs)
+sum_agent = SummarizationAgent(**agent_kwargs)
+query_agent = QueryFormattingAgent(**agent_kwargs)
+planning_agent = PlanningAgent(**agent_kwargs)
+plan_check_agent = PlanCheckAgent(**agent_kwargs)
+intent_agent = IntentAgent(**agent_kwargs)
 arxiv = ArXiv()
 s2 = SemanticScholar()
 serper = Serper()

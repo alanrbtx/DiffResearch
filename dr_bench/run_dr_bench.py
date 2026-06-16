@@ -1,4 +1,3 @@
-import os
 import json
 import argparse
 import sys
@@ -8,13 +7,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.agents.agent_template import agent_kwargs_from_env
 from src.agents.agents_collection import SummarizationAgent, DecomposeAgent, JudgeAgent, ComplexityAgent
 from src.web_tools.search_engine import ArXiv, SemanticScholar
 from src.web_tools.visit_site import visit_site
 
-api_key = os.environ['API_KEY']
-base_url = os.environ['BASE_URL']
-model = os.environ['MODEL_NAME']
+agent_kwargs = agent_kwargs_from_env()
 
 parser = argparse.ArgumentParser('Run DiffResearch on DeepResearchBench')
 parser.add_argument('--model-name', type=str, required=True, help='Output filename (without .jsonl)')
@@ -25,10 +23,10 @@ BENCH_DIR = PROJECT_ROOT.parent / 'deep_research_bench'
 QUERY_FILE = BENCH_DIR / 'data' / 'prompt_data' / 'query.jsonl'
 OUTPUT_FILE = BENCH_DIR / 'data' / 'test_data' / 'raw_data' / f'{args.model_name}.jsonl'
 
-sum_agent = SummarizationAgent(api_key=api_key, base_url=base_url, model=model)
-comp_agent = ComplexityAgent(api_key=api_key, base_url=base_url, model=model)
-judge_agent = JudgeAgent(api_key=api_key, base_url=base_url, model=model)
-decompose_agent = DecomposeAgent(api_key=api_key, base_url=base_url, model=model)
+sum_agent = SummarizationAgent(**agent_kwargs)
+comp_agent = ComplexityAgent(**agent_kwargs)
+judge_agent = JudgeAgent(**agent_kwargs)
+decompose_agent = DecomposeAgent(**agent_kwargs)
 arxiv = ArXiv()
 s2 = SemanticScholar()
 
