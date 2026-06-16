@@ -23,6 +23,7 @@ from src.web_tools.search_engine import ArXiv, SemanticScholar
 from src.web_tools.visit_site import visit_site
 
 
+DIFFUSION_MODEL_BASE_URL = os.environ.get("DIFFUSION_MODEL_BASE_URL")
 DECOMPOSITION_PROMPT_TEMPLATE = """You are a research-query decomposition engine.
 
 Task:
@@ -359,6 +360,10 @@ def build_agent_kwargs(args: argparse.Namespace) -> dict[str, Any]:
     backend = args.agent_backend
     if backend:
         agent_kwargs["backend"] = backend
+        if args.agent_base_url:
+            agent_kwargs["base_url"] = args.agent_base_url
+        if args.agent_api_key:
+            agent_kwargs["api_key"] = args.agent_api_key
         if args.agent_model:
             agent_kwargs["model"] = args.agent_model
         elif backend == "gemma4":
@@ -366,7 +371,9 @@ def build_agent_kwargs(args: argparse.Namespace) -> dict[str, Any]:
         elif backend == "diffusiongemma":
             agent_kwargs["model"] = os.environ.get("DIFFUSIONGEMMA_MODEL_ID") or DEFAULT_DIFFUSIONGEMMA_MODEL
         else:
-            agent_kwargs["model"] = os.environ.get("MODEL_NAME") or agent_kwargs.get("model")
+            agent_kwargs["model"] = (
+                os.environ.get("MODEL_NAME") or agent_kwargs.get("model") or DEFAULT_DIFFUSIONGEMMA_MODEL
+            )
     elif args.agent_model:
         agent_kwargs["model"] = args.agent_model
     return agent_kwargs
@@ -483,8 +490,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-id", default=os.environ.get("DIFFUSIONGEMMA_MODEL_ID") or DEFAULT_DIFFUSIONGEMMA_MODEL)
     parser.add_argument(
         "--decomposition-base-url",
-        default=os.environ.get("DIFFUSION_DECOMPOSE_BASE_URL"),
-        help="Fast decomposition API base URL, for example http://127.0.0.1:18080. Uses local HF if unset.",
+        default=os.environ.get("DIFFUSION_DECOMPOSE_BASE_URL") or DIFFUSION_MODEL_BASE_URL,
+        help="Decomposition API base URL, for example http://127.0.0.1:18080. Uses local HF if unset.",
     )
     parser.add_argument(
         "--decomposition-timeout",
@@ -499,14 +506,32 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--agent-backend",
-        default=os.environ.get("RESEARCH_AGENT_BACKEND") or os.environ.get("MODEL_BACKEND") or "gemma4",
+        default=(
+            os.environ.get("RESEARCH_AGENT_BACKEND")
+            or ("openai" if DIFFUSION_MODEL_BASE_URL else None)
+            or os.environ.get("MODEL_BACKEND")
+            or "gemma4"
+        ),
         choices=["gemma4", "openai", "diffusiongemma"],
-        help="Backend for planning/relevance/extraction/summarization. Defaults to AR Gemma.",
+        help="Backend for planning/relevance/extraction/summarization. Uses DIFFUSION_MODEL_BASE_URL when set.",
     )
     parser.add_argument(
         "--agent-model",
-        default=os.environ.get("RESEARCH_AGENT_MODEL"),
+        default=os.environ.get("RESEARCH_AGENT_MODEL") or (DEFAULT_DIFFUSIONGEMMA_MODEL if DIFFUSION_MODEL_BASE_URL else None),
         help="Override model id/name for non-decomposition agents.",
+    )
+    parser.add_argument(
+        "--agent-base-url",
+        default=(
+            os.environ.get("RESEARCH_AGENT_BASE_URL")
+            or (DIFFUSION_MODEL_BASE_URL.rstrip("/") + "/v1" if DIFFUSION_MODEL_BASE_URL else None)
+        ),
+        help="OpenAI-compatible base URL for non-decomposition agents.",
+    )
+    parser.add_argument(
+        "--agent-api-key",
+        default=os.environ.get("RESEARCH_AGENT_API_KEY") or os.environ.get("API_KEY") or "local",
+        help="API key for OpenAI-compatible non-decomposition agents.",
     )
     parser.add_argument("--max-new-tokens", type=int, default=768)
     parser.add_argument("--arxiv-per-query", type=int, default=2)
