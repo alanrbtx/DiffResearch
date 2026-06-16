@@ -8,7 +8,7 @@ The current `main` branch is based on the `research_bench` pipeline. It focuses 
 
 - Formats a user topic into search queries.
 - Searches ArXiv and Semantic Scholar for academic sources.
-- Optionally uses Serper for general web search in the experimental v2 benchmark runner.
+- Optionally uses Serper for general web search in the experimental plan-based benchmark runner.
 - Extracts article or paper text with ArXiv metadata, Serper scraping, `trafilatura`, or BeautifulSoup fallback.
 - Builds structured literature-review reports with inline numbered references.
 - Supports benchmark runs against a sibling DeepResearchBench checkout.
@@ -18,11 +18,14 @@ The current `main` branch is based on the `research_bench` pipeline. It focuses 
 ```text
 run_lite_deep_research.py   # single-pass literature review workflow
 run_full_deep_research.py   # decomposition, judge, and plan-check workflow
-run_bench.py                # DeepResearchBench runner using ArXiv + Semantic Scholar
-run_bench_v2.py             # experimental Serper/web benchmark runner
+dr_bench/run_dr_bench.py    # DeepResearchBench runner using ArXiv + Semantic Scholar
+dr_bench/run_dr_bench_plan_based.py
+                            # experimental plan-based Serper/web benchmark runner
 src/agents/                 # OpenAI-compatible agent classes and prompts
 src/web_tools/              # search engines and page extraction utilities
 examples/                   # sample reports
+examples/plan_based_report.txt
+                            # sample report from the plan-based benchmark path
 deep_research_scheem.png    # architecture diagram
 ```
 
@@ -50,7 +53,7 @@ export S2_API_KEY="your_semantic_scholar_key"
 export SERPER_API_KEY="your_serper_key"
 ```
 
-`S2_API_KEY` is optional for Semantic Scholar. `SERPER_API_KEY` is required by `run_bench_v2.py` for web search and Serper scraping.
+`S2_API_KEY` is optional for Semantic Scholar. `SERPER_API_KEY` is required by `dr_bench/run_dr_bench_plan_based.py` for web search and Serper scraping.
 
 ## Usage
 
@@ -90,13 +93,13 @@ The benchmark scripts expect DeepResearchBench data in a sibling directory:
 Run the main benchmark pipeline:
 
 ```bash
-uv run run_bench.py --model-name my-model
+uv run dr_bench/run_dr_bench.py --model-name my-model
 ```
 
 Resume an interrupted run:
 
 ```bash
-uv run run_bench.py --model-name my-model --resume
+uv run dr_bench/run_dr_bench.py --model-name my-model --resume
 ```
 
 Output is written to:
@@ -105,25 +108,25 @@ Output is written to:
 ../deep_research_bench/data/test_data/raw_data/<model-name>.jsonl
 ```
 
-## Experimental v2 Benchmark Runner
+## Plan-Based Benchmark Runner
 
-`run_bench_v2.py` adds `QueryFormattingAgent`, `IntentAgent`, `PlanningAgent`, optional relevance filtering, optional squeezing, and Serper web search:
+`dr_bench/run_dr_bench_plan_based.py` adds `QueryFormattingAgent`, `IntentAgent`, `PlanningAgent`, optional relevance filtering, optional squeezing, and Serper web search:
 
 ```bash
-uv run run_bench_v2.py --model-name my-model-v2 --relevance --squeeze
+uv run dr_bench/run_dr_bench_plan_based.py --model-name my-model-plan --relevance --squeeze
 ```
 
-Important: although `IntentAgent` is called, the script currently overrides the result with `intent = 'web'`, so it always uses Serper/web search. In prior checks, this v2 Serper/web-search path did not improve results.
+Important: although `IntentAgent` is called, the script currently overrides the result with `intent = 'web'`, so it always uses Serper/web search. In prior checks, this plan-based Serper/web-search path did not improve results.
 
 ## Agent Pipelines
 
-`run_bench.py`:
+`dr_bench/run_dr_bench.py`:
 
 ```text
 ComplexityAgent -> DecomposeAgent -> ArXiv/SemanticScholar search -> SummarizationAgent -> JudgeAgent
 ```
 
-`run_bench_v2.py`:
+`dr_bench/run_dr_bench_plan_based.py`:
 
 ```text
 QueryFormattingAgent -> IntentAgent (ignored) -> PlanningAgent -> Serper web search -> optional RelevanceAgent/ExtractionAgent -> SummarizationAgent

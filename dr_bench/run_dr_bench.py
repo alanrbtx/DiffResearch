@@ -1,7 +1,13 @@
 import os
 import json
 import argparse
+import sys
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from src.agents.agents_collection import SummarizationAgent, DecomposeAgent, JudgeAgent, ComplexityAgent
 from src.web_tools.search_engine import ArXiv, SemanticScholar
 from src.web_tools.visit_site import visit_site
@@ -10,12 +16,12 @@ api_key = os.environ['API_KEY']
 base_url = os.environ['BASE_URL']
 model = os.environ['MODEL_NAME']
 
-parser = argparse.ArgumentParser('Run simple_deep_research on DeepResearch Bench')
+parser = argparse.ArgumentParser('Run DiffResearch on DeepResearchBench')
 parser.add_argument('--model-name', type=str, required=True, help='Output filename (without .jsonl)')
 parser.add_argument('--resume', action='store_true', help='Skip already completed task IDs')
 args = parser.parse_args()
 
-BENCH_DIR = Path(__file__).parent.parent / 'deep_research_bench'
+BENCH_DIR = PROJECT_ROOT.parent / 'deep_research_bench'
 QUERY_FILE = BENCH_DIR / 'data' / 'prompt_data' / 'query.jsonl'
 OUTPUT_FILE = BENCH_DIR / 'data' / 'test_data' / 'raw_data' / f'{args.model_name}.jsonl'
 
