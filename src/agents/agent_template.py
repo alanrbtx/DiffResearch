@@ -120,14 +120,22 @@ class _DiffusionGemmaRuntime:
             output = self.model.generate(**inputs, max_new_tokens=max_new_tokens)
 
         generated = output[0]
+        decode_candidates = []
         input_ids = inputs.get("input_ids")
-        if input_ids is not None and generated.shape[-1] > input_ids.shape[-1]:
-            generated = generated[input_ids.shape[-1]:]
+        if (
+            input_ids is not None
+            and hasattr(generated, "shape")
+            and generated.shape[-1] > input_ids.shape[-1]
+        ):
+            decode_candidates.append(generated[input_ids.shape[-1]:])
+        decode_candidates.append(generated)
 
-        text = self.processor.decode(generated, skip_special_tokens=True).strip()
-        if not text:
-            text = self.processor.decode(output[0], skip_special_tokens=True).strip()
-        return _strip_thinking_channel(text)
+        for candidate in decode_candidates:
+            decoded = self.processor.decode(candidate, skip_special_tokens=True)
+            text = _clean_generated_text(decoded)
+            if text:
+                return text
+        return ""
 
 
 class _Gemma4Runtime:
@@ -206,6 +214,45 @@ def _strip_thinking_channel(text: str) -> str:
     """Remove empty or populated DiffusionGemma thinking-channel tags."""
     text = re.sub(r"<\|channel\>thought\s*.*?<channel\|>", "", text, flags=re.S)
     return text.strip()
+
+
+def _decoded_to_text(value) -> str:
+    """Normalize processor.decode outputs across Gemma processor versions."""
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict):
+        if "content" in value:
+            return _decoded_to_text(value.get("content"))
+        parts = [_decoded_to_text(item) for item in value.values()]
+        return "\n".join(part for part in parts if part)
+    if isinstance(value, (list, tuple)):
+        for item in reversed(value):
+            if isinstance(item, dict) and item.get("role") in {"assistant", "model"}:
+                text = _decoded_to_text(item.get("content"))
+                if text:
+                    return text
+        parts = [_decoded_to_text(item) for item in value]
+        return "\n".join(part for part in parts if part)
+    return str(value)
+
+
+def _clean_generated_text(decoded) -> str:
+    """Extract only the final model answer from decoded chat-template text."""
+    text = _strip_thinking_channel(_decoded_to_text(decoded))
+    for marker in (
+        "\nmodel\nthought\n",
+        "\nassistant\nthought\n",
+        "\nmodel\n",
+        "\nassistant\n",
+    ):
+        if marker in text:
+            text = text.rsplit(marker, 1)[1].strip()
+            break
+    if text.startswith("thought\n"):
+        text = text[len("thought\n"):].strip()
+    return text
 
 
 class OpenAIAgent:
