@@ -307,6 +307,37 @@ def decompose_fast_mode(
     )
 
 
+def decompose_full_generation(
+    *,
+    query: str,
+    model_id: str,
+    max_new_tokens: int,
+    request_mode: str = "full",
+) -> DecompositionResult:
+    runtime = _get_diffusiongemma_runtime(model_id)
+    prompt = DECOMPOSITION_PROMPT_TEMPLATE.format(query=query)
+    messages = [{"role": "user", "content": prompt}]
+
+    synchronize_cuda()
+    start_time = time.perf_counter()
+    text = runtime.generate(messages, max_new_tokens=max_new_tokens)
+    synchronize_cuda()
+    generation_ms = elapsed_ms(start_time)
+
+    obj = parse_subquery_json(text)
+    if not obj or len(obj.get("subqueries", [])) != 6:
+        raise RuntimeError(f"DiffusionGemma final generation did not return exact-6 JSON: {text!r}")
+
+    return DecompositionResult(
+        subqueries=obj["subqueries"],
+        mode="final_exact6_regular",
+        request_mode=request_mode,
+        elapsed_ms=generation_ms,
+        draft_step=None,
+        final_text=text,
+    )
+
+
 def decompose_via_api(
     *,
     base_url: str,
@@ -563,10 +594,13 @@ def run_deep_research(args: argparse.Namespace) -> dict[str, Any]:
     print(plan, flush=True)
     print(f"Planning latency: {latencies['planning_ms']:.1f} ms", flush=True)
 
-    print("\n||DIFFUSIONGEMMA FAST DECOMPOSITION|| Waiting for first exact-6 draft\n", flush=True)
-    stage_start = time.perf_counter()
     decomposition_mode = "full" if args.no_early_stop else args.decomposition_mode
     early_stop = decomposition_mode == "fast"
+    if decomposition_mode == "fast":
+        print("\n||DIFFUSIONGEMMA FAST DECOMPOSITION|| Waiting for first exact-6 draft\n", flush=True)
+    else:
+        print("\n||DIFFUSIONGEMMA FULL DECOMPOSITION|| Running regular generation\n", flush=True)
+    stage_start = time.perf_counter()
     if args.decomposition_base_url:
         decomposition = decompose_via_api(
             base_url=args.decomposition_base_url,
@@ -577,14 +611,21 @@ def run_deep_research(args: argparse.Namespace) -> dict[str, Any]:
             timeout=args.decomposition_timeout,
         )
     else:
-        decomposition = decompose_fast_mode(
-            query=args.prompt,
-            model_id=args.model_id,
-            max_new_tokens=args.max_new_tokens,
-            early_stop=early_stop,
-            request_mode=decomposition_mode,
-            require_final=decomposition_mode == "full",
-        )
+        if decomposition_mode == "fast":
+            decomposition = decompose_fast_mode(
+                query=args.prompt,
+                model_id=args.model_id,
+                max_new_tokens=args.max_new_tokens,
+                early_stop=True,
+                request_mode=decomposition_mode,
+            )
+        else:
+            decomposition = decompose_full_generation(
+                query=args.prompt,
+                model_id=args.model_id,
+                max_new_tokens=args.max_new_tokens,
+                request_mode=decomposition_mode,
+            )
     latencies["decomposition_wall_ms"] = elapsed_ms(stage_start)
     latencies["decomposition_generation_ms"] = decomposition.elapsed_ms
     latencies["decomposition_request_ms"] = decomposition.request_elapsed_ms

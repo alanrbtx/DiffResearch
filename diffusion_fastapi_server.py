@@ -10,7 +10,7 @@ from uuid import uuid4
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from diffusion_deep_research import decompose_fast_mode
+from diffusion_deep_research import decompose_fast_mode, decompose_full_generation
 from src.agents.agent_template import DEFAULT_DIFFUSIONGEMMA_MODEL, _get_diffusiongemma_runtime
 
 
@@ -178,18 +178,23 @@ def decompose(request: DecomposeRequest) -> DecomposeResponse:
     try:
         ensure_model_loaded()
         request_mode = request.mode
-        early_stop = request.early_stop if request.early_stop is not None else request_mode == "fast"
-        if request_mode == "full":
-            early_stop = False
         with generation_lock:
-            result = decompose_fast_mode(
-                query=request.query,
-                model_id=MODEL_ID,
-                max_new_tokens=request.max_new_tokens,
-                early_stop=early_stop,
-                request_mode=request_mode,
-                require_final=request_mode == "full",
-            )
+            if request_mode == "full":
+                result = decompose_full_generation(
+                    query=request.query,
+                    model_id=MODEL_ID,
+                    max_new_tokens=request.max_new_tokens,
+                    request_mode=request_mode,
+                )
+            else:
+                early_stop = request.early_stop if request.early_stop is not None else True
+                result = decompose_fast_mode(
+                    query=request.query,
+                    model_id=MODEL_ID,
+                    max_new_tokens=request.max_new_tokens,
+                    early_stop=early_stop,
+                    request_mode=request_mode,
+                )
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
