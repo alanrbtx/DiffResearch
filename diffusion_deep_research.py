@@ -9,10 +9,12 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
+import requests
 from tqdm import tqdm
 
 from src.agents.agent_template import (
     DEFAULT_DIFFUSIONGEMMA_MODEL,
+    DEFAULT_GEMMA4_MODEL,
     _get_diffusiongemma_runtime,
     agent_kwargs_from_env,
 )
@@ -57,6 +59,10 @@ class DecompositionResult:
     elapsed_ms: float
     draft_step: int | None
     final_text: str | None
+    backend: str = "local_hf"
+    request_elapsed_ms: float | None = None
+    server_elapsed_ms: float | None = None
+    remote_url: str | None = None
 
 
 class EarlySubqueriesReady(Exception):
@@ -294,8 +300,67 @@ def decompose_fast_mode(
     )
 
 
+def decompose_via_api(
+    *,
+    base_url: str,
+    query: str,
+    max_new_tokens: int,
+    early_stop: bool,
+    timeout: float,
+) -> DecompositionResult:
+    url = base_url.rstrip("/") + "/decompose"
+    payload = {
+        "query": query,
+        "max_new_tokens": max_new_tokens,
+        "early_stop": early_stop,
+    }
+    request_start = time.perf_counter()
+    response = requests.post(url, json=payload, timeout=timeout)
+    request_elapsed_ms = (time.perf_counter() - request_start) * 1000.0
+    response.raise_for_status()
+    data = response.json()
+
+    subqueries = data.get("subqueries")
+    if not isinstance(subqueries, list) or len(subqueries) != 6:
+        raise RuntimeError(f"Decomposition API returned invalid subqueries: {data!r}")
+
+    return DecompositionResult(
+        subqueries=[str(item) for item in subqueries],
+        mode=str(data.get("mode") or "remote_fast_mode"),
+        elapsed_ms=float(data.get("elapsed_ms") or request_elapsed_ms),
+        draft_step=data.get("draft_step"),
+        final_text=data.get("final_text"),
+        backend="remote_fastapi",
+        request_elapsed_ms=request_elapsed_ms,
+        server_elapsed_ms=data.get("server_elapsed_ms"),
+        remote_url=url,
+    )
+
+
 def normalize_title(title: str) -> str:
     return re.sub(r"\s+", " ", title).casefold().strip()
+
+
+def elapsed_ms(start_time: float) -> float:
+    return (time.perf_counter() - start_time) * 1000.0
+
+
+def build_agent_kwargs(args: argparse.Namespace) -> dict[str, Any]:
+    agent_kwargs = agent_kwargs_from_env()
+    backend = args.agent_backend
+    if backend:
+        agent_kwargs["backend"] = backend
+        if args.agent_model:
+            agent_kwargs["model"] = args.agent_model
+        elif backend == "gemma4":
+            agent_kwargs["model"] = os.environ.get("GEMMA4_MODEL_ID") or DEFAULT_GEMMA4_MODEL
+        elif backend == "diffusiongemma":
+            agent_kwargs["model"] = os.environ.get("DIFFUSIONGEMMA_MODEL_ID") or DEFAULT_DIFFUSIONGEMMA_MODEL
+        else:
+            agent_kwargs["model"] = os.environ.get("MODEL_NAME") or agent_kwargs.get("model")
+    elif args.agent_model:
+        agent_kwargs["model"] = args.agent_model
+    return agent_kwargs
 
 
 def collect_search_results(
@@ -407,6 +472,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", default="diffusion_deep_report.txt")
     parser.add_argument("--metadata-output", default="diffusion_deep_metadata.json")
     parser.add_argument("--model-id", default=os.environ.get("DIFFUSIONGEMMA_MODEL_ID") or DEFAULT_DIFFUSIONGEMMA_MODEL)
+    parser.add_argument(
+        "--decomposition-base-url",
+        default=os.environ.get("DIFFUSION_DECOMPOSE_BASE_URL"),
+        help="Fast decomposition API base URL, for example http://127.0.0.1:18080. Uses local HF if unset.",
+    )
+    parser.add_argument(
+        "--decomposition-timeout",
+        type=float,
+        default=float(os.environ.get("DIFFUSION_DECOMPOSE_TIMEOUT", "180")),
+    )
+    parser.add_argument(
+        "--agent-backend",
+        default=os.environ.get("RESEARCH_AGENT_BACKEND") or os.environ.get("MODEL_BACKEND") or "gemma4",
+        choices=["gemma4", "openai", "diffusiongemma"],
+        help="Backend for planning/relevance/extraction/summarization. Defaults to AR Gemma.",
+    )
+    parser.add_argument(
+        "--agent-model",
+        default=os.environ.get("RESEARCH_AGENT_MODEL"),
+        help="Override model id/name for non-decomposition agents.",
+    )
     parser.add_argument("--max-new-tokens", type=int, default=768)
     parser.add_argument("--arxiv-per-query", type=int, default=2)
     parser.add_argument("--s2-per-query", type=int, default=2)
@@ -421,8 +507,10 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    pipeline_start = time.perf_counter()
     args = parse_args()
-    agent_kwargs = agent_kwargs_from_env()
+    agent_kwargs = build_agent_kwargs(args)
+    latencies: dict[str, float | None] = {}
 
     rel_agent = RelevanceAgent(**agent_kwargs)
     ext_agent = ExtractionAgent(**agent_kwargs)
@@ -430,34 +518,56 @@ def main() -> None:
     planning_agent = PlanningAgent(**agent_kwargs)
 
     print("\n||PLANNING AGENT|| Creating literature review plan\n", flush=True)
+    stage_start = time.perf_counter()
     plan = planning_agent.generate(args.prompt)
+    latencies["planning_ms"] = elapsed_ms(stage_start)
     print(plan, flush=True)
+    print(f"Planning latency: {latencies['planning_ms']:.1f} ms", flush=True)
 
     print("\n||DIFFUSIONGEMMA FAST DECOMPOSITION|| Waiting for first exact-6 draft\n", flush=True)
-    decomposition = decompose_fast_mode(
-        query=args.prompt,
-        model_id=args.model_id,
-        max_new_tokens=args.max_new_tokens,
-        early_stop=not args.no_early_stop,
-    )
+    stage_start = time.perf_counter()
+    if args.decomposition_base_url:
+        decomposition = decompose_via_api(
+            base_url=args.decomposition_base_url,
+            query=args.prompt,
+            max_new_tokens=args.max_new_tokens,
+            early_stop=not args.no_early_stop,
+            timeout=args.decomposition_timeout,
+        )
+    else:
+        decomposition = decompose_fast_mode(
+            query=args.prompt,
+            model_id=args.model_id,
+            max_new_tokens=args.max_new_tokens,
+            early_stop=not args.no_early_stop,
+        )
+    latencies["decomposition_wall_ms"] = elapsed_ms(stage_start)
+    latencies["decomposition_generation_ms"] = decomposition.elapsed_ms
+    latencies["decomposition_request_ms"] = decomposition.request_elapsed_ms
+    latencies["decomposition_server_ms"] = decomposition.server_elapsed_ms
     print(
-        f"Decomposition mode={decomposition.mode}, elapsed_ms={decomposition.elapsed_ms:.1f}, "
+        f"Decomposition backend={decomposition.backend}, mode={decomposition.mode}, "
+        f"generation_ms={decomposition.elapsed_ms:.1f}, wall_ms={latencies['decomposition_wall_ms']:.1f}, "
         f"draft_step={decomposition.draft_step}",
         flush=True,
     )
     for index, subquery in enumerate(decomposition.subqueries, start=1):
         print(f"  {index}. {subquery}", flush=True)
 
+    stage_start = time.perf_counter()
     raw_results, unique_results = collect_search_results(
         subqueries=decomposition.subqueries,
         arxiv_per_query=args.arxiv_per_query,
         s2_per_query=args.s2_per_query,
     )
+    latencies["search_ms"] = elapsed_ms(stage_start)
     print(
         f"\n||SEARCH COMPLETE|| raw_results={len(raw_results)}, unique_titles={len(unique_results)}\n",
         flush=True,
     )
+    print(f"Search latency: {latencies['search_ms']:.1f} ms", flush=True)
 
+    stage_start = time.perf_counter()
     result_text, references, source_records = build_source_material(
         prompt=args.prompt,
         search_results=unique_results,
@@ -466,27 +576,38 @@ def main() -> None:
         use_relevance=args.relevance,
         use_squeeze=args.squeeze,
     )
+    latencies["source_fetch_ms"] = elapsed_ms(stage_start)
     print(f"\n||SOURCE MATERIAL|| used_sources={len(references)}\n", flush=True)
+    print(f"Source material latency: {latencies['source_fetch_ms']:.1f} ms", flush=True)
     if not references:
         raise RuntimeError("No source material was collected; refusing to write an unsourced review.")
 
     print("\n||SUMMARIZATION AGENT|| Writing literature review\n", flush=True)
+    stage_start = time.perf_counter()
     review = sum_agent.generate(
         args.prompt,
         result_text,
         references="\n".join(references),
         plan=plan,
     )
+    latencies["summarization_ms"] = elapsed_ms(stage_start)
+    print(f"Summarization latency: {latencies['summarization_ms']:.1f} ms", flush=True)
 
+    stage_start = time.perf_counter()
     output_path = Path(args.output)
     metadata_path = Path(args.metadata_output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     metadata_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(review, encoding="utf-8")
+    latencies["write_report_ms"] = elapsed_ms(stage_start)
+    latencies["e2e_ms"] = elapsed_ms(pipeline_start)
     metadata = {
         "prompt": args.prompt,
         "plan": plan,
+        "agent_backend": agent_kwargs.get("backend"),
+        "agent_model": agent_kwargs.get("model"),
         "decomposition": asdict(decomposition),
+        "latency": latencies,
         "search": {
             "arxiv_per_query": args.arxiv_per_query,
             "s2_per_query": args.s2_per_query,
@@ -502,6 +623,7 @@ def main() -> None:
     metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Report written to {output_path}", flush=True)
     print(f"Metadata written to {metadata_path}", flush=True)
+    print(f"E2E latency: {latencies['e2e_ms']:.1f} ms", flush=True)
 
 
 if __name__ == "__main__":
