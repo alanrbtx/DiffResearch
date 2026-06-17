@@ -1,0 +1,46 @@
+{
+  "model_id": "google/diffusiongemma-26B-A4B-it",
+  "queries_file": "/workspace/diffusion_gemma_fastapi/query_decomposition_100.jsonl",
+  "total_queries": 100,
+  "max_new_tokens": 768,
+  "stable_steps": 2,
+  "load_ms_excluded": 23258.445455227047,
+  "final_exact6_count": 100,
+  "first_valid_json_count": 100,
+  "first_exact6_count": 100,
+  "first_stable_exact6_count": 100,
+  "first_exact6_equals_final_count": 1,
+  "first_stable_exact6_equals_final_count": 91,
+  "draft_steps": {
+    "mean": 8.99,
+    "median": 9.0,
+    "min": 6.0,
+    "max": 17.0
+  },
+  "full_generation_ms": {
+    "mean": 499.67037410475314,
+    "median": 484.88833755254745,
+    "min": 339.4616339355707,
+    "max": 1749.5070667937398
+  },
+  "first_valid_json_ms": {
+    "mean": 268.45789797604084,
+    "median": 243.4233285021037,
+    "min": 193.07886715978384,
+    "max": 1553.0905271880329
+  },
+  "first_exact6_ms": {
+    "mean": 268.45789797604084,
+    "median": 243.4233285021037,
+    "min": 193.07886715978384,
+    "max": 1553.0905271880329
+  },
+  "first_stable_exact6_ms": {
+    "mean": 475.6860487582162,
+    "median": 468.4037119150162,
+    "min": 338.7413979507983,
+    "max": 1697.534732054919
+  },
+  "median_full_over_first_exact6": 1.9919550871984606,
+  "median_full_over_first_stable_exact6": 1.0351932002633706
+}
