@@ -6,9 +6,7 @@ The default model backend is `google/diffusiongemma-26B-A4B-it` via Hugging Face
 
 ## 🔔 News
 
-> 🎉 **Accepted at the EMNLP 2026 Industry Track!**
->
-> **August 2026** — *DiffResearch: Accelerating Deep Research with Diffusion Language Models*
+> **August 2026**: 🎉 Our paper *DiffResearch: Accelerating Deep Research with Diffusion Language Models* was **accepted to the EMNLP 2026 Industry Track!**
 
 ## What It Does
 
