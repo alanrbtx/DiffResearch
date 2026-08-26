@@ -4,6 +4,10 @@ DiffResearch is a lightweight framework for autonomous research workflows. It us
 
 The default model backend is `google/diffusiongemma-26B-A4B-it` via Hugging Face Transformers. The repository also supports `google/gemma-4-26B-A4B-it` as a native Transformers backend, while OpenAI-compatible servers remain available as an explicit fallback.
 
+## News
+
+- **August 2026:** *DiffResearch: Accelerating Deep Research with Diffusion Language Models* was accepted to the **EMNLP 2026 Industry Track**.
+
 ## What It Does
 
 - Formats a user topic into search queries.
