@@ -1,35 +1,77 @@
 # DiffResearch
 
-DiffResearch is a lightweight framework for autonomous research workflows. It uses a native DiffusionGemma core model, academic search backends, web extraction, and multi-agent synthesis to produce grounded long-form reports without LangChain or LangGraph.
+**Accelerating Deep Research with Diffusion Language Models**
 
-The default model backend is `google/diffusiongemma-26B-A4B-it` via Hugging Face Transformers. The repository also supports `google/gemma-4-26B-A4B-it` as a native Transformers backend, while OpenAI-compatible servers remain available as an explicit fallback.
+DiffResearch is an open multi-agent framework for studying how diffusion language models change the latency and quality of deep-research systems. The EMNLP study holds the agent scaffold, prompts, retrieval, and evaluation fixed while swapping a native DiffusionGemma backbone with a similarly sized autoregressive Gemma 4 backbone.
+
+The repository also implements **dFast**, a decomposition mode that reads DiffusionGemma's intermediate denoising states and returns a valid set of search subqueries before generation finishes. The framework then retrieves evidence and produces long-form, citation-bearing reports without LangChain or LangGraph.
 
 ## 🔔 News
 
 > **August 2026**: 🎉 Our paper *DiffResearch: Accelerating Deep Research with Diffusion Language Models* was **accepted to the EMNLP 2026 Industry Track!**
 
-## What It Does
+## Paper Overview
 
-- Formats a user topic into search queries.
-- Searches ArXiv and Semantic Scholar for academic sources.
-- Optionally uses Serper for general web search in the experimental plan-based benchmark runner.
-- Extracts article or paper text with ArXiv metadata, Serper scraping, `trafilatura`, or BeautifulSoup fallback.
-- Builds structured literature-review reports with inline numbered references.
-- Supports benchmark runs against a sibling DeepResearchBench checkout.
+Deep-research agents repeatedly plan, decompose a question, retrieve evidence, and synthesize a long report. Autoregressive models perform the model-bound parts of this pipeline token by token. DiffResearch tests whether replacing only that backbone with diffusion decoding reduces latency without lowering report quality.
+
+The paper studies three configurations on 100 Deep Research Bench tasks:
+
+- **dFull:** DiffusionGemma with ordinary full decomposition generation.
+- **dFast:** the same diffusion backbone, with subqueries extracted from intermediate denoising states.
+- **AR:** a similarly sized Gemma 4 autoregressive backbone in the same agent pipeline.
+
+### Main Findings
+
+| Result | Finding |
+| --- | --- |
+| End-to-end latency | dFull and dFast are roughly **6× faster** than AR in the reported H200 setup. |
+| Planning | Diffusion reduces mean planning latency from 39.32 s to about 3.6–3.7 s (**10.7×**). |
+| Long-form writing | Mean writing latency falls from 59.78 s to about 5.1–5.3 s (**about 11–12×**). |
+| dFast decomposition | The first valid exact-count draft is **1.99× faster at the median** than full decomposition generation in the isolated probe. |
+| Report quality | RACE scores remain similar; dFast has the best available-case overall score, while paired mean-difference intervals include zero. |
+
+dFast is a **stage-level optimization**: it accelerates decomposition, but does not provide an additional end-to-end reduction over dFull in the current pipeline. The diffusion reports are only about 10–17% shorter than the AR reports in the language-specific means, so output length alone does not explain the much larger writing-stage speedup.
+
+A separate Mercury-backed DiffResearch instance is also reported in a public leaderboard snapshot. That result measures complete-system competitiveness and is not a causal comparison of diffusion decoding.
+
+## dFast: Reading Intermediate Denoising States
+
+dFast attaches a custom streamer to DiffusionGemma generation. At each denoising step it decodes the current draft, searches for a valid exact-count JSON object, and stops as soon as one appears. The released fast-mode entry point and isolated probe request exactly six non-empty subqueries. dFast does not use a separate draft model and is therefore not speculative decoding.
+
+```text
+research question
+      -> planning
+      -> dFast decomposition (first valid exact-6 draft)
+      -> ArXiv / Semantic Scholar retrieval
+      -> source extraction
+      -> long-form synthesis
+```
+
+Early drafts are used only for retrieval-oriented decomposition, where wording variation is tolerable. Final report generation still runs to completion.
+
+## What the Repository Provides
+
+- Native Hugging Face backends for DiffusionGemma and Gemma 4, plus an explicit OpenAI-compatible fallback.
+- A paper-aligned dFast deep-research entry point with report and metadata outputs.
+- The saved 100-query intermediate-state probe and its per-query artifacts.
+- ArXiv, Semantic Scholar, and optional Serper retrieval backends.
+- General-purpose lite, iterative, and DeepResearchBench workflows.
 
 ## Repository Layout
 
 ```text
-run_lite_deep_research.py   # single-pass literature review workflow
-run_full_deep_research.py   # decomposition, judge, and plan-check workflow
+diffusion_deep_research.py  # paper-aligned dFast pipeline
+early_diffusion/            # intermediate-state probe, results, and reproduction notes
+run_lite_deep_research.py   # general single-pass literature review workflow
+run_full_deep_research.py   # general decomposition, judge, and plan-check workflow
 dr_bench/run_dr_bench.py    # DeepResearchBench runner using ArXiv + Semantic Scholar
 dr_bench/run_dr_bench_plan_based.py
                             # experimental plan-based Serper/web benchmark runner
 src/agents/                 # model backend wrapper and research agents
 src/web_tools/              # search engines and page extraction utilities
 examples/                   # sample reports
-examples/plan_based_report.txt
-                            # sample report from the plan-based benchmark path
+arGemma_report.txt          # saved autoregressive comparison report
+dGemma_report.txt           # saved diffusion comparison report
 deep_research_scheem.png    # architecture diagram
 ```
 
@@ -78,6 +120,27 @@ export SERPER_API_KEY="your_serper_key"
 ```
 
 `S2_API_KEY` is optional for Semantic Scholar. `SERPER_API_KEY` is required by `dr_bench/run_dr_bench_plan_based.py` for web search and Serper scraping.
+
+## Paper-Aligned dFast Workflow
+
+Run the diffusion-native pipeline with fast decomposition:
+
+```bash
+uv run diffusion_deep_research.py \
+  --prompt "How do diffusion language models change generation speed and quality?" \
+  --output diffusion_deep_report.txt \
+  --metadata-output diffusion_deep_metadata.json
+```
+
+The command writes the final report separately from structured metadata containing the plan, extracted subqueries, decomposition latency, draft step, retrieved records, and references. Add `--relevance` to filter results by title or `--squeeze` to compress retrieved text before synthesis.
+
+To wait for full decomposition generation instead of stopping at the first valid exact-count draft, add:
+
+```bash
+--no-early-stop
+```
+
+The isolated 100-query dFast experiment, saved outputs, and reproduction command are documented in [`early_diffusion/README.md`](early_diffusion/README.md). Its authoritative per-query outputs are stored in `early_diffusion/results/draft_step_results.jsonl`.
 
 ## Gemma 4 Backend
 
@@ -140,7 +203,7 @@ inputs = processor(text=text, return_tensors="pt").to(model.device)
 outputs = model.generate(**inputs, max_new_tokens=1024)
 ```
 
-## Usage
+## Additional Workflows
 
 ### Lite Literature Review
 
@@ -169,16 +232,24 @@ Simple prompts write `report.txt`; complex prompts write `report_2.txt`.
 
 ## DeepResearchBench
 
-The benchmark scripts expect DeepResearchBench data in a sibling directory:
+The benchmark scripts use the same agent abstraction for diffusion and autoregressive backbones and expect DeepResearchBench data in a sibling directory:
 
 ```text
 ../deep_research_bench/data/prompt_data/query.jsonl
 ```
 
-Run the main benchmark pipeline:
+Run the general benchmark pipeline with DiffusionGemma:
 
 ```bash
-uv run dr_bench/run_dr_bench.py --model-name my-model
+MODEL_BACKEND=diffusiongemma \
+uv run dr_bench/run_dr_bench.py --model-name diffusiongemma
+```
+
+Swap only the configured backbone to run Gemma 4:
+
+```bash
+MODEL_BACKEND=gemma4 \
+uv run dr_bench/run_dr_bench.py --model-name gemma4
 ```
 
 Resume an interrupted run:
@@ -192,6 +263,10 @@ Output is written to:
 ```text
 ../deep_research_bench/data/test_data/raw_data/<model-name>.jsonl
 ```
+
+### Reproduction Scope
+
+The public runner above is a practical ArXiv + Semantic Scholar workflow. Matching the paper's controlled tables additionally requires the reported Semantic-Scholar-only retrieval configuration, H200 serving setup, stage-level timing instrumentation, and official RACE evaluation. The dFast intermediate-state mechanism and its isolated timing artifacts are released separately under `early_diffusion/`.
 
 ## Plan-Based Benchmark Runner
 
@@ -221,7 +296,7 @@ QueryFormattingAgent -> IntentAgent (ignored) -> PlanningAgent -> Serper web sea
 
 - ArXiv requests are rate-limited; the search class waits between requests.
 - DuckDuckGo HTML search is still present as legacy/fallback code and may be throttled.
-- Several historical branches contained generated files such as `report_2.txt` and `__pycache__`; avoid committing new generated artifacts.
+- Generated reports and `__pycache__` directories are development artifacts; avoid committing new ones.
 - Keep API keys and local environment files out of Git.
 
 ## License
